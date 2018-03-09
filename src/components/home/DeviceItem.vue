@@ -1,20 +1,29 @@
 <template>
-    <div class="justify-content-center device-item">
-        <span class="badge badge-pill badge-info device-name">1</span>
-        <div class="device-channel">
-            <span class="fa fa-fire channel-icon" aria-hidden="true"></span>
-            <span class="channel-display">CH1</span>
-        </div>
-        <div class="device-channel">
-            <span class="fa fa-fire fa-2x channel-icon" aria-hidden="true"></span>
-            <span class="channel-display">CH2</span>
-        </div>
+  <div class="justify-content-center device-item cursor-pointer hvr-fade" v-on:click="clickItem">
+    <span class="badge badge-pill badge-info device-name">{{ initData.addr }}</span>
+    <div class="device-channel">
+      <span class="fa fa-fire channel-icon" aria-hidden="true"></span>
+      <span class="channel-display">CH1</span>
     </div>
+    <div class="device-channel">
+      <span class="fa fa-fire fa-2x channel-icon" aria-hidden="true"></span>
+      <span class="channel-display">CH2</span>
+    </div>
+  </div>
 </template>
 
 <script> 
 export default {
-    name: 'DeviceItem'
+  name: 'DeviceItem',
+  props: {
+    initData: Object,
+  },
+  methods: {
+    clickItem: function (event) {
+      console.log('device_detail');
+      this.$router.push({ path: '/device_detail' });
+    },
+  }
 }
 </script>
 
@@ -32,7 +41,7 @@ export default {
     text-align: center;
   }
   .channel-icon {
-    font-size: 1em;
+    font-size: 1rem;
   }
 
   .channel-display {

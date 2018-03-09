@@ -1,35 +1,35 @@
 <template>
-    <div class="card my-logincard">
+    <div class="card my-card">
         <i class="fa fa-user-circle fa-5x text-primary"></i>
 
-        <input ref="inputPassword" type="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus>
-        <div ref="invalidMessage" class="invalid-message">Sorry, that username's taken. Try another?</div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickLogin">Login</button>
+        <input ref="inputAddress" type="text" id="inputAddress" class="form-control" placeholder="Device Address" required autofocus>
+        <div ref="invalidMessage" class="invalid-message">Sorry, the device address range is 1-127. Try another?</div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickLogin">Write</button>
 
     </div>
 </template>
 
 <script>   
 export default {
-    name: 'Login',
+    name: 'SetDeviceAddress',
     methods: {
         invalidInput: function (_inputValue) {
             console.log(_inputValue);
-            if (_inputValue && _inputValue.length > 3) {
+            if (_inputValue > 0 && _inputValue < 127) {
                 return true;
             }
             return false;
         },
         clickLogin: function (event) {
-            let _inputDom = this.$refs.inputPassword;
+            let _inputDom = this.$refs.inputAddress;
             let _inputValue = _inputDom.value;
             if (this.invalidInput(_inputValue)) {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
 
                 let _lastRouteName = this.$store.state.lastRouteName;
-                this.$store.commit('changeLogin', true);
-                toastr.success('login success.');
+                // this.$store.commit('changeLogin', true);
+                toastr.success('write success.');
 
                 if (_lastRouteName) {
                     this.$router.push({ path: _lastRouteName });
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.my-logincard {
+.my-card {
   max-width: 320px;
   padding: 24px 24px;
   margin: 24px auto 24px;

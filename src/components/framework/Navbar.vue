@@ -2,34 +2,28 @@
     <nav class="navbar navbar-expand navbar-dark bg-primary">
 
         <div class="collapse navbar-collapse">
-            <a class="nav-link" href="#" v-on:click="clickBrand">
+            <a class="nav-link cursor-pointer" v-on:click="clickBrand">
                 <i class="fa fa-align-left text-white"></i>
             </a>
 
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                <li class="nav-item" href="#">
+                    <a class="nav-link">Home</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="true">Action
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">Action
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="download">
-
                         <router-link v-if="isNotLogin" to="/login" class="dropdown-item">
                             Login
                         </router-link>
                         <a v-else class="dropdown-item" v-on:click="clickLogout">
                             Logout
                         </a>
-                        <div class="dropdown-divider"></div>
-
-                        <router-link to="/set_device_address" class="dropdown-item">
-                            Set Device Address
-                        </router-link>
                         <div class="dropdown-divider"></div>
 
                         <router-link to="/config_host" class="dropdown-item">
@@ -42,7 +36,13 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">RodinX</a>
+                    <a class="nav-link cursor-pointer" to="/set_device_address" >
+                        Com3
+                    </a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link cursor-pointer">RodinX</a>
                 </li>
             </ul>
 
