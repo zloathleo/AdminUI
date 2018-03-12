@@ -26,15 +26,15 @@
                 </div>
             </div>
         </div>
-        <DeviceDetailComment/>
+        <Comment/>
     </div>
 </template>
 
 <script> 
-import DeviceDetailComment from './DeviceDetailComment.vue';
+import Comment from './Comment.vue';
 export default {
-    name: 'DeviceDetailSummary',
-    components: { DeviceDetailComment },
+    name: 'Summary',
+    components: { Comment },
 }
 </script>
 

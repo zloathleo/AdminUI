@@ -9,11 +9,8 @@ export default {
     name: 'VirtualLayer',
     methods: {
         clickOverlay: function (event) {
-            let _mySidebar = $("#sidebar");
-            _mySidebar.fadeOut();
-
-            let _myOverlay = $("#overlay");
-            _myOverlay.fadeOut();
+            $("#sidebar").fadeOut();
+            $("#overlay").fadeOut();
         }
     }
 }

@@ -13,12 +13,12 @@
             </ul>
 
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown cursor-pointer">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">Action
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="download">
-                        <router-link v-if="isNotLogin" to="/login" class="dropdown-item">
+                        <router-link v-if="isNotLogin" :to="{name:'login'}" class="dropdown-item">
                             Login
                         </router-link>
                         <a v-else class="dropdown-item" v-on:click="clickLogout">
@@ -36,9 +36,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cursor-pointer" to="/set_device_address" >
+                    <router-link class="nav-link cursor-pointer" :to="{name:'set_device_address'}" >
                         Com3
-                    </a>
+                    </router-link>
                 </li>
 
                 <li class="nav-item active">

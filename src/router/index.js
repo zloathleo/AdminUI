@@ -4,16 +4,29 @@ import Home from '../components/Home.vue';
 import Alarm from '../components/Alarm.vue';
 import Login from '../components/action/Login.vue';
 import SetDeviceAddress from '../components/action/SetDeviceAddress.vue';
-import DeviceDetail from '../components/home/detail/DeviceDetail.vue';
+import DetailPage from '../components/home/detail/DetailPage.vue';
+import ChannelsContent from '../components/home/detail/ChannelsContent.vue';
+import UserSettingsContent from '../components/home/detail/usersettings/UserSettingsContent.vue';
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
   routes: [
-    { path: '/', component: Home }, 
-    { path: '/device_detail', component: DeviceDetail },
-    { path: '/alarm', component: Alarm },
-    { path: '/login', component: Login },
-    { path: '/set_device_address', component: SetDeviceAddress }
+    { name: 'home', path: '/', component: Home },
+    {
+      path: '/detail', component: DetailPage,
+      children: [
+        {
+          name: 'home.detail', path: "/",
+          component: ChannelsContent
+        }, {
+          name: 'home.usersettings', path: "usersettings",
+          component: UserSettingsContent
+        }
+      ]
+    },
+    { name: 'alarm', path: '/alarm', component: Alarm },
+    { name: 'login', path: '/login', component: Login },
+    { name: 'set_device_address', path: '/set_device_address', component: SetDeviceAddress }
   ]
 })

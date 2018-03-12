@@ -1,6 +1,6 @@
 <template>
     <div class="block">
-        <ul class="property-list">
+        <ul class="property-list coment">
             <li class="detail-item-li">
                 <span>°C</span>
                 <span class="value">Celsius</span>
@@ -53,12 +53,12 @@
 
 <script>  
 export default {
-    name: 'DeviceDetailComment',
+    name: 'Comment',
 }
 </script>
 
 <style scoped lang="less">
-.detail-item-li {
-  padding-bottom: 0.2rem;
-}
+.coment {
+  padding: 1rem 1rem 0;
+} 
 </style>

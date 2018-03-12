@@ -1,8 +1,9 @@
 <template>
     <div class="block">
+        <div class="bg-primary ribbon-box text-uppercase">CH1</div>
         <div class="row">
             <div class="col-6">
-                <ul class="property-list">
+                <ul class="property-list ribbon-box-paddomh">
                     <li class="detail-item-li">
                         <span>FC</span>
                         <span class="value">11</span>
@@ -51,12 +52,9 @@
 
 <script>   
 export default {
-    name: 'DeviceDetailChan',
+    name: 'Chan',
 }
 </script>
 
-<style scoped lang="less">
-.detail-item-li {
-  padding-bottom: 0.2rem;
-}
+<style scoped lang="less"> 
 </style>

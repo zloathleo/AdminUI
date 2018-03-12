@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Vuex from 'vuex';
- 
+
 import store from './vuex/store';
 import Root from './Root.vue';
 import router from './router';
@@ -18,8 +18,8 @@ toastr.options.extendedTimeOut = 1000;
 
 // 全局钩子
 router.beforeEach((to, from, next) => {
-  store.state.lastRouteName = from.path;
-  store.state.currentRouteName = to.path;
+  store.state.lastRouteName = from.name;
+  store.state.currentRouteName = to.name;
   next();
 });
 

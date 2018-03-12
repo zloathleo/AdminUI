@@ -15,10 +15,5 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.actionbar {
-  position: fixed;
-  bottom: 22px;
-  right: 0px;
-}
+<style scoped lang="less"> 
 </style>

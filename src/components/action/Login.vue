@@ -33,9 +33,9 @@ export default {
 
                 let _lastRouteName = this.$store.state.lastRouteName;
                 if (_lastRouteName) {
-                    this.$router.push({ path: _lastRouteName });
+                    this.$router.push({ name: _lastRouteName });
                 } else {
-                    this.$router.push({ path: '/' });
+                    this.$router.push({ name: '/' });
                 }
             } else {
                 $(_inputDom).addClass('is-invalid');

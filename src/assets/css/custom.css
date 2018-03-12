@@ -9,13 +9,50 @@
     font-size: 0.6rem;
 }
 
-.property-list {
-    padding: 1rem 1rem 0;
+.property-list { 
     list-style: none;
+    padding: 1rem; 
+} 
+
+.detail-item-li {
+    margin-bottom: 0.5rem;
 }
 
 .property-list .value {
     float: right;
+}
+
+.value input {
+    width: 100%;
+}
+
+.actionbar {
+    position: fixed;
+    bottom: 22px;
+    right: 0px;
+}
+
+.ribbon-box-paddomh {
+    padding: 3rem 1rem 0; 
+} 
+
+.ribbon-box {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+    color: #fff;
+    margin-right: 0.8rem;
+}
+
+.value-radio-buttom {
+    padding: 0;
+    font-size: 0.6rem;
+    line-height: 1.5;
+    border-radius: 0;
+    min-width: 4rem;
 }
 
 .hvr-fade {

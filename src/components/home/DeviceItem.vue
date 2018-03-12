@@ -20,8 +20,8 @@ export default {
   },
   methods: {
     clickItem: function (event) {
-      console.log('device_detail');
-      this.$router.push({ path: '/device_detail' });
+      console.log('detail');
+      this.$router.push({ path: '/detail' });
     },
   }
 }
