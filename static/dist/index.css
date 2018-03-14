@@ -1,4 +1,8 @@
 /*! This file is created at 2018-03-09T00:39:07.961Z */
+html {
+    overflow: hidden;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

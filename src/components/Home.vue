@@ -5,12 +5,11 @@
                 <DeviceItem :init-data='item' />
             </div>
         </div>
-        <ActionBar/>
+        <ActionBar v-show="$store.state.isLogin" />
     </div>
 </template>
 
-<script>   
-import MyFetch from '../common/MyFetch';
+<script>    
 import DeviceItem from './home/DeviceItem.vue';
 import ActionBar from './home/ActionBar.vue';
 export default {
@@ -23,7 +22,7 @@ export default {
     },
     mounted() {
         var _self = this;
-        MyFetch.fetch("/dashboard", { method: 'GET' }, function (response) {
+        this.$myfetch.fetch("/dashboard", { method: 'GET' }, function (response) {
             _self.data = response;
         });
     }

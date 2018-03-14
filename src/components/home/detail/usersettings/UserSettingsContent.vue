@@ -2,13 +2,13 @@
     <div class="col-sm-8">
         <div class="row">
             <div class="col-12">
-                <Chan/>
+                <Chan :init-data='initData.ch1'/>
             </div>
             <div class="col-12">
-                <Chan/>
+                <Chan :init-data='initData.ch2'/>
             </div>
         </div>
-        <ActionBar/>
+        <ActionBar :init-data='initData.name' />
     </div>
 </template>
 
@@ -18,6 +18,9 @@ import ActionBar from './ActionBar.vue';
 export default {
     name: 'UserSettingsContent',
     components: { Chan, ActionBar },
+    props: {
+        initData: Object,
+    }, 
 }
 </script>
 

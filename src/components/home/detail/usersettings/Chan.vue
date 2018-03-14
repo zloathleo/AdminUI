@@ -1,54 +1,20 @@
 <template>
     <div class="block">
-        <div class="bg-primary ribbon-box text-uppercase">CH1</div>
+        <div class="bg-primary ribbon-box text-uppercase">{{initData.name}}</div>
         <div class="row">
             <div class="col-12">
                 <ul class="property-list ribbon-box-paddomh">
-                    <li class="detail-item-li">
-                        <span>Burner Type</span>
-                        <span class="value">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-primary value-radio-buttom active">
-                                    <input type="radio" name="options" checked=""> RI
-                                </label>
-                                <label class="btn btn-primary value-radio-buttom">
-                                    <input type="radio" name="options" class="btn-sm"> UV
-                                </label>
-                            </div>
-                        </span>
-                    </li>
-                    <li class="detail-item-li">
-                        <span>Channel En</span>
-                        <span class="value ">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-primary value-radio-buttom active">
-                                    <input type="radio" name="options" checked=""> Enable
-                                </label>
-                                <label class="btn btn-primary value-radio-buttom">
-                                    <input type="radio" name="options" class="btn-sm"> Disable
-                                </label>
-                            </div>
-                        </span>
-                    </li>
-                    <li class="detail-item-li">
-                        <span>File</span>
-                        <span class="value">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-primary value-radio-buttom active">
-                                    <input type="radio" name="options" checked=""> File A
-                                </label>
-                                <label class="btn btn-primary value-radio-buttom">
-                                    <input type="radio" name="options" class="btn-sm"> File B
-                                </label>
-                            </div>
-                        </span>
-                    </li>
+
+                    <RadioButtom :title="'Burner Type'" :value="initData.type" :item1="burnerTypeItem1" :item2="burnerTypeItem2" @onPropsChange="burnerTypeChange" />
+                    <RadioButtom :title="'Channel En'" :value="initData.enable" :item1="EnItem1" :item2="EnItem2" @onPropsChange="enableChange" />
+                    <RadioButtom :title="'File'" :value="initData.file" :item1="fileItem1" :item2="fileItem2" @onPropsChange="fileChange" />
+
                     <div class="dropdown-divider"></div>
 
                     <div class="col-12">
                         <div class="row">
-                            <file/>
-                            <file/>
+                            <file :init-data='initData.filea' />
+                            <file :init-data='initData.fileb' />
                         </div>
                     </div>
                 </ul>
@@ -59,9 +25,34 @@
 
 <script>   
 import File from './File.vue';
+import RadioButtom from './RadioButtom.vue';
 export default {
     name: 'Chan',
-    components: { File },
+    components: { File, RadioButtom },
+    props: {
+        initData: Object,
+    },
+    data: function () {
+        return {
+            burnerTypeItem1: { display: 'IR', value: 'IR' },
+            burnerTypeItem2: { display: 'UV', value: 'UV' },
+            EnItem1: { display: 'Enable', value: 1 },
+            EnItem2: { display: 'Disable', value: 0 },
+            fileItem1: { display: 'File A', value: 0 },
+            fileItem2: { display: 'File B', value: 1 },
+        }
+    },
+    methods: {
+        burnerTypeChange(propName, newVal, oldVal) {
+            this.initData.type = newVal;
+        },
+        enableChange(propName, newVal, oldVal) {
+            this.initData.enable = newVal;
+        },
+        fileChange(propName, newVal, oldVal) {
+            this.initData.file = newVal;
+        },
+    },
 }
 </script>
 
@@ -69,6 +60,9 @@ export default {
 @media (min-width: 768px) {
   .ribbon-box-paddomh {
     padding: 1rem 1rem 0;
+    .active {
+      z-index: 0;
+    }
     .value {
       padding-right: 3rem;
     }

@@ -3,7 +3,9 @@ import Constants from './Constants';
 // import MCache from '../common/MCache.jsx';
 
 export default {
-    callUsertimeOut: 300,
+    callUsertimeOut: 100,
+
+    vuexStore: undefined,
 
     fetch: function (url, _opt, _then, _fault) {
         _opt.headers = {
@@ -27,12 +29,12 @@ export default {
     },
 
     _callFetch(_url, _opt, _then, _fault) {
-        // MCache.APICalling = true;
-        if (_opt.defaultEventDispatch !== false) {
-            // EventProxy.trigger(Constants.Event.EventFetchStart, {
-            //     url: _url,
-            //     loadingMessage: _opt ? _opt.loadingMessage : undefined,
-            // });
+        if (_opt.defaultEventDispatch != false) {
+            this.vuexStore.commit('changeApiLoading', {
+                status: 1,//1=loading
+                loadingMessage: _opt ? _opt.loadingMessage : undefined,
+                url: _url,
+            });
         }
 
         fetch(_url, _opt)
@@ -43,29 +45,39 @@ export default {
                     if (response.ok) {
                         this._timeoutCall(function () {
                             if (_opt.defaultEventDispatch !== false) {
-                                // EventProxy.trigger(Constants.Event.EventFetchEnd, {
-                                //     url: _url
-                                // });
+                                this.vuexStore.commit('changeApiLoading', {
+                                    status: 0,//1=loading
+                                    loadingMessage: undefined,
+                                    url: undefined,
+                                });
                             }
                             if (_then) {
                                 _then(_json);
                             }
-                        });
+                        }.bind(this));
                     } else {
                         this._timeoutCall(function () {
                             let _dispatch = { err: response, json: _json };
-                            // EventProxy.trigger(Constants.Event.EventFetchError, _dispatch);
+                            this.vuexStore.commit('changeApiLoading', {
+                                status: -1,//1=loading
+                                loadingMessage: undefined,
+                                url: undefined,
+                            });
                             if (_fault) {
                                 _fault(_dispatch);
                             }
-                        });
+                        }.bind(this));
                     }
                 }.bind(this));
             }.bind(this)).catch(function (err) {
                 // MCache.APICalling = false;
                 this._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
-                    // EventProxy.trigger(Constants.Event.EventFetchNetError, _dispatch);
+                    this.vuexStore.commit('changeApiLoading', {
+                        status: -1,//1=loading
+                        loadingMessage: undefined,
+                        url: undefined,
+                    });
                     if (_fault) {
                         _fault(_dispatch);
                     }
@@ -81,7 +93,6 @@ export default {
             this.download_file = iframe;
             document.body.appendChild(this.download_file);
         }
-        // alert(download_file.iframe);
         this.download_file.src = url;
         this.download_file.style.display = "none";
     }

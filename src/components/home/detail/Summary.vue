@@ -5,18 +5,18 @@
                 <div class="device-summary-bg-op">
                     <div class="text-center">
                         <i class="fa fa-3x fa-sun-o text-warning device-logo"></i>
-                        <h3 class="h4 text-uppercase text-white device-name">A1</h3>
+                        <h3 class="h4 text-uppercase text-white device-name">{{initData.name}}</h3>
                     </div>
                 </div>
             </div>
             <div class="summary-content">
                 <div class="row text-center">
                     <div class="col-4">
-                        <div class="text-value font-w300">1</div>
+                        <div class="text-value font-w300">{{initData.addr}}</div>
                         <div class="text-label text-muted">Addr</div>
                     </div>
                     <div class="col-4">
-                        <div class="text-value font-w300">On</div>
+                        <div class="text-value font-w300">{{initData.status}}</div>
                         <div class="text-label text-muted">Status</div>
                     </div>
                     <div class="col-4">
@@ -35,6 +35,9 @@ import Comment from './Comment.vue';
 export default {
     name: 'Summary',
     components: { Comment },
+    props: {
+        initData: Object,
+    },
 }
 </script>
 

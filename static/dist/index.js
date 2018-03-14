@@ -12592,7 +12592,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'MainContent',
-    components: { Breadcrumb: _Breadcrumb2.default }
+    components: { Breadcrumb: _Breadcrumb2.default },
+    mounted: function mounted() {
+        var _content_height = document.documentElement.clientHeight - (42 + 54 + 36 + 22);
+        $('#MainContent').css("height", _content_height + "px");
+    }
 }; //
 //
 //
@@ -12705,9 +12709,22 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'VirtualLayer',
+    computed: {
+        isApiLoadStart: function isApiLoadStart() {
+            var _apiLoadingStatus = this.$store.state.apiLoading.status;
+            return _apiLoadingStatus == 1;
+        }
+    },
     methods: {
         clickOverlay: function clickOverlay(event) {
             $("#sidebar").fadeOut();
@@ -12748,10 +12765,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _MyFetch = __webpack_require__(58);
-
-var _MyFetch2 = _interopRequireDefault(_MyFetch);
-
 var _DeviceItem = __webpack_require__(60);
 
 var _DeviceItem2 = _interopRequireDefault(_DeviceItem);
@@ -12761,6 +12774,18 @@ var _ActionBar = __webpack_require__(64);
 var _ActionBar2 = _interopRequireDefault(_ActionBar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'Home',
@@ -12772,21 +12797,11 @@ exports.default = {
     },
     mounted: function mounted() {
         var _self = this;
-        _MyFetch2.default.fetch("/dashboard", { method: 'GET' }, function (response) {
+        this.$myfetch.fetch("/dashboard", { method: 'GET' }, function (response) {
             _self.data = response;
         });
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 15 */
@@ -12820,8 +12835,7 @@ exports.default = {
   },
   methods: {
     clickItem: function clickItem(event) {
-      console.log('detail');
-      this.$router.push({ path: '/detail' });
+      this.$router.push({ path: '/detail', query: { device: this.initData.name } });
     }
   }
 };
@@ -13002,8 +13016,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__vuex_store__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Root_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__router__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_css_custom_css__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_css_custom_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__assets_css_custom_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_MyFetch__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_css_custom_css__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_css_custom_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__assets_css_custom_css__);
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
@@ -13014,7 +13029,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */])
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_5__common_MyFetch__["a" /* default */].vuexStore = __WEBPACK_IMPORTED_MODULE_2__vuex_store__["default"];
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$myfetch = __WEBPACK_IMPORTED_MODULE_5__common_MyFetch__["a" /* default */];
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = false;
 
@@ -13318,12 +13338,22 @@ const store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
         lastRouteName: '/',
         currentRouteName: '/',
-        isLogin: false,
+        isLogin: true,
+
+        currentUserSettingsData: undefined,
+        apiLoading: {
+            status: 0,//0=noloading ,1=loading ,-1=error
+            loadingMessage: undefined,
+            url: undefined,
+        },
     },
     mutations: {
         changeLogin(state, value) {
             state.isLogin = value;
-        }
+        },
+        changeApiLoading(state, value) {
+            state.apiLoading = value;
+        },
     }
 })
 
@@ -13806,7 +13836,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.breadcrumb[data-v-8c6ef67c] {\n  padding: 0.5rem 1rem;\n}\n.main-content[data-v-8c6ef67c] {\n  width: 100%;\n  padding-right: 1.6rem;\n  padding-left: 1.6rem;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/MainContent.vue"],"names":[],"mappings":";AAAA;EACE,qBAAqB;CACtB;AACD;EACE,YAAY;EACZ,sBAAsB;EACtB,qBAAqB;CACtB","file":"MainContent.vue","sourcesContent":[".breadcrumb {\n  padding: 0.5rem 1rem;\n}\n.main-content {\n  width: 100%;\n  padding-right: 1.6rem;\n  padding-left: 1.6rem;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.breadcrumb[data-v-8c6ef67c] {\n  padding: 0.5rem 1rem;\n}\n.main-content[data-v-8c6ef67c] {\n  overflow: auto;\n  width: 100%;\n  padding-right: 1.6rem;\n  padding-left: 1.6rem;\n}\n.main-content[data-v-8c6ef67c]::-webkit-scrollbar-track {\n  border-radius: 5px;\n  background-color: #f5f5f5;\n}\n.main-content[data-v-8c6ef67c]::-webkit-scrollbar {\n  width: 6px;\n  background-color: #f5f5f5;\n}\n.main-content[data-v-8c6ef67c]::-webkit-scrollbar-thumb {\n  border-radius: 5px;\n  background-color: rgba(0, 0, 0, 0.2);\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/MainContent.vue"],"names":[],"mappings":";AAAA;EACE,qBAAqB;CACtB;AACD;EACE,eAAe;EACf,YAAY;EACZ,sBAAsB;EACtB,qBAAqB;CACtB;AACD;EACE,mBAAmB;EACnB,0BAA0B;CAC3B;AACD;EACE,WAAW;EACX,0BAA0B;CAC3B;AACD;EACE,mBAAmB;EACnB,qCAAqC;CACtC","file":"MainContent.vue","sourcesContent":[".breadcrumb {\n  padding: 0.5rem 1rem;\n}\n.main-content {\n  overflow: auto;\n  width: 100%;\n  padding-right: 1.6rem;\n  padding-left: 1.6rem;\n}\n.main-content::-webkit-scrollbar-track {\n  border-radius: 5px;\n  background-color: #f5f5f5;\n}\n.main-content::-webkit-scrollbar {\n  width: 6px;\n  background-color: #f5f5f5;\n}\n.main-content::-webkit-scrollbar-thumb {\n  border-radius: 5px;\n  background-color: rgba(0, 0, 0, 0.2);\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -13974,11 +14004,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "MainContent" } },
     [
       _c("Breadcrumb"),
       _vm._v(" "),
-      _c("div", { staticClass: "main-content" }, [_c("router-view")], 1)
+      _c(
+        "div",
+        { staticClass: "main-content", attrs: { id: "MainContent" } },
+        [_c("router-view")],
+        1
+      )
     ],
     1
   )
@@ -14272,7 +14306,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.my-overlay[data-v-c5192798] {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/VirtualLayer.vue"],"names":[],"mappings":";AAAA;EACE,gBAAgB;EAChB,cAAc;EACd,YAAY;EACZ,aAAa;EACb,OAAO;EACP,QAAQ;EACR,SAAS;EACT,UAAU;EACV,qCAAqC;EACrC,WAAW;CACZ","file":"VirtualLayer.vue","sourcesContent":[".my-overlay {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.display-none[data-v-c5192798] {\n  display: none;\n}\n.my-overlay[data-v-c5192798] {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading[data-v-c5192798] {\n  text-align: center;\n  padding-top: 50%;\n  color: #fff;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/VirtualLayer.vue"],"names":[],"mappings":";AAAA;EACE,cAAc;CACf;AACD;EACE,gBAAgB;EAChB,YAAY;EACZ,aAAa;EACb,OAAO;EACP,QAAQ;EACR,SAAS;EACT,UAAU;EACV,qCAAqC;EACrC,WAAW;CACZ;AACD;EACE,mBAAmB;EACnB,iBAAiB;EACjB,YAAY;CACb","file":"VirtualLayer.vue","sourcesContent":[".display-none {\n  display: none;\n}\n.my-overlay {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading {\n  text-align: center;\n  padding-top: 50%;\n  color: #fff;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -14290,10 +14324,36 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", {
-      staticClass: "my-overlay",
+      staticClass: "my-overlay display-none",
       attrs: { id: "overlay" },
       on: { click: _vm.clickOverlay }
-    })
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isApiLoadStart,
+            expression: "isApiLoadStart"
+          }
+        ],
+        staticClass: "my-overlay loading",
+        attrs: { id: "loadingOverLayer" }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-circle-o-notch fa-spin fa-3x fa-fw",
+          attrs: { "aria-hidden": "true" }
+        }),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "loadingOverLayerText" } }, [
+          _vm._v("\n            loading data\n        ")
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -14501,10 +14561,21 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
       children: [
         {
           name: 'home.detail', path: "/",
-          component: __WEBPACK_IMPORTED_MODULE_7__components_home_detail_ChannelsContent_vue__["default"]
+          component: __WEBPACK_IMPORTED_MODULE_7__components_home_detail_ChannelsContent_vue__["default"],
+          // beforeLeave: (to, from, next) => {
+          //   let device = to.query.device;
+          //   let type = 1;
+          //   this.a.app.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (response) {
+          //     console.log(this);
+          //     next();
+          //   });
+          // }
         }, {
           name: 'home.usersettings', path: "usersettings",
-          component: __WEBPACK_IMPORTED_MODULE_8__components_home_detail_usersettings_UserSettingsContent_vue__["default"]
+          component: __WEBPACK_IMPORTED_MODULE_8__components_home_detail_usersettings_UserSettingsContent_vue__["default"],
+          // beforeEnter: (to, from, next) => {
+          //   console.log(this.$myfetch);
+          // }
         }
       ]
     },
@@ -17251,14 +17322,15 @@ exports.push([module.i, "\n.device-row[data-v-fed36922] {\n  border: 1px solid r
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants__ = __webpack_require__(59);
 
 // import EventProxy from '../common/EventProxy.jsx';
 // import MCache from '../common/MCache.jsx';
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-    callUsertimeOut: 300,
+/* harmony default export */ __webpack_exports__["a"] = ({
+    callUsertimeOut: 100,
+
+    vuexStore: undefined,
 
     fetch: function (url, _opt, _then, _fault) {
         _opt.headers = {
@@ -17282,12 +17354,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     _callFetch(_url, _opt, _then, _fault) {
-        // MCache.APICalling = true;
-        if (_opt.defaultEventDispatch !== false) {
-            // EventProxy.trigger(Constants.Event.EventFetchStart, {
-            //     url: _url,
-            //     loadingMessage: _opt ? _opt.loadingMessage : undefined,
-            // });
+        if (_opt.defaultEventDispatch != false) {
+            this.vuexStore.commit('changeApiLoading', {
+                status: 1,//1=loading
+                loadingMessage: _opt ? _opt.loadingMessage : undefined,
+                url: _url,
+            });
         }
 
         fetch(_url, _opt)
@@ -17298,29 +17370,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (response.ok) {
                         this._timeoutCall(function () {
                             if (_opt.defaultEventDispatch !== false) {
-                                // EventProxy.trigger(Constants.Event.EventFetchEnd, {
-                                //     url: _url
-                                // });
+                                this.vuexStore.commit('changeApiLoading', {
+                                    status: 0,//1=loading
+                                    loadingMessage: undefined,
+                                    url: undefined,
+                                });
                             }
                             if (_then) {
                                 _then(_json);
                             }
-                        });
+                        }.bind(this));
                     } else {
                         this._timeoutCall(function () {
                             let _dispatch = { err: response, json: _json };
-                            // EventProxy.trigger(Constants.Event.EventFetchError, _dispatch);
+                            this.vuexStore.commit('changeApiLoading', {
+                                status: -1,//1=loading
+                                loadingMessage: undefined,
+                                url: undefined,
+                            });
                             if (_fault) {
                                 _fault(_dispatch);
                             }
-                        });
+                        }.bind(this));
                     }
                 }.bind(this));
             }.bind(this)).catch(function (err) {
                 // MCache.APICalling = false;
                 this._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
-                    // EventProxy.trigger(Constants.Event.EventFetchNetError, _dispatch);
+                    this.vuexStore.commit('changeApiLoading', {
+                        status: -1,//1=loading
+                        loadingMessage: undefined,
+                        url: undefined,
+                    });
                     if (_fault) {
                         _fault(_dispatch);
                     }
@@ -17336,7 +17418,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.download_file = iframe;
             document.body.appendChild(this.download_file);
         }
-        // alert(download_file.iframe);
         this.download_file.src = url;
         this.download_file.style.display = "none";
     }
@@ -17702,7 +17783,16 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _c("ActionBar")
+          _c("ActionBar", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.state.isLogin,
+                expression: "$store.state.isLogin"
+              }
+            ]
+          })
         ],
         2
       )
@@ -18156,7 +18246,51 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'DetailPage',
-    components: { Summary: _Summary2.default }
+    data: function data() {
+        return {
+            data: {
+                name: '--', ch1: {
+                    // enable: 0,
+                    // file: 0,
+                    // type: "UV"
+                }, ch2: {
+                    // enable: 0,
+                    // file: 0,
+                    // type: "UV"
+                }
+            }
+        };
+    },
+    components: { Summary: _Summary2.default },
+    mounted: function mounted() {
+        var routeName = this.$route.name;
+        this.refreshDetailData(routeName);
+    },
+    beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+        this.refreshDetailData(to.name);
+        next();
+    },
+
+    methods: {
+        refreshDetailData: function refreshDetailData(routeName) {
+            var device = this.$route.query.device;
+            var _self = this;
+
+            if ("home.detail" == routeName) {
+                var type = 1;
+                this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (response) {
+                    _self.data = response.devices[device];
+                });
+            } else if ("home.usersettings" == routeName) {
+                var _type = "u";
+                var source = "d";
+                this.$myfetch.fetch('/settings/' + device + '?type=' + _type + '&source=' + source, { method: 'GET' }, function (response) {
+                    _self.data = response;
+                    _self.$store.state.currentUserSettingsData = response;
+                });
+            }
+        }
+    }
 }; //
 //
 //
@@ -18282,7 +18416,11 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      [_c("Summary"), _vm._v(" "), _c("router-view")],
+      [
+        _c("Summary", { attrs: { "init-data": _vm.data } }),
+        _vm._v(" "),
+        _c("router-view", { attrs: { "init-data": _vm.data } })
+      ],
       1
     )
   ])
@@ -18310,7 +18448,7 @@ if (false) {
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+    value: true
 });
 //
 //
@@ -18366,7 +18504,10 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-   name: 'Chan'
+    name: 'Chan',
+    props: {
+        initData: Object
+    }
 };
 
 /***/ }),
@@ -18481,86 +18622,99 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "block" }, [
-      _c("div", { staticClass: "bg-primary ribbon-box text-uppercase" }, [
-        _vm._v("CH1")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6" }, [
-          _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("FC")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("11")])
-            ]),
+  return _c("div", { staticClass: "block" }, [
+    _c("div", { staticClass: "bg-primary ribbon-box text-uppercase" }, [
+      _vm._v("CH1")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-6" }, [
+        _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("FC")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("ON_TH")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("1999")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.fc))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("ON_TH")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("ON_TL")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("600")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.onth))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("ON_TL")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("MAX")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("1600")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.ontl))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("MAX")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("MIN")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("300")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.max))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("MIN")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("DC ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("231")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.min))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("DC ")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("0")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.dc))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("AC ")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("FREQ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("0")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.ac))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("FREQ")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("TEMP")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("0.0 °C")])
-            ]),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.freq))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("TEMP")]),
             _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("FQ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [_vm._v("0")])
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.temp) + " °C")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("span", [_vm._v("FQ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "value" }, [
+              _vm._v(_vm._s(_vm.initData.fq) + "%")
             ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -18589,7 +18743,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'Summary',
-    components: { Comment: _Comment2.default }
+    components: { Comment: _Comment2.default },
+    props: {
+        initData: Object
+    }
 }; //
 //
 //
@@ -19007,7 +19164,60 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "col-sm-4" },
-    [_vm._m(0), _vm._v(" "), _c("Comment")],
+    [
+      _c("div", { staticClass: "block" }, [
+        _c(
+          "div",
+          {
+            staticClass: "device-summary-bg",
+            staticStyle: { "background-image": "url('images/ezflame.png')" }
+          },
+          [
+            _c("div", { staticClass: "device-summary-bg-op" }, [
+              _c("div", { staticClass: "text-center" }, [
+                _c("i", {
+                  staticClass: "fa fa-3x fa-sun-o text-warning device-logo"
+                }),
+                _vm._v(" "),
+                _c(
+                  "h3",
+                  { staticClass: "h4 text-uppercase text-white device-name" },
+                  [_vm._v(_vm._s(_vm.initData.name))]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "summary-content" }, [
+          _c("div", { staticClass: "row text-center" }, [
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "text-value font-w300" }, [
+                _vm._v(_vm._s(_vm.initData.addr))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-label text-muted" }, [
+                _vm._v("Addr")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "text-value font-w300" }, [
+                _vm._v(_vm._s(_vm.initData.status))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-label text-muted" }, [
+                _vm._v("Status")
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("Comment")
+    ],
     1
   )
 }
@@ -19016,57 +19226,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "block" }, [
-      _c(
-        "div",
-        {
-          staticClass: "device-summary-bg",
-          staticStyle: { "background-image": "url('images/ezflame.png')" }
-        },
-        [
-          _c("div", { staticClass: "device-summary-bg-op" }, [
-            _c("div", { staticClass: "text-center" }, [
-              _c("i", {
-                staticClass: "fa fa-3x fa-sun-o text-warning device-logo"
-              }),
-              _vm._v(" "),
-              _c(
-                "h3",
-                { staticClass: "h4 text-uppercase text-white device-name" },
-                [_vm._v("A1")]
-              )
-            ])
-          ])
-        ]
-      ),
+    return _c("div", { staticClass: "col-4" }, [
+      _c("div", { staticClass: "text-value font-w300" }, [_vm._v("100%")]),
       _vm._v(" "),
-      _c("div", { staticClass: "summary-content" }, [
-        _c("div", { staticClass: "row text-center" }, [
-          _c("div", { staticClass: "col-4" }, [
-            _c("div", { staticClass: "text-value font-w300" }, [_vm._v("1")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-label text-muted" }, [
-              _vm._v("Addr")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4" }, [
-            _c("div", { staticClass: "text-value font-w300" }, [_vm._v("On")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-label text-muted" }, [
-              _vm._v("Status")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4" }, [
-            _c("div", { staticClass: "text-value font-w300" }, [
-              _vm._v("100%")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-label text-muted" }, [_vm._v("FQ")])
-          ])
-        ])
-      ])
+      _c("div", { staticClass: "text-label text-muted" }, [_vm._v("FQ")])
     ])
   }
 ]
@@ -19100,6 +19263,9 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
     name: 'ActionBar',
+    props: {
+        initData: String
+    },
     methods: {
         clickGo2Usersettings: function clickGo2Usersettings(event) {
             toastr.success('clickGo2Usersettings success.');
@@ -19227,7 +19393,10 @@ var render = function() {
         "router-link",
         {
           staticClass: "btn btn-primary",
-          attrs: { to: { name: "home.usersettings" }, append: "" }
+          attrs: {
+            to: { name: "home.usersettings", query: { device: this.initData } },
+            append: ""
+          }
         },
         [
           _vm._v(" UserSettings\n        "),
@@ -19291,7 +19460,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'UserSettingsContent',
-    components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default }
+    components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default },
+    props: {
+        initData: Object
+    }
 };
 
 /***/ }),
@@ -19410,12 +19582,22 @@ var render = function() {
     { staticClass: "col-sm-8" },
     [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [_c("Chan")], 1),
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [_c("Chan", { attrs: { "init-data": _vm.initData.ch1 } })],
+          1
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [_c("Chan")], 1)
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [_c("Chan", { attrs: { "init-data": _vm.initData.ch2 } })],
+          1
+        )
       ]),
       _vm._v(" "),
-      _c("ActionBar")
+      _c("ActionBar", { attrs: { "init-data": _vm.initData.name } })
     ],
     1
   )
@@ -19468,7 +19650,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'ChannelsContent',
-    components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default }
+    components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default },
+    props: {
+        initData: Object
+    }
 
 };
 
@@ -19588,12 +19773,22 @@ var render = function() {
     { staticClass: "col-sm-8" },
     [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [_c("Chan")], 1),
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [_c("Chan", { attrs: { "init-data": _vm.initData.ch1 } })],
+          1
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [_c("Chan")], 1)
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [_c("Chan", { attrs: { "init-data": _vm.initData.ch2 } })],
+          1
+        )
       ]),
       _vm._v(" "),
-      _c("ActionBar")
+      _c("ActionBar", { attrs: { "init-data": _vm.initData.name } })
     ],
     1
   )
@@ -19694,9 +19889,16 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
     name: 'ActionBar',
+    props: {
+        initData: String
+    },
     methods: {
         clickGo2Usersettings: function clickGo2Usersettings(event) {
             toastr.success('clickGo2Usersettings success.');
+        },
+        clickWrite: function clickWrite(event) {
+            var _currentUserSettingsData = this.$store.state.currentUserSettingsData;
+            console.log(_currentUserSettingsData);
         }
     }
 };
@@ -19821,7 +20023,10 @@ var render = function() {
         "router-link",
         {
           staticClass: "btn btn-primary",
-          attrs: { to: { name: "home.detail" }, append: "" }
+          attrs: {
+            to: { name: "home.detail", query: { device: this.initData } },
+            append: ""
+          }
         },
         [
           _c("i", { staticClass: "fa fa-arrow-left" }),
@@ -19829,23 +20034,28 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(0)
+      _c(
+        "button",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.state.isLogin,
+              expression: "$store.state.isLogin"
+            }
+          ],
+          staticClass: "btn btn-primary",
+          attrs: { type: "button" },
+          on: { click: _vm.clickWrite }
+        },
+        [_vm._v(" Write\n        "), _c("i", { staticClass: "fa fa-floppy-o" })]
+      )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-primary", attrs: { type: "button" } },
-      [_vm._v(" Write\n        "), _c("i", { staticClass: "fa fa-floppy-o" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -19870,70 +20080,66 @@ var _File = __webpack_require__(169);
 
 var _File2 = _interopRequireDefault(_File);
 
+var _RadioButtom = __webpack_require__(174);
+
+var _RadioButtom2 = _interopRequireDefault(_RadioButtom);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'Chan',
-    components: { File: _File2.default }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+    components: { File: _File2.default, RadioButtom: _RadioButtom2.default },
+    props: {
+        initData: Object
+    },
+    data: function data() {
+        return {
+            burnerTypeItem1: { display: 'IR', value: 'IR' },
+            burnerTypeItem2: { display: 'UV', value: 'UV' },
+            EnItem1: { display: 'Enable', value: 1 },
+            EnItem2: { display: 'Disable', value: 0 },
+            fileItem1: { display: 'File A', value: 0 },
+            fileItem2: { display: 'File B', value: 1 }
+        };
+    },
+    methods: {
+        burnerTypeChange: function burnerTypeChange(propName, newVal, oldVal) {
+            this.initData.type = newVal;
+        },
+        enableChange: function enableChange(propName, newVal, oldVal) {
+            this.initData.enable = newVal;
+        },
+        fileChange: function fileChange(propName, newVal, oldVal) {
+            this.initData.file = newVal;
+        }
+    }
+};
 
 /***/ }),
 /* 165 */
@@ -19971,7 +20177,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n@media (min-width: 768px) {\n.ribbon-box-paddomh[data-v-9753df1c] {\n    padding: 1rem 1rem 0;\n}\n.ribbon-box-paddomh .value[data-v-9753df1c] {\n    padding-right: 3rem;\n}\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/usersettings/Chan.vue"],"names":[],"mappings":";AAAA;AACE;IACE,qBAAqB;CACtB;AACD;IACE,oBAAoB;CACrB;CACF","file":"Chan.vue","sourcesContent":["@media (min-width: 768px) {\n  .ribbon-box-paddomh {\n    padding: 1rem 1rem 0;\n  }\n  .ribbon-box-paddomh .value {\n    padding-right: 3rem;\n  }\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n@media (min-width: 768px) {\n.ribbon-box-paddomh[data-v-9753df1c] {\n    padding: 1rem 1rem 0;\n}\n.ribbon-box-paddomh .active[data-v-9753df1c] {\n    z-index: 0;\n}\n.ribbon-box-paddomh .value[data-v-9753df1c] {\n    padding-right: 3rem;\n}\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/usersettings/Chan.vue"],"names":[],"mappings":";AAAA;AACE;IACE,qBAAqB;CACtB;AACD;IACE,WAAW;CACZ;AACD;IACE,oBAAoB;CACrB;CACF","file":"Chan.vue","sourcesContent":["@media (min-width: 768px) {\n  .ribbon-box-paddomh {\n    padding: 1rem 1rem 0;\n  }\n  .ribbon-box-paddomh .active {\n    z-index: 0;\n  }\n  .ribbon-box-paddomh .value {\n    padding-right: 3rem;\n  }\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -19989,149 +20195,67 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "block" }, [
     _c("div", { staticClass: "bg-primary ribbon-box text-uppercase" }, [
-      _vm._v("CH1")
+      _vm._v(_vm._s(_vm.initData.name))
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
-        _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [
-            _c(
-              "div",
-              { staticClass: "row" },
-              [_c("file"), _vm._v(" "), _c("file")],
-              1
-            )
-          ])
-        ])
+        _c(
+          "ul",
+          { staticClass: "property-list ribbon-box-paddomh" },
+          [
+            _c("RadioButtom", {
+              attrs: {
+                title: "Burner Type",
+                value: _vm.initData.type,
+                item1: _vm.burnerTypeItem1,
+                item2: _vm.burnerTypeItem2
+              },
+              on: { onPropsChange: _vm.burnerTypeChange }
+            }),
+            _vm._v(" "),
+            _c("RadioButtom", {
+              attrs: {
+                title: "Channel En",
+                value: _vm.initData.enable,
+                item1: _vm.EnItem1,
+                item2: _vm.EnItem2
+              },
+              on: { onPropsChange: _vm.enableChange }
+            }),
+            _vm._v(" "),
+            _c("RadioButtom", {
+              attrs: {
+                title: "File",
+                value: _vm.initData.file,
+                item1: _vm.fileItem1,
+                item2: _vm.fileItem2
+              },
+              on: { onPropsChange: _vm.fileChange }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-divider" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12" }, [
+              _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _c("file", { attrs: { "init-data": _vm.initData.filea } }),
+                  _vm._v(" "),
+                  _c("file", { attrs: { "init-data": _vm.initData.fileb } })
+                ],
+                1
+              )
+            ])
+          ],
+          1
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "detail-item-li" }, [
-      _c("span", [_vm._v("Burner Type")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "value" }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn-group btn-group-toggle",
-            attrs: { "data-toggle": "buttons" }
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "btn btn-primary value-radio-buttom active" },
-              [
-                _c("input", {
-                  attrs: { type: "radio", name: "options", checked: "" }
-                }),
-                _vm._v(" RI\n                            ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("label", { staticClass: "btn btn-primary value-radio-buttom" }, [
-              _c("input", {
-                staticClass: "btn-sm",
-                attrs: { type: "radio", name: "options" }
-              }),
-              _vm._v(" UV\n                            ")
-            ])
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "detail-item-li" }, [
-      _c("span", [_vm._v("Channel En")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "value " }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn-group btn-group-toggle",
-            attrs: { "data-toggle": "buttons" }
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "btn btn-primary value-radio-buttom active" },
-              [
-                _c("input", {
-                  attrs: { type: "radio", name: "options", checked: "" }
-                }),
-                _vm._v(" Enable\n                            ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("label", { staticClass: "btn btn-primary value-radio-buttom" }, [
-              _c("input", {
-                staticClass: "btn-sm",
-                attrs: { type: "radio", name: "options" }
-              }),
-              _vm._v(" Disable\n                            ")
-            ])
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "detail-item-li" }, [
-      _c("span", [_vm._v("File")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "value" }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn-group btn-group-toggle",
-            attrs: { "data-toggle": "buttons" }
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "btn btn-primary value-radio-buttom active" },
-              [
-                _c("input", {
-                  attrs: { type: "radio", name: "options", checked: "" }
-                }),
-                _vm._v(" File A\n                            ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("label", { staticClass: "btn btn-primary value-radio-buttom" }, [
-              _c("input", {
-                staticClass: "btn-sm",
-                attrs: { type: "radio", name: "options" }
-              }),
-              _vm._v(" File B\n                            ")
-            ])
-          ]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -20216,7 +20340,10 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
     name: 'File',
-    methods: {}
+    methods: {},
+    props: {
+        initData: Object
+    }
 };
 
 /***/ }),
@@ -20315,7 +20442,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.file[data-v-33264d9c] {\n  padding: 0 0.1rem 1rem;\n}\n.file .card[data-v-33264d9c] {\n  background-color: #eee;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  padding-bottom: 1rem;\n}\n.file .card-header[data-v-33264d9c] {\n  padding: 0.2rem 1rem;\n}\n@media (min-width: 768px) {\n.file[data-v-33264d9c] {\n    padding: 0 0.1rem;\n}\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/usersettings/File.vue"],"names":[],"mappings":";AAAA;EACE,uBAAuB;CACxB;AACD;EACE,uBAAuB;EACvB,qCAAqC;EACrC,qBAAqB;CACtB;AACD;EACE,qBAAqB;CACtB;AACD;AACE;IACE,kBAAkB;CACnB;CACF","file":"File.vue","sourcesContent":[".file {\n  padding: 0 0.1rem 1rem;\n}\n.file .card {\n  background-color: #eee;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  padding-bottom: 1rem;\n}\n.file .card-header {\n  padding: 0.2rem 1rem;\n}\n@media (min-width: 768px) {\n  .file {\n    padding: 0 0.1rem;\n  }\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.file[data-v-33264d9c] {\n  padding: 0 0.1rem 1rem;\n}\n.file .card[data-v-33264d9c] {\n  background-color: #eee;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n.file .card-header[data-v-33264d9c] {\n  padding: 0.2rem 1rem;\n}\n@media (min-width: 768px) {\n.file[data-v-33264d9c] {\n    padding: 0 0.1rem;\n}\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/usersettings/File.vue"],"names":[],"mappings":";AAAA;EACE,uBAAuB;CACxB;AACD;EACE,uBAAuB;EACvB,qCAAqC;CACtC;AACD;EACE,qBAAqB;CACtB;AACD;AACE;IACE,kBAAkB;CACnB;CACF","file":"File.vue","sourcesContent":[".file {\n  padding: 0 0.1rem 1rem;\n}\n.file .card {\n  background-color: #eee;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n.file .card-header {\n  padding: 0.2rem 1rem;\n}\n@media (min-width: 768px) {\n  .file {\n    padding: 0 0.1rem;\n  }\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -20331,144 +20458,295 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 file" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("File A")]),
-        _vm._v(" "),
-        _c("div", {}, [
-          _c("ul", { staticClass: "property-list" }, [
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("FC (3-41 67-89)")]),
+  return _c("div", { staticClass: "col-md-6 file" }, [
+    _vm.initData
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("File A")]),
+          _vm._v(" "),
+          _c("div", [
+            _c("ul", { staticClass: "property-list" }, [
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("FC (3-41 67-89)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.fc,
+                        expression: "initData.ac.fc"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.fc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.initData.ac, "fc", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC Gain (1-200)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("AC Gain (1-200)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.ac_gain,
+                        expression: "initData.ac.ac_gain"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.ac_gain },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.initData.ac,
+                          "ac_gain",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC ON_TH (0-1999)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("AC ON_TH (0-1999)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.ac_on_th,
+                        expression: "initData.ac.ac_on_th"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.ac_on_th },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.initData.ac,
+                          "ac_on_th",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC ON_TL (0-1999)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("AC ON_TL (0-1999)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.ac_on_tl,
+                        expression: "initData.ac.ac_on_tl"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.ac_on_tl },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.initData.ac,
+                          "ac_on_tl",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC MAX (1-1999)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("AC MAX (1-1999)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.max,
+                        expression: "initData.ac.max"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.max },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.initData.ac, "max", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("AC MIN (0-1998)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("AC MIN (0-1998)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.ac.min,
+                        expression: "initData.ac.min"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.ac.min },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.initData.ac, "min", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("OTD (1-6)")]),
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("OTD (1-6)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.public.otd,
+                        expression: "initData.public.otd"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.public.otd },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.initData.public,
+                          "otd",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "detail-item-li" }, [
-              _c("span", [_vm._v("FFRT (1-6)")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "value" }, [
-                _c("input", {
-                  attrs: {
-                    type: "text",
-                    maxlength: "6",
-                    size: "6",
-                    value: "11"
-                  }
-                })
+              _c("li", { staticClass: "detail-item-li" }, [
+                _c("span", [_vm._v("FFRT (1-6)")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "value" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.initData.public.ffrt,
+                        expression: "initData.public.ffrt"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      maxlength: "6",
+                      size: "6",
+                      value: "11"
+                    },
+                    domProps: { value: _vm.initData.public.ffrt },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.initData.public,
+                          "ffrt",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
               ])
             ])
           ])
         ])
-      ])
-    ])
-  }
-]
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -20477,6 +20755,323 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-33264d9c", { render: render, staticRenderFns: staticRenderFns })
   }
 }
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propsync = __webpack_require__(178);
+
+var _propsync2 = _interopRequireDefault(_propsync);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//引入mixin文件
+exports.default = {
+    name: 'RadioButtom',
+    mixins: [_propsync2.default], //声明使用propsync的mixin
+    props: ['title', 'value', 'item1', 'item2'],
+    methods: {
+        clickItem1: function clickItem1(_current) {
+            this.p_value = _current; //可以直接使用this.p_active 
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1df601c8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_RadioButtom_vue__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(0);
+var disposed = false
+function injectStyle (context) {
+  if (disposed) return
+  __webpack_require__(175)
+}
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1df601c8"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+
+var Component = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__["a" /* default */])(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_RadioButtom_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1df601c8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_RadioButtom_vue__["a" /* render */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1df601c8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_RadioButtom_vue__["b" /* staticRenderFns */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src\\components\\home\\detail\\usersettings\\RadioButtom.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1df601c8", Component.options)
+  } else {
+    hotAPI.reload("data-v-1df601c8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(176);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(2).default
+var update = add("416bc858", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js?sourceMap!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1df601c8\",\"scoped\":true,\"sourceMap\":true}!../../../../../node_modules/less-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RadioButtom.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js?sourceMap!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1df601c8\",\"scoped\":true,\"sourceMap\":true}!../../../../../node_modules/less-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RadioButtom.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(true);
+// imports
+
+
+// module
+exports.push([module.i, "\n.active[data-v-1df601c8] {\n  z-index: 0;\n}\n.value[data-v-1df601c8] {\n  padding-right: 3rem;\n}\n.value .btn-group[data-v-1df601c8] {\n  position: relative;\n  display: -ms-inline-flexbox;\n  display: inline-flex;\n  vertical-align: middle;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/usersettings/RadioButtom.vue"],"names":[],"mappings":";AAAA;EACE,WAAW;CACZ;AACD;EACE,oBAAoB;CACrB;AACD;EACE,mBAAmB;EACnB,4BAA4B;EAC5B,qBAAqB;EACrB,uBAAuB;CACxB","file":"RadioButtom.vue","sourcesContent":[".active {\n  z-index: 0;\n}\n.value {\n  padding-right: 3rem;\n}\n.value .btn-group {\n  position: relative;\n  display: -ms-inline-flexbox;\n  display: inline-flex;\n  vertical-align: middle;\n}\n"],"sourceRoot":""}]);
+
+// exports
+
+
+/***/ }),
+/* 177 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "detail-item-li" }, [
+    _c("span", [_vm._v(_vm._s(_vm.title))]),
+    _vm._v(" "),
+    _c("span", { staticClass: "value" }, [
+      _c("div", { staticClass: "btn-group" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary value-radio-buttom",
+            class: { active: _vm.item1.value == _vm.value },
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                _vm.clickItem1(_vm.item1.value)
+              }
+            }
+          },
+          [_vm._v(" " + _vm._s(_vm.item1.display))]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary value-radio-buttom",
+            class: { active: _vm.item2.value == _vm.value },
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                _vm.clickItem1(_vm.item2.value)
+              }
+            }
+          },
+          [_vm._v(" " + _vm._s(_vm.item2.display))]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1df601c8", { render: render, staticRenderFns: staticRenderFns })
+  }
+}
+
+/***/ }),
+/* 178 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/**
+ * =================说明==================
+ * propsync：vue组件的混合对象，主要用于组件编写时混入调用。
+ *
+ * 【主要功能】
+ * 1、实现了在组件内自动创建所有prop对应的data属性，方便组件内修改prop使用。解决了vue2.0中不允许组件内直接修改prop的设计。
+ * 2、实现了组件外修改组件prop，组件内自动同步修改到data属性。
+ * 3、实现了组件内修改了data属性（由prop创建的），自动向组件外发出事件通知有内部prop修改。由组件外决定是否要将修改同步到组件外
+ *
+ * 【使用方法】
+ * 1、编写组件：在选项对象中增加 mixins:[propsync]即可，无需其他修改
+ * 2、调用组件：在调用组件的templat处，增加一个事件监听 onPropsChange（可修改）,当组件内修改了props时会调用此函数，返回 修改prop名称，修改后值，修改前值
+ *
+ * 调用组件例：
+ * <mycomponent :prop1="xxx" :prop2="xxx" @onPropsChange="change"></mycomponent>
+ *
+ * {
+ *   methods:{
+ *     change:function(propName,newVal,oldVal){
+ *       this[propName]=newVal;
+ *       console.log("组件mycomponent的" +propName+ "属性由" +oldVal+ "修改为了" +newVal);
+ *     }
+ *   }
+ * }
+ *
+ * 【可配置忽略】
+ * 默认情况下，调用了本mixin的组件，会实现组件定义的所有的props，创建对应data变量，绑定双向watch。
+ * 若希望某个props不进行绑定（如仅纯展示型props），则可在那个props中增加propsync:false(可配置)来忽略，默认所有props均为true
+ * 例：
+ * props:{
+ *   xxx:{
+ *     type: String,
+ *     default: "xxx",
+ *     propsync: false//增加此props的属性，则本mixin会忽略xxx
+ *   }
+ * }
+ */
+/**
+ * 【配置】
+ * 当在组件内部修改了prop属性，对外emit发出的事件名称
+ */
+const emitPropsChangeName = "onPropsChange";
+/**
+ * 【配置】
+ * 可在组件属性中定义当前props是否参加本mixin实现双向绑定。
+ */
+const isEnableName = "propsync";
+/**
+ * 【配置】
+ * 根据prop的名称生成对应的data属性名，可自行修改生成后的名称。
+ * 默认为在prop属性名前面增加"p_"，即若prop中有字段名为"active"，则自动生成名为"p_active"的data字段
+ *
+ * @param {string} propName 组件prop字段名称
+ * @returns {string} 返回生成的data字段名
+ */
+function getDataName(propName) {
+    //注意：映射后名称不能以 $ 或 _ 开头，会被vue认定为内部属性！！
+    return "p_" + propName;
+}
+/* harmony default export */ __webpack_exports__["default"] = ({
+    //修改data，自动生成props对应的data字段
+    data: function () {
+        var data = {};
+        var that = this;
+        /** 所有组件定义的props名称数组 */
+        var propsKeys = Object.keys((that.$options.props) || {});
+        propsKeys.forEach(function (prop, i) {
+            var dataName = getDataName(prop);
+            var isEnable = that.$options.props[prop][isEnableName];
+            isEnable = (typeof isEnable === "boolean") ? isEnable : true;
+            if (!isEnable)
+                return;
+            //若使用mixins方法导入本代码，则本函数会 先于 组件内data函数执行！
+            data[dataName] = that[prop];
+        });
+        return data;
+    },
+    created: function () {
+        var that = this;
+        /** 所有 取消props的watch监听函数 的数组 */
+        var unwatchPropsFnArr = [];
+        /** 所有 取消data的watch监听函数 的数组 */
+        var unwatchDataFnArr = [];
+        /** 所有组件定义的props名称数组 */
+        var propsKeys = Object.keys((that.$options.props) || {});
+        propsKeys.forEach(function (prop, i) {
+            var dataName = getDataName(prop);
+            var isEnable = that.$options.props[prop][isEnableName];
+            isEnable = (typeof isEnable === "boolean") ? isEnable : true;
+            if (!isEnable)
+                return;
+            //监听所有props属性
+            var propsFn = that.$watch(prop, function (newVal, oldVal) {
+                that[dataName] = newVal; //将组件外变更的prop同步到组件内的p_prop变量中
+            }, {});
+            unwatchPropsFnArr.push(propsFn);
+            //[监听所有属性映射到组件内的变量]
+            var dataFn = that.$watch(dataName, function (newVal, oldVal) {
+                that.$emit(emitPropsChangeName, prop, newVal, oldVal); //将组件内p_prop通知给组件外(调用方)
+            }, {});
+            unwatchDataFnArr.push(dataFn);
+        });
+    },
+    destroyed: function () {
+
+    }
+});
 
 /***/ })
 /******/ ]);

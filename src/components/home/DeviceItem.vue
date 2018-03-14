@@ -20,8 +20,7 @@ export default {
   },
   methods: {
     clickItem: function (event) {
-      console.log('detail');
-      this.$router.push({ path: '/detail' });
+      this.$router.push({ path: '/detail', query: { device: this.initData.name } });
     },
   }
 }

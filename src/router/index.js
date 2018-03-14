@@ -18,10 +18,21 @@ export default new VueRouter({
       children: [
         {
           name: 'home.detail', path: "/",
-          component: ChannelsContent
+          component: ChannelsContent,
+          // beforeLeave: (to, from, next) => {
+          //   let device = to.query.device;
+          //   let type = 1;
+          //   this.a.app.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (response) {
+          //     console.log(this);
+          //     next();
+          //   });
+          // }
         }, {
           name: 'home.usersettings', path: "usersettings",
-          component: UserSettingsContent
+          component: UserSettingsContent,
+          // beforeEnter: (to, from, next) => {
+          //   console.log(this.$myfetch);
+          // }
         }
       ]
     },
