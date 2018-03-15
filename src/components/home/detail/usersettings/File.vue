@@ -8,49 +8,49 @@
                     <li class="detail-item-li">
                         <span>FC (3-41 67-89)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.fc" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.fc" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>AC Gain (1-200)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.ac_gain" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.ac_gain" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>AC ON_TH (0-1999)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.ac_on_th" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.ac_on_th" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>AC ON_TL (0-1999)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.ac_on_tl" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.ac_on_tl" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>AC MAX (1-1999)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.max" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.max" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>AC MIN (0-1998)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.ac.min" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.ac.min" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>OTD (1-6)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.public.otd" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.public.otd" maxlength="6" size="6">
                         </span>
                     </li>
                     <li class="detail-item-li">
                         <span>FFRT (1-6)</span>
                         <span class="value">
-                            <input type="text" v-model="initData.public.ffrt" maxlength="6" size="6" value="11">
+                            <input type="number" :disabled='$store.state.isLogin == false' class="form-control" v-model.number="initData.public.ffrt" maxlength="6" size="6">
                         </span>
                     </li>
                 </ul>
@@ -80,6 +80,9 @@ export default {
   }
   .card-header {
     padding: 0.2rem 1rem;
+  }
+  .value {
+    width: 50%;
   }
 }
 @media (min-width: 768px) {

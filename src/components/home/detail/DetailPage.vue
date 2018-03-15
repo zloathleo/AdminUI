@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <Summary :init-data='data' /> 
+            <Summary :init-data='data' />
             <router-view :init-data='data'></router-view>
         </div>
     </div>
@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         refreshDetailData: function (routeName) {
-            let device = this.$route.query.device;
+            let device = this.$store.state.currentDeviceName;
             var _self = this;
 
             if ("home.detail" == routeName) {
@@ -48,9 +48,9 @@ export default {
             } else if ("home.usersettings" == routeName) {
                 let type = "u";
                 let source = "d";
-                this.$myfetch.fetch('/settings/' + device + '?type=' + type + '&source=' + source, { method: 'GET' }, function (response) {
-                    _self.data = response;
-                    _self.$store.state.currentUserSettingsData = response;
+                this.$myfetch.fetch('/settings/' + device + '?type=' + type + '&source=' + source, { method: 'GET' }, function (response) {  
+                     _self.data = response; 
+                    _self.$store.commit('changeUserSettingsData', response);
                 });
             }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="btn-group actionbar" role="group">
-        <router-link :to="{name:'home.usersettings', query: { device: this.initData }}" append class="btn btn-primary"> UserSettings
+        <router-link :to="{name:'home.usersettings'}" append class="btn btn-primary"> UserSettings
             <i class="fa fa-arrow-right"></i>
         </router-link>
     </div>

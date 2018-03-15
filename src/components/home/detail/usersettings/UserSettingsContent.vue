@@ -1,14 +1,14 @@
 <template>
-    <div class="col-sm-8">
+    <div v-if="currentUserSettingsData" class="col-sm-8">
         <div class="row">
             <div class="col-12">
-                <Chan :init-data='initData.ch1'/>
+                <Chan :init-data='currentUserSettingsData.ch1' />
             </div>
             <div class="col-12">
-                <Chan :init-data='initData.ch2'/>
+                <Chan :init-data='currentUserSettingsData.ch2' />
             </div>
         </div>
-        <ActionBar :init-data='initData.name' />
+        <ActionBar :init-data='currentUserSettingsData.name' />
     </div>
 </template>
 
@@ -17,10 +17,12 @@ import Chan from './Chan.vue';
 import ActionBar from './ActionBar.vue';
 export default {
     name: 'UserSettingsContent',
-    components: { Chan, ActionBar },
-    props: {
-        initData: Object,
-    }, 
+    components: { Chan, ActionBar }, 
+    computed: {
+        currentUserSettingsData: function () {
+            return this.$store.state.currentUserSettingsData;
+        }
+    }
 }
 </script>
 

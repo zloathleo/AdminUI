@@ -1,15 +1,17 @@
 <template>
     <li class="detail-item-li">
         <span>{{title}}</span>
-        <span class="value">
 
+        <span class="value" v-if="$store.state.isLogin">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary value-radio-buttom" @click="clickItem1(item1.value)" v-bind:class="{active: (item1.value == value)}"> {{item1.display}}</button>
                 <button type="button" class="btn btn-primary value-radio-buttom" @click="clickItem1(item2.value)" v-bind:class="{active: (item2.value == value)}"> {{item2.display}}</button>
             </div>
-
-            </div>
         </span>
+        <span class="value" v-else>
+            {{item1.value == value ? item1.display : item2.display}}
+        </span>
+
     </li>
 </template>
 

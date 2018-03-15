@@ -9,7 +9,8 @@ const store = new Vuex.Store({
         lastRouteName: '/',
         currentRouteName: '/',
         isLogin: true,
-
+ 
+        currentDeviceName: undefined,
         currentUserSettingsData: undefined,
         apiLoading: {
             status: 0,//0=noloading ,1=loading ,-1=error
@@ -24,6 +25,12 @@ const store = new Vuex.Store({
         changeApiLoading(state, value) {
             state.apiLoading = value;
         },
+        changeDeviceName(state, value) {
+            state.currentDeviceName = value;
+        },
+        changeUserSettingsData(state, value) {
+            state.currentUserSettingsData = value;
+        }
     }
 })
 

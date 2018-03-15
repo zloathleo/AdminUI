@@ -8,12 +8,14 @@ import Root from './Root.vue';
 import router from './router';
 
 import MyFetch from './common/MyFetch';
+import Tools from './common/Tools';
 
 import './assets/css/custom.css';
 
 Vue.use(Vuex);
 MyFetch.vuexStore = store;
 Vue.prototype.$myfetch = MyFetch;
+Vue.prototype.$tools = Tools;
 
 Vue.config.productionTip = false;
 

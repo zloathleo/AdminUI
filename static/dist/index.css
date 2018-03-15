@@ -1,6 +1,12 @@
-/*! This file is created at 2018-03-09T00:39:07.961Z */
+/*! This file is created at 2018-03-15T01:19:58.624Z */
 html {
     overflow: hidden;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
 }
 
 .cursor-pointer {
@@ -14,10 +20,10 @@ html {
     font-size: 0.6rem;
 }
 
-.property-list { 
+.property-list {
     list-style: none;
-    padding: 1rem; 
-} 
+    padding: 1rem;
+}
 
 .detail-item-li {
     margin-bottom: 0.5rem;
@@ -28,7 +34,10 @@ html {
 }
 
 .value input {
-    width: 100%;
+    /* float: right;
+    width: 60%; */
+    padding: 0px 0.5rem;
+    font-size: 0.6rem;
 }
 
 .actionbar {
@@ -38,8 +47,8 @@ html {
 }
 
 .ribbon-box-paddomh {
-    padding: 3rem 1rem 0; 
-} 
+    padding: 3rem 1rem 0;
+}
 
 .ribbon-box {
     position: absolute;

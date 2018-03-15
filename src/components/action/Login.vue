@@ -26,8 +26,7 @@ export default {
             if (this.invalidInput(_inputValue)) {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
-
-
+ 
                 this.$store.commit('changeLogin', true);
                 toastr.success('login success.');
 

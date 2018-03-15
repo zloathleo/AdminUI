@@ -1,6 +1,6 @@
 <template>
     <div class="btn-group actionbar" role="group">
-        <router-link :to="{name:'home.detail' , query: { device: this.initData }} " append class="btn btn-primary">
+        <router-link :to="{name:'home.detail'} " append class="btn btn-primary">
             <i class="fa fa-arrow-left"></i>
             UserSettings
         </router-link>
@@ -23,7 +23,21 @@ export default {
         },
         clickWrite: function (event) {
             let _currentUserSettingsData = this.$store.state.currentUserSettingsData
-            console.log(_currentUserSettingsData);
+            var _self = this;
+
+            var form = new URLSearchParams();
+            form.set('content', JSON.stringify(_currentUserSettingsData));
+            form.set('type', "u");
+            let _device = this.initData;
+            this.$myfetch.fetch('/settings/' + _device, { method: 'PUT', body: form, loadingMessage: 'Update UserSettings.', }, function (json) {
+                toastr.success('write device ' + _device + ' success.');
+                _self.$store.commit('changeUserSettingsData', json);
+            }, function (_errDispatch) {
+                let _err = _self.$tools.formatError(_errDispatch);
+                toastr.error('write device ' + _device + ' fault.<br/>' + _err);
+            });
+
+
         }
     }
 }

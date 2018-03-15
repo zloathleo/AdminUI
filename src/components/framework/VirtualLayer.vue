@@ -46,7 +46,7 @@ export default {
 }
 .loading {
   text-align: center;
-  padding-top: 50%;
+  padding-top: 40%;
   color: #fff;
 }
 </style>
