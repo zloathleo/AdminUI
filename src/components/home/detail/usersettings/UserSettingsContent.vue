@@ -20,7 +20,7 @@ export default {
     components: { Chan, ActionBar }, 
     computed: {
         currentUserSettingsData: function () {
-            return this.$store.state.currentUserSettingsData;
+            return this.$mem.currentUserSettingsData;
         }
     }
 }

@@ -15,13 +15,7 @@ export default {
         return {
             data: {
                 name: '--', ch1: {
-                    // enable: 0,
-                    // file: 0,
-                    // type: "UV"
                 }, ch2: {
-                    // enable: 0,
-                    // file: 0,
-                    // type: "UV"
                 }
             }
         }
@@ -32,25 +26,38 @@ export default {
         this.refreshDetailData(routeName);
     },
     beforeRouteUpdate(to, from, next) {
-        this.refreshDetailData(to.name);
-        next();
+        this.refreshDetailData(to.name, next);
     },
     methods: {
-        refreshDetailData: function (routeName) {
+        refreshDetailData: function (routeName, _next) {
             let device = this.$store.state.currentDeviceName;
             var _self = this;
 
             if ("home.detail" == routeName) {
                 let type = 1;
-                this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (response) {
-                    _self.data = response.devices[device];
+                this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (json) {
+                    //待修改
+                    let _device_detail = json.devices[device];
+                    if (_device_detail) {
+                        Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
+                    }
+                    _self.data = _device_detail;
+                    if (_next) {
+                        _next();
+                    }
                 });
             } else if ("home.usersettings" == routeName) {
                 let type = "u";
                 let source = "d";
-                this.$myfetch.fetch('/settings/' + device + '?type=' + type + '&source=' + source, { method: 'GET' }, function (response) {  
-                     _self.data = response; 
-                    _self.$store.commit('changeUserSettingsData', response);
+                this.$myfetch.fetch('/settings/' + device + '?type=' + type + '&source=' + source, { method: 'GET' }, function (json) {
+                    _self.data = json;
+                    _self.$mem.currentUserSettingsData = json;
+                    if (_next) {
+                        _next();
+                    }
+                }, function (_errDispatch) {
+                    _self.$tools.toastrError(_errDispatch, 'read device ' + device + ' usersettings fault.');
+                    _self.$mem.currentUserSettingsData = undefined;
                 });
             }
 

@@ -2,9 +2,9 @@
   <div>
     <Sidebar />
     <Navbar />
-    <MainContent />
-    <Foot />
+    <MainContent v-if="$store.state.serverConnected" />
     <VirtualLayer />
+    <Foot />
   </div>
 </template>
 
@@ -13,6 +13,18 @@ import { Navbar, MainContent, Sidebar, VirtualLayer, Foot } from './components/f
 
 export default {
   name: 'Root',
-  components: { Navbar, MainContent, Sidebar, VirtualLayer, Foot }
+  components: { Navbar, MainContent, Sidebar, VirtualLayer, Foot },
+  mounted() {
+    let _self = this;
+    this.$eventHub.$on("dashboardUpdate", function (json) {
+      if (json) {
+        _self.data = json;
+      }
+    });
+    this.$tools.connectServer(_self);
+  },
+
+  methods: {
+  }
 }
 </script>

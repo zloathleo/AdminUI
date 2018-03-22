@@ -1,13 +1,9 @@
 <template>
   <div class="justify-content-center device-item cursor-pointer hvr-fade" v-on:click="clickItem">
-    <span class="badge badge-pill badge-info device-name">{{ initData.addr }}</span>
-    <div class="device-channel">
+    <span class="badge badge-pill badge-primary device-name">{{ initData.addr }}</span>
+    <div class="device-channel" :style="{color:getChannelColor(initData.chs,_index)}" v-for="_index in $store.state.currentProduct.channel_num">
       <span class="fa fa-fire channel-icon" aria-hidden="true"></span>
-      <span class="channel-display">CH1</span>
-    </div>
-    <div class="device-channel">
-      <span class="fa fa-fire fa-2x channel-icon" aria-hidden="true"></span>
-      <span class="channel-display">CH2</span>
+      <span class="channel-display">CH{{_index}}</span>
     </div>
   </div>
 </template>
@@ -20,9 +16,14 @@ export default {
   },
   methods: {
     clickItem: function (event) {
+      event.stopPropagation();
       this.$store.commit('changeDeviceName', this.initData.name);
       this.$router.push({ path: '/detail' });
     },
+    getChannelColor: function (_chs, _index) {
+      let _ch = _chs[_index - 1];
+      return this.$tools.getChannelColor(_ch.status);
+    }
   }
 }
 </script>
@@ -52,9 +53,7 @@ export default {
 //≥768px ≥Medium
 @media (min-width: 768px) {
   .device-item {
-    padding: 0.5rem;
     .device-channel {
-      text-align: center;
       padding-right: 0;
       padding-left: 0;
 

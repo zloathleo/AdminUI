@@ -1,21 +1,16 @@
-import Constants from './Constants';
-// import EventProxy from '../common/EventProxy.jsx';
-// import MCache from '../common/MCache.jsx';
-
 export default {
     callUsertimeOut: 100,
-
-    vuexStore: undefined,
+    store: undefined,
 
     fetch: function (url, _opt, _then, _fault) {
         _opt.headers = {
             "Content-Type": "application/x-www-form-urlencoded"
         };
-        this._callFetch(Constants.Server.Host + url, _opt, _then, _fault);
+        this._callFetch(this.store.state.serverhost + url, _opt, _then, _fault);
     },
 
     fetchUpdateFile: function (url, _opt, _then, _fault) {
-        this._callFetch(Constants.Server.Host + url, _opt, _then, _fault);
+        this._callFetch(this.store.state.serverhost + url, _opt, _then, _fault);
     },
 
     _timeoutCall(_then) {
@@ -30,11 +25,11 @@ export default {
 
     _callFetch(_url, _opt, _then, _fault) {
         if (_opt.defaultEventDispatch != false) {
-            this.vuexStore.commit('changeApiLoading', {
+            this.store.state.apiLoading = {
                 status: 1,//1=loading
                 loadingMessage: _opt ? _opt.loadingMessage : undefined,
                 url: _url,
-            });
+            };
         }
 
         fetch(_url, _opt)
@@ -44,25 +39,25 @@ export default {
                     //ok 范围 200-299  
                     if (response.ok) {
                         this._timeoutCall(function () {
+                            if (_then) {
+                                _then(_json);
+                            }
                             if (_opt.defaultEventDispatch !== false) {
-                                this.vuexStore.commit('changeApiLoading', {
+                                this.store.state.apiLoading = {
                                     status: 0,//1=loading
                                     loadingMessage: undefined,
                                     url: undefined,
-                                });
-                            }
-                            if (_then) {
-                                _then(_json);
+                                };
                             }
                         }.bind(this));
                     } else {
                         this._timeoutCall(function () {
                             let _dispatch = { err: response, json: _json };
-                            this.vuexStore.commit('changeApiLoading', {
+                            this.store.state.apiLoading = {
                                 status: -1,//1=loading
                                 loadingMessage: undefined,
                                 url: undefined,
-                            });
+                            };
                             if (_fault) {
                                 _fault(_dispatch);
                             }
@@ -73,15 +68,15 @@ export default {
                 // MCache.APICalling = false;
                 this._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
-                    this.vuexStore.commit('changeApiLoading', {
+                    this.store.state.apiLoading = {
                         status: -1,//1=loading
                         loadingMessage: undefined,
                         url: undefined,
-                    });
+                    };
                     if (_fault) {
                         _fault(_dispatch);
                     }
-                });
+                }.bind(this));
             }.bind(this));
     },
 

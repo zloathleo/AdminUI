@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         clickGo2Usersettings: function (event) {
-            toastr.success('clickGo2Usersettings success.');
+            this.$tools.toastrError('clickGo2Usersettings success.');
         },
     }
 }

@@ -15,18 +15,24 @@ export default {
     computed: {
         currentRouteName() {
             let _currentRouteName = this.$store.state.currentRouteName;
-            let _root = _currentRouteName.split(".");
-            let _items = new Object();
+            if (_currentRouteName) {
+                let _root = _currentRouteName.split(".");
+                let _items = new Object();
 
-            _items.active = _root.pop();
-            _items.root = _root;
+                _items.active = _root.pop();
+                _items.root = _root;
+                console.log("_items:", _items);
 
-            return _items;
+                return _items;
+            }else{
+                return new Object();
+            }
+
         }
     },
     methods: {
         clickLink: function (_lastRouteName) {
-           this.$router.push({ name: _lastRouteName });
+            this.$router.push({ name: _lastRouteName });
         }
     }
 }

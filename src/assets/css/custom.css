@@ -33,8 +33,6 @@ input::-webkit-inner-spin-button {
 }
 
 .value input {
-    /* float: right;
-    width: 60%; */
     padding: 0px 0.5rem;
     font-size: 0.6rem;
 }
@@ -43,6 +41,12 @@ input::-webkit-inner-spin-button {
     position: fixed;
     bottom: 22px;
     right: 0px;
+    width: 100%;
+    padding: 0px 1px;
+}
+
+.half-width { 
+    width: 50%;
 }
 
 .ribbon-box-paddomh {

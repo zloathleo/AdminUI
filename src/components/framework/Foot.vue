@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-primary">
-        Foot
+        {{$store.state.serverConnected}}
     </footer>
 </template>
 

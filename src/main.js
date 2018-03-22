@@ -1,40 +1,43 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import mem from './vuex/mem';
 import store from './vuex/store';
-import Root from './Root.vue';
-import router from './router';
-
 import MyFetch from './common/MyFetch';
 import Tools from './common/Tools';
+import router from './router';
 
+import Root from './Root.vue';
 import './assets/css/custom.css';
-
-Vue.use(Vuex);
-MyFetch.vuexStore = store;
-Vue.prototype.$myfetch = MyFetch;
-Vue.prototype.$tools = Tools;
 
 Vue.config.productionTip = false;
 
-toastr.options.positionClass = "toast-bottom-center";
+toastr.options.closeButton = true;
+toastr.options.positionClass = "toast-top-center";
 toastr.options.timeOut = 3000;
 toastr.options.extendedTimeOut = 1000;
 
+MyFetch.store = store;
+
+store.state.serverConnected = false;
+
 // 全局钩子
-router.beforeEach((to, from, next) => {
-  store.state.lastRouteName = from.name;
-  store.state.currentRouteName = to.name;
-  next();
+router.afterEach((to, from) => {
+  // mem.lastRouteName = from.name;
+  // mem.currentRouteName = to.name;
+  console.log(from.name);
+  console.log(to.name);
+  store.commit('changeRouteName', [from.name, to.name]);
 });
 
-/* eslint-disable no-new */
+Vue.prototype.$myfetch = MyFetch;
+Vue.prototype.$tools = Tools;
+Vue.prototype.$mem = mem;
+Vue.prototype.$eventHub = Vue.prototype.$eventHub || new Vue();
+
 new Vue({
   el: '#root',
   router,
   store,
   components: { 'root': Root }
-})
-
+});

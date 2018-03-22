@@ -19,10 +19,10 @@ export default {
     },
     methods: {
         clickGo2Usersettings: function (event) {
-            toastr.success('clickGo2Usersettings success.');
+            this.$tools.toastrError('clickGo2Usersettings success.');
         },
         clickWrite: function (event) {
-            let _currentUserSettingsData = this.$store.state.currentUserSettingsData
+            let _currentUserSettingsData = this.$mem.currentUserSettingsData;
             var _self = this;
 
             var form = new URLSearchParams();
@@ -30,11 +30,10 @@ export default {
             form.set('type', "u");
             let _device = this.initData;
             this.$myfetch.fetch('/settings/' + _device, { method: 'PUT', body: form, loadingMessage: 'Update UserSettings.', }, function (json) {
-                toastr.success('write device ' + _device + ' success.');
+                _self.$tools.toastrError('write device ' + _device + ' success.');
                 _self.$store.commit('changeUserSettingsData', json);
             }, function (_errDispatch) {
-                let _err = _self.$tools.formatError(_errDispatch);
-                toastr.error('write device ' + _device + ' fault.<br/>' + _err);
+                _self.$tools.toastrError(_errDispatch, 'write device ' + _device + ' fault.'); 
             });
 
 

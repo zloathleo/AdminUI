@@ -29,14 +29,15 @@
                         <router-link to="/config_host" class="dropdown-item">
                             Config Host
                         </router-link>
-                        <div class="dropdown-divider"></div>
-                        <router-link to="/config_com" class="dropdown-item">
-                            Config Com
+                        <div class="dropdown-divider"></div> 
+
+                        <router-link class="dropdown-item" :to="{name:'set_device_address'}">
+                            Config Device Addr
                         </router-link>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link cursor-pointer" :to="{name:'set_device_address'}" >
+                    <router-link class="nav-link cursor-pointer" :to="{name:'set_com'}">
                         Com3
                     </router-link>
                 </li>
@@ -61,11 +62,12 @@ export default {
     methods: {
         clickLogout: function (event) {
             this.$store.commit('changeLogin', false);
-            toastr.success('logout success.');
+            this.$eventHub.$emit('changeLogin', false);
+            this.$tools.toastrSuccess('logout success.');
         },
         clickAbout: function (event) {
             // `this` 在方法里指向当前 Vue 实例
-            toastr.success('Hello')
+            this.$tools.toastrSuccess('Hello')
         },
         clickBrand: function (event) {
             // `this` 在方法里指向当前 Vue 实例 

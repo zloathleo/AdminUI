@@ -3,9 +3,20 @@
         <div id="overlay" class="my-overlay display-none" v-on:click="clickOverlay" />
 
         <div id="loadingOverLayer" v-show="isApiLoadStart" class="my-overlay loading">
-            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
             <div id="loadingOverLayerText">
                 loading data
+            </div>
+        </div>
+
+        <div v-show="isServerConnected" class="my-overlay">
+            <div class="alert alert-dismissible alert-danger notconnected">
+                server {{$store.state.serverhost}} connect fault.
+                <br/>
+                <a class="cursor-pointer" v-on:click="clickReconnectServer">
+                    <i class="fa fa-refresh"></i>
+                    click reconnect server.
+                </a>
             </div>
         </div>
     </div>
@@ -16,15 +27,21 @@ export default {
     name: 'VirtualLayer',
     computed: {
         isApiLoadStart: function () {
-            let _apiLoadingStatus = this.$store.state.apiLoading.status;
-            return _apiLoadingStatus == 1;
+            return this.$store.state.apiLoading.status == 1;
+        },
+        isServerConnected: function () {
+            return !this.$store.state.serverConnected && !(this.$store.state.apiLoading.status == 1);
         },
     },
     methods: {
         clickOverlay: function (event) {
             $("#sidebar").fadeOut();
             $("#overlay").fadeOut();
-        }
+        },
+        clickReconnectServer: function (event) {
+            console.log("clickReconnectServer");
+            this.$tools.connectServer(this);
+        },
     }
 }
 </script>
@@ -48,5 +65,11 @@ export default {
   text-align: center;
   padding-top: 40%;
   color: #fff;
+}
+.notconnected {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0.8rem;
 }
 </style>

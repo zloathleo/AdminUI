@@ -11,17 +11,13 @@
             </div>
             <div class="summary-content">
                 <div class="row text-center">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="text-value font-w300">{{initData.addr}}</div>
                         <div class="text-label text-muted">Addr</div>
                     </div>
-                    <div class="col-4">
-                        <div class="text-value font-w300">{{initData.status}}</div>
+                    <div class="col-6">
+                        <div class="text-value font-w300">{{initData.s_deviceMessage}}</div>
                         <div class="text-label text-muted">Status</div>
-                    </div>
-                    <div class="col-4">
-                        <div class="text-value font-w300">100%</div>
-                        <div class="text-label text-muted">FQ</div>
                     </div>
                 </div>
             </div>
@@ -38,6 +34,15 @@ export default {
     props: {
         initData: Object,
     },
+    methods: {
+        getStatusMsg: function () {
+            if (this.initData.statusValue) {
+                return this.initData.statusValue.ch2Color;
+            } else {
+                return '#989898';
+            }
+        },
+    }
 }
 </script>
 

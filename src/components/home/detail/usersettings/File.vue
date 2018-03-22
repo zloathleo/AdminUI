@@ -80,6 +80,7 @@ export default {
   }
   .card-header {
     padding: 0.2rem 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .value {
     width: 50%;
