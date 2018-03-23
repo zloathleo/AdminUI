@@ -1,7 +1,7 @@
 <template>
     <nav id="sidebar" class="my-sidebar bg-primary" style="z-index:3;display:none">
         <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
+            <h3>RodinX</h3>
         </div>
         <ul class="list-group list-group-flush">
             <router-link :to="{name:'home'}" @click.native="clickCloseSidebar" class="list-group-item w3-bar-item w3-button w3-padding m-sidebaritem-active">

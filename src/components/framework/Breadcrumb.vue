@@ -21,10 +21,9 @@ export default {
 
                 _items.active = _root.pop();
                 _items.root = _root;
-                console.log("_items:", _items);
 
                 return _items;
-            }else{
+            } else {
                 return new Object();
             }
 

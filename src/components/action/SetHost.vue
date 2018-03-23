@@ -2,34 +2,32 @@
     <div class="card my-card">
         <i class="fa fa-cog fa-5x text-primary"></i>
 
-        <label>write device address</label> 
-        <input ref="inputAddress" type="text" class="form-control" placeholder="Device Address" required autofocus>
-
-        <div ref="invalidMessage" class="invalid-message">Sorry, the device address range is 1-127. Try another?</div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickLogin">Write</button>
+        <label>change server host</label>
+        <input ref="inputDom" type="text" class="form-control" placeholder="Server Host" required autofocus>
+        <div ref="invalidMessage" class="invalid-message">the input is error. Try another?</div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickSubmit">Submit</button>
 
     </div>
 </template>
 
 <script>   
 export default {
-    name: 'SetDeviceAddress',
+    name: 'SetHost',
     methods: {
         invalidInput: function (_inputValue) {
-            console.log(_inputValue);
-            if (_inputValue > 0 && _inputValue < 127) {
+            if (_inputValue.length > 5) {
                 return true;
             }
             return false;
         },
-        clickLogin: function (event) {
-            let _inputDom = this.$refs.inputAddress;
+        clickSubmit: function (event) {
+            let _inputDom = this.$refs.inputDom;
             let _inputValue = _inputDom.value;
             if (this.invalidInput(_inputValue)) {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
- 
-                this.$tools.toastrSuccess('write success.'); 
+                
+                this.$tools.toastrSuccess('change server host success.');
                 this.$tools.back(this);
             } else {
                 $(_inputDom).addClass('is-invalid');

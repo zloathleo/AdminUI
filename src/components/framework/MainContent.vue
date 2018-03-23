@@ -23,10 +23,13 @@ export default {
   },
   methods: {
     changeHeight: function (_isLogin) {
-      console.log("_isLogin:", _isLogin);
-      let _padding = (42 + 54 + 16 + 22);
+      // let _padding = (42 + 54 + 16 + 22);
+      // if (_isLogin) {
+      //   _padding = 42 + 54 + 36 + 5 + 22;
+      // }
+      let _padding = (42 + 54 + 16 + 0);
       if (_isLogin) {
-        _padding = 42 + 54 + 36 + 5 + 22;
+        _padding = 42 + 54 + 36 + 5 + 0;
       }
       let _content_height = document.documentElement.clientHeight - _padding;
       $('#MainContent').css("height", _content_height + "px");

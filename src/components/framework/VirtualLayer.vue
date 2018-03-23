@@ -3,7 +3,7 @@
         <div id="overlay" class="my-overlay display-none" v-on:click="clickOverlay" />
 
         <div id="loadingOverLayer" v-show="isApiLoadStart" class="my-overlay loading">
-            <i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
             <div id="loadingOverLayerText">
                 loading data
             </div>

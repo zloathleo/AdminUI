@@ -18,6 +18,12 @@ export default {
         toastr.success(msg);
     },
 
+    toastrError: function (_dispatch, errorMsg) {
+        let _err = this.formatError(_dispatch);
+        toastr.options.timeOut = -1;
+        toastr.error(errorMsg + '<br/>' + _err);
+    },
+
     connectServer: function (_vue) {
         _vue.$myfetch.fetch("/products", { method: 'GET' }, function (json) {
             json.rows.forEach(function (_product) {
@@ -29,10 +35,13 @@ export default {
         });
     },
 
-    toastrError: function (_dispatch, errorMsg) {
-        let _err = this.formatError(_dispatch);
-        toastr.options.timeOut = -1;
-        toastr.error(errorMsg + '<br/>' + _err);
+    back: function (_vue) {
+        let _lastRouteName = _vue.$store.state.lastRouteName;
+        if (_lastRouteName) {
+            _vue.$router.push({ name: _lastRouteName });
+        } else {
+            _vue.$router.push({ name: 'home' });
+        }
     },
 
     getChannelColor: function (_status) {

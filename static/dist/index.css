@@ -26,7 +26,7 @@ input::-webkit-inner-spin-button {
 }
 
 .detail-item-li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 }
 
 .property-list .value {
@@ -40,7 +40,7 @@ input::-webkit-inner-spin-button {
 
 .actionbar {
     position: fixed;
-    bottom: 22px;
+    bottom: 0px;
     right: 0px;
     width: 100%;
     padding: 0px 1px;
@@ -48,6 +48,10 @@ input::-webkit-inner-spin-button {
 
 .half-width { 
     width: 50%;
+}
+
+.full-width { 
+    width: 100%;
 }
 
 .ribbon-box-paddomh {

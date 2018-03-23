@@ -2,9 +2,14 @@
     <div class="card my-card">
         <i class="fa fa-cog fa-5x text-primary"></i>
 
-        <label>Com</label>
-        <input ref="inputAddress" type="text" class="form-control" placeholder="Com" required autofocus>
-        <div ref="invalidMessage" class="invalid-message">Sorry, the device address range is 1-127. Try another?</div>
+        <div class="form-group">
+            <label>change communication com</label>
+            <select class="custom-select" ref="inputDom" required autofocus>
+                <option v-for="com, index in coms">
+                    <option>{{com}}</option>
+                </option>
+            </select>
+        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickLogin">Submit</button>
 
     </div>
@@ -13,33 +18,24 @@
 <script>   
 export default {
     name: 'SetCom',
+    data: function () {
+        return {
+            coms: undefined
+        }
+    },
+    mounted() {
+        let _self = this;
+        this.$myfetch.fetch("/ports", { method: 'GET' }, function (json) {
+            _self.coms = json.rows;
+        });
+    },
     methods: {
-        invalidInput: function (_inputValue) {
-            console.log(_inputValue);
-            if (_inputValue > 0 && _inputValue < 127) {
-                return true;
-            }
-            return false;
-        },
         clickLogin: function (event) {
-            let _inputDom = this.$refs.inputAddress;
+            let _inputDom = this.$refs.inputDom;
             let _inputValue = _inputDom.value;
-            if (this.invalidInput(_inputValue)) {
-                $(_inputDom).removeClass('is-invalid');
-                this.$refs.invalidMessage.style.display = 'none';
 
-                let _lastRouteName = this.$store.state.lastRouteName;
-                this.$tools.toastrSuccess('write success.');
-
-                if (_lastRouteName) {
-                    this.$router.push({ name: _lastRouteName });
-                } else {
-                    this.$router.push({ name: '/' });
-                }
-            } else {
-                $(_inputDom).addClass('is-invalid');
-                this.$refs.invalidMessage.style.display = 'block';
-            }
+            this.$tools.toastrSuccess('com change success.');
+            this.$tools.back(this);
         },
     }
 }

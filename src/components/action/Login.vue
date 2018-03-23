@@ -38,13 +38,7 @@ export default {
                     _self.$eventHub.$emit('changeLogin', true);
                     _self.$tools.toastrSuccess('login success.');
 
-                    let _lastRouteName = _self.$store.state.lastRouteName;
-                    if (_lastRouteName) {
-                        _self.$router.push({ name: _lastRouteName });
-                    } else {
-                        _self.$router.push({ name: '/' });
-                    }
-
+                    _self.$tools.back(_self);
                 }, function (_errDispatch) {
                     $(_inputDom).removeClass('is-invalid');
                     _self.$refs.invalidMessage.style.display = 'none';

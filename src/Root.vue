@@ -4,7 +4,7 @@
     <Navbar />
     <MainContent v-if="$store.state.serverConnected" />
     <VirtualLayer />
-    <Foot />
+    <!-- <Foot /> -->
   </div>
 </template>
 

@@ -23,10 +23,6 @@ store.state.serverConnected = false;
 
 // 全局钩子
 router.afterEach((to, from) => {
-  // mem.lastRouteName = from.name;
-  // mem.currentRouteName = to.name;
-  console.log(from.name);
-  console.log(to.name);
   store.commit('changeRouteName', [from.name, to.name]);
 });
 

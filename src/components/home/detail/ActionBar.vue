@@ -1,10 +1,10 @@
 <template>
     <div class="btn-group actionbar" role="group">
-        <router-link :to="{name:'home.usersettings'}" append class="btn btn-primary"> UserSettings
+        <router-link :to="{name:'home.usersettings'}" append class="btn btn-primary full-width"> UserSettings
             <i class="fa fa-arrow-right"></i>
         </router-link>
-    </div>
-</template>
+    </div> 
+</template> 
 
 <script> 
 export default {

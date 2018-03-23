@@ -7,9 +7,9 @@
             </a>
 
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" href="#">
+                <!-- <li class="nav-item" href="#">
                     <a class="nav-link">Home</a>
-                </li>
+                </li> -->
             </ul>
 
             <ul class="navbar-nav">
@@ -17,23 +17,20 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">Action
                         <span class="caret"></span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="download">
+                    <div class="dropdown-menu" aria-labelledby="download"> 
                         <router-link v-if="isNotLogin" :to="{name:'login'}" class="dropdown-item">
                             Login
                         </router-link>
                         <a v-else class="dropdown-item" v-on:click="clickLogout">
                             Logout
                         </a>
-                        <div class="dropdown-divider"></div>
-
-                        <router-link to="/config_host" class="dropdown-item">
+                        <router-link :to="{name:'set_host'}" class="dropdown-item">
                             Config Host
                         </router-link>
-                        <div class="dropdown-divider"></div> 
-
-                        <router-link class="dropdown-item" :to="{name:'set_device_address'}">
+                        <div v-if="!isNotLogin" class="dropdown-divider"></div>
+                        <router-link v-if="!isNotLogin" class="dropdown-item" :to="{name:'set_device_address'}">
                             Config Device Addr
-                        </router-link>
+                        </router-link> 
                     </div>
                 </li>
                 <li class="nav-item">

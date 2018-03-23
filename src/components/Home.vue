@@ -1,6 +1,6 @@
 <template>
     <div v-if="data!= undefined">
-        <div v-for="row, index in data.rows">
+        <div v-for="row, index in data.rows" class="row-total">
             <div class="row device-row">
                 <div class="device-title">
                     {{row.title}}
@@ -47,7 +47,7 @@ export default {
             this.$myfetch.fetch("/dashboard", { method: 'GET' }, function (json) {
                 let _currentProduct = _self.$mem.products[json.product];
                 _self.$store.commit('changeCurrentProduct', _currentProduct);
-                
+
                 _self.data = json;
             });
         },
@@ -56,18 +56,21 @@ export default {
 </script>
 
 <style scoped lang="less">
-.device-row {
-  border-left-width: 2rem;
-  border-left-style: solid;
-  border-left-color: #008cba; 
-  position: relative;
-  background-color: #eee !important;
-  //   margin-bottom: 0.5rem;
-  .device-title {
-    position: absolute;
-    left: -1.2rem;
-    top: 35%;
-    color: #fff;
+.row-total {
+  padding-bottom: 0.5rem;
+  .device-row {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-left-width: 2rem;
+    border-left-style: solid;
+    border-left-color: #008cba;
+    position: relative;
+    background-color: #eee !important;
+    .device-title {
+      position: absolute;
+      left: -1.2rem;
+      top: 35%;
+      color: #fff;
+    }
   }
 }
 </style>
