@@ -6,15 +6,16 @@
                 <i class="fa fa-align-left text-white"></i>
             </a>
 
-            <ul class="navbar-nav" style="-webkit-app-region: drag; width: calc(100% - 203px);">
+            <ul class="navbar-nav" v-bind:class="[is_electron ? 'electronClass' : 'mr-auto']">
                 <li class="nav-item">
                     <a class="nav-link cursor-pointer">RodinX</a>
                 </li>
-            </ul> 
+            </ul>
 
             <ul class="navbar-nav">
                 <li class="nav-item dropdown cursor-pointer">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">Action
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">
+                        Action
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="download">
@@ -38,20 +39,20 @@
                         Com3
                     </router-link>
                 </li>
+            </ul>
 
+            <ul class="navbar-nav" v-if="is_electron">
                 <!-- electron -->
                 <li class="nav-item" v-if="$store.state.winMax">
                     <a class="nav-link cursor-pointer" v-on:click="clickRestore">
                         <i class="fa fa-window-restore" aria-hidden="true"></i>
                     </a>
                 </li>
-
                 <li class="nav-item" v-if="$store.state.winMax == false">
                     <a class="nav-link cursor-pointer" v-on:click="clickMax">
                         <i class="fa fa-window-maximize" aria-hidden="true"></i>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link cursor-pointer" v-on:click="clickClose">
                         <i class="fa fa-close" aria-hidden="true"></i>
@@ -69,8 +70,12 @@ export default {
     name: 'Navbar',
     computed: {
         isNotLogin: function () {
+            console.log("globle_is_electron:", globle_is_electron);
             return this.$store.state.isLogin == false;
         },
+        is_electron: function () {
+            return globle_is_electron;
+        }
     },
     methods: {
         clickLogout: function (event) {
@@ -109,6 +114,10 @@ export default {
 <style scoped lang="less">
 .navbar {
   padding: 0.2rem 1rem;
+  .electronClass {
+    -webkit-app-region: drag;
+    width: calc(100% - 203px);
+  }
   .nav-link {
     padding: 0.5rem;
   }

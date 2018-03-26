@@ -13851,13 +13851,18 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
 
 // const ipcRenderer = require('electron').ipcRenderer;
 exports.default = {
     name: 'Navbar',
     computed: {
         isNotLogin: function isNotLogin() {
+            console.log("globle_is_electron:", globle_is_electron);
             return this.$store.state.isLogin == false;
+        },
+        is_electron: function is_electron() {
+            return globle_is_electron;
         }
     },
     methods: {
@@ -24206,7 +24211,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.navbar[data-v-821b3284] {\n  padding: 0.2rem 1rem;\n}\n.navbar .nav-link[data-v-821b3284] {\n  padding: 0.5rem;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/Navbar.vue"],"names":[],"mappings":";AAAA;EACE,qBAAqB;CACtB;AACD;EACE,gBAAgB;CACjB","file":"Navbar.vue","sourcesContent":[".navbar {\n  padding: 0.2rem 1rem;\n}\n.navbar .nav-link {\n  padding: 0.5rem;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.navbar[data-v-821b3284] {\n  padding: 0.2rem 1rem;\n}\n.navbar .electronClass[data-v-821b3284] {\n  -webkit-app-region: drag;\n  width: calc(100% - 203px);\n}\n.navbar .nav-link[data-v-821b3284] {\n  padding: 0.5rem;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/Navbar.vue"],"names":[],"mappings":";AAAA;EACE,qBAAqB;CACtB;AACD;EACE,yBAAyB;EACzB,0BAA0B;CAC3B;AACD;EACE,gBAAgB;CACjB","file":"Navbar.vue","sourcesContent":[".navbar {\n  padding: 0.2rem 1rem;\n}\n.navbar .electronClass {\n  -webkit-app-region: drag;\n  width: calc(100% - 203px);\n}\n.navbar .nav-link {\n  padding: 0.5rem;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -24242,7 +24247,14 @@ var render = function() {
             [_c("i", { staticClass: "fa fa-align-left text-white" })]
           ),
           _vm._v(" "),
-          _vm._m(0),
+          _c(
+            "ul",
+            {
+              staticClass: "navbar-nav",
+              class: [_vm.is_electron ? "electronClass" : "mr-auto"]
+            },
+            [_vm._m(0)]
+          ),
           _vm._v(" "),
           _c("ul", { staticClass: "navbar-nav" }, [
             _c("li", { staticClass: "nav-item dropdown cursor-pointer" }, [
@@ -24331,60 +24343,64 @@ var render = function() {
                 )
               ],
               1
-            ),
-            _vm._v(" "),
-            _vm.$store.state.winMax
-              ? _c("li", { staticClass: "nav-item" }, [
+            )
+          ]),
+          _vm._v(" "),
+          _vm.is_electron
+            ? _c("ul", { staticClass: "navbar-nav" }, [
+                _vm.$store.state.winMax
+                  ? _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link cursor-pointer",
+                          on: { click: _vm.clickRestore }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-window-restore",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$store.state.winMax == false
+                  ? _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link cursor-pointer",
+                          on: { click: _vm.clickMax }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-window-maximize",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
                   _c(
                     "a",
                     {
                       staticClass: "nav-link cursor-pointer",
-                      on: { click: _vm.clickRestore }
+                      on: { click: _vm.clickClose }
                     },
                     [
                       _c("i", {
-                        staticClass: "fa fa-window-restore",
+                        staticClass: "fa fa-close",
                         attrs: { "aria-hidden": "true" }
                       })
                     ]
                   )
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.$store.state.winMax == false
-              ? _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link cursor-pointer",
-                      on: { click: _vm.clickMax }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-window-maximize",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link cursor-pointer",
-                  on: { click: _vm.clickClose }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-close",
-                    attrs: { "aria-hidden": "true" }
-                  })
-                ]
-              )
-            ])
-          ])
+              ])
+            : _vm._e()
         ]
       )
     ]
@@ -24395,23 +24411,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "navbar-nav",
-        staticStyle: {
-          "-webkit-app-region": "drag",
-          width: "calc(100% - 203px)"
-        }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link cursor-pointer" }, [
-            _vm._v("RodinX")
-          ])
-        ])
-      ]
-    )
+    return _c("li", { staticClass: "nav-item" }, [
+      _c("a", { staticClass: "nav-link cursor-pointer" }, [_vm._v("RodinX")])
+    ])
   },
   function() {
     var _vm = this
@@ -24428,7 +24430,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("Action\n                    "),
+        _vm._v("\n                    Action\n                    "),
         _c("span", { staticClass: "caret" })
       ]
     )
