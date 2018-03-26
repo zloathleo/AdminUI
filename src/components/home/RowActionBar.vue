@@ -1,14 +1,14 @@
 <template>
     <div class="row row-action-bar">
-        <button type="button" class="offset-sm-6 col-4 col-sm-2 btn btn" v-on:click="clickDeleteRow">
+        <button type="button" class="offset-sm-6 col-4 col-sm-2 btn btn-danger" v-on:click="clickDeleteRow">
             <i class="fa fa-times-circle"></i>
             Delete Row
         </button>
-        <button type="button" class="col-4 col-sm-2 btn" v-on:click="clickDeleteDevice">
+        <button type="button" class="col-4 col-sm-2 btn btn-warning" v-on:click="clickDeleteDevice">
             <i class="fa fa-times-circle"></i>
             Delete Device
         </button>
-        <button type="button" class="col-4 col-sm-2 btn" v-on:click="clickAddDevice">
+        <button type="button" class="col-4 col-sm-2 btn btn-success" v-on:click="clickAddDevice">
             <i class="fa fa-plus-circle"></i>
             Add Device
         </button>
@@ -22,7 +22,8 @@ export default {
         rowTitle: String,
     },
     methods: {
-        clickDeleteDevice() {
+        clickDeleteDevice(_event) {
+            _event.stopPropagation();
             var form = new URLSearchParams();
             form.set('command', 4);
             form.set('row', this.rowTitle);
@@ -35,7 +36,8 @@ export default {
                 _self.$tools.toastrError(_errDispatch, 'dashboard delete device fault.');
             });
         },
-        clickAddDevice() {
+        clickAddDevice(_event) {
+            _event.stopPropagation();
             var form = new URLSearchParams();
             form.set('command', 3);
             form.set('row', this.rowTitle);
@@ -48,7 +50,8 @@ export default {
                 _self.$tools.toastrError(_errDispatch, 'dashboard add device fault.');
             });
         },
-        clickDeleteRow() {
+        clickDeleteRow(_event) {
+            _event.stopPropagation();
             var form = new URLSearchParams();
             form.set('command', 2);
             form.set('row', this.rowTitle);
@@ -67,14 +70,10 @@ export default {
 
 <style scoped lang="less">
 .row-action-bar {
-//   padding-bottom: 0.5rem;
+  //   padding-bottom: 0.5rem;
   button {
     padding: 0rem 0.5rem;
-    font-size: 0.5rem;
-    background-color: #eee;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-top: 0px;
-    color: #7c7c7c;
+    font-size: 0.8rem;
   }
 }
 </style>

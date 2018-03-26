@@ -15,7 +15,7 @@
   <!-- <link href="plugins/w3c/w3c.css" rel="stylesheet" type="text/css" /> -->
   <link href="plugins/bootswatch/yeti/bootstrap.css" rel="stylesheet" type="text/css" />
   <!-- <link href="plugins/bootswatch/slate/bootstrap.css" rel="stylesheet" type="text/css" /> -->
-  <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" /> 
+  <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
   <!-- Plugin CSS -->
 
   <!-- CSS -->
@@ -28,7 +28,23 @@
     <root></root>
   </div>
 
-  <!-- <script src="plugins/vue/vue.min.js"></script>   -->
+  <script src="dist/electron_renderer.js"></script>
+  <script>
+    try {
+      if (process) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+      }
+
+      // if (typeof module === 'object') {
+      //   window.jQuery = window.$ = module.exports;
+      // };
+
+    } catch (err) {
+    }
+  </script>
 
   <script src="plugins/jquery/jquery.min.js"></script>
   <script src="plugins/bootstrap4/js/bootstrap.min.js"></script>
@@ -37,7 +53,7 @@
 
   <!-- Plugin Javascripts -->
 
-  <!-- Javascripts -->
+  <!-- Javascripts --> 
   <script src="dist/index.js"></script>
 </body>
 

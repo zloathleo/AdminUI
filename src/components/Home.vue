@@ -1,7 +1,7 @@
 <template>
     <div v-if="data!= undefined">
-        <div v-for="row, index in data.rows" class="row-total">
-            <div class="row device-row">
+        <div v-for="row, index in data.rows" class="row-total" v-on:click="clickRow($event,row.title)">
+            <div class="row device-row cursor-pointer">
                 <div class="device-title">
                     {{row.title}}
                 </div>
@@ -9,7 +9,11 @@
                     <DeviceItem :init-data='item' />
                 </div>
             </div>
-            <RowActionBar v-if="$store.state.isLogin" :row-title="row.title" />
+            <transition name="fade">
+                <RowActionBar v-if="showRowActionBar(row.title)" :row-title="row.title" />
+            </transition>
+
+            <!-- <RowActionBar v-if="$store.state.isLogin" :row-title="row.title" /> -->
         </div>
         <ActionBar v-show="$store.state.isLogin" />
     </div>
@@ -24,7 +28,8 @@ export default {
     components: { DeviceItem, ActionBar, RowActionBar },
     data: function () {
         return {
-            data: undefined
+            data: undefined,
+            showStatus: new Object(),
         }
     },
     mounted() {
@@ -34,13 +39,32 @@ export default {
         this.$eventHub.$on("dashboardUpdate", function (json) {
             if (json) {
                 _self.data = json;
+                console.log(_self.showStatus);
             }
         });
     },
     methods: {
-        clickRow: function (_event) {
+        clickRow: function (_event, _title) { 
             _event.stopPropagation();
-            console.log("clickRow");
+            if (this.$store.state.isLogin) {
+
+                let _isShow = this.showStatus[_title];
+                //reset
+                for (let _key in this.showStatus) {
+                    console.log(this.showStatus[_key]);
+                    this.showStatus[_key] = false;
+                }
+                if (_isShow == true) {
+                    this.showStatus[_title] = false;
+                } else {
+                    this.showStatus[_title] = true;
+                }
+                console.log("clickRow:", this.showStatus);
+                this.$forceUpdate();
+            }
+        },
+        showRowActionBar(_title) {
+            return this.showStatus[_title] == true;
         },
         loadDashboard() {
             let _self = this;

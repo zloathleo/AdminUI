@@ -1,5 +1,5 @@
 <template>
-  <div class="justify-content-center device-item cursor-pointer hvr-fade" v-on:click="clickItem">
+  <div class="justify-content-center device-item hvr-fade" v-on:click="clickItem">
     <span class="badge badge-pill badge-primary device-name">{{ initData.addr }}</span>
     <div class="device-channel" :style="{color:getChannelColor(initData.chs,_index)}" v-for="_index in $store.state.currentProduct.channel_num">
       <span class="fa fa-fire channel-icon" aria-hidden="true"></span>
@@ -15,8 +15,8 @@ export default {
     initData: Object,
   },
   methods: {
-    clickItem: function (event) {
-      event.stopPropagation();
+    clickItem: function (_event) {
+      _event.stopPropagation();
       this.$store.commit('changeDeviceName', this.initData.name);
       this.$router.push({ path: '/detail' });
     },
@@ -46,7 +46,7 @@ export default {
   }
 
   .channel-display {
-    font-size: 0.5rem;
+    font-size: 0.8rem;
   }
 }
 

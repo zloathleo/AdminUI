@@ -43,6 +43,9 @@ module.exports = {
     ]
   },
 
+  node: {
+    fs: "empty"
+  },
 
   plugins: [
     //生成css

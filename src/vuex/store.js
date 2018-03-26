@@ -15,6 +15,8 @@ export default new Vuex.Store({
         serverConnected: false,
         isLogin: true,
 
+        winMax:true,
+
         lastRouteName: '/',
         currentRouteName: '/',
 
@@ -35,6 +37,9 @@ export default new Vuex.Store({
         },
         changeLogin(state, value) {
             state.isLogin = value;
+        },
+        changeWinMax(state, value) {
+            state.winMax = value;
         },
 
         changeRouteName(state, routeNames) { 
