@@ -1,14 +1,19 @@
 <template>
     <div class="col-sm-8">
         <div class="row">
-            <div class="col-12">
-                <Chan :init-data='initData.ch1'/>
+
+            <div v-for="channel, index in initData.channels" class="col-12">
+                <Chan :init-data="channel" />
+            </div>
+
+            <!-- <div class="col-12">
+                <Chan :init-data='initData.ch1' />
             </div>
             <div class="col-12">
-                <Chan :init-data='initData.ch2'/>
-            </div>
-        </div> 
-        <ActionBar :init-data='initData.name'/>
+                <Chan :init-data='initData.ch2' />
+            </div> -->
+        </div>
+        <ActionBar :init-data='initData.name' />
     </div>
 </template>
 

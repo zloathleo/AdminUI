@@ -69,8 +69,7 @@
 export default {
     name: 'Navbar',
     computed: {
-        isNotLogin: function () {
-            console.log("globle_is_electron:", globle_is_electron);
+        isNotLogin: function () { 
             return this.$store.state.isLogin == false;
         },
         is_electron: function () {

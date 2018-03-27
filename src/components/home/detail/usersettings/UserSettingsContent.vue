@@ -1,14 +1,13 @@
 <template>
-    <div v-if="currentUserSettingsData" class="col-sm-8">
+    <div v-if="initData" class="col-sm-8">
         <div class="row">
-            <div class="col-12">
-                <Chan :init-data='currentUserSettingsData.ch1' />
-            </div>
-            <div class="col-12">
-                <Chan :init-data='currentUserSettingsData.ch2' />
-            </div>
+
+            <div v-for="channel, index in initData.channels" class="col-12">
+                <Chan :init-data="channel" />
+            </div> 
+
         </div>
-        <ActionBar :init-data='currentUserSettingsData.name' />
+        <ActionBar :init-data="initData.name" />
     </div>
 </template>
 
@@ -17,12 +16,14 @@ import Chan from './Chan.vue';
 import ActionBar from './ActionBar.vue';
 export default {
     name: 'UserSettingsContent',
-    components: { Chan, ActionBar }, 
-    computed: {
-        currentUserSettingsData: function () {
-            return this.$mem.currentUserSettingsData;
-        }
-    }
+    components: { Chan, ActionBar },
+    props: {
+        initData: Object,
+    },
+    computed: { 
+    },
+    beforeUpdate: function () { 
+    },
 }
 </script>
 

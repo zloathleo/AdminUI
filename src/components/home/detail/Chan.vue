@@ -10,11 +10,11 @@
                     </li>
                     <li class="detail-item-li">
                         <span>ON_TH</span>
-                        <span class="value">{{initData.onth}}</span>
+                        <span class="value">{{initData.ac_on_th}}</span>
                     </li>
                     <li class="detail-item-li">
                         <span>ON_TL</span>
-                        <span class="value">{{initData.ontl}}</span>
+                        <span class="value">{{initData.ac_on_tl}}</span>
                     </li>
                     <li class="detail-item-li">
                         <span>MAX</span>

@@ -63,7 +63,7 @@ export default {
 }
 .loading {
   text-align: center;
-  padding-top: 40%;
+  padding-top: 25%;
   color: #fff;
 }
 .notconnected {

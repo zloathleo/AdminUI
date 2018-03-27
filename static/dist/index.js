@@ -1,4 +1,4 @@
-/*! This file is created at 2018-03-23T08:44:23.878Z */
+/*! This file is created at 2018-03-27T00:48:36.603Z */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -12885,7 +12885,9 @@ exports.default = {
     data: function data() {
         return {
             data: {
-                name: '--', ch1: {}, ch2: {}
+                name: '--',
+                ch1: {},
+                ch2: {}
             }
         };
     },
@@ -12907,7 +12909,7 @@ exports.default = {
                 var type = 1;
                 this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (json) {
                     //待修改
-                    var _device_detail = json.devices[device];
+                    var _device_detail = json.value;
                     if (_device_detail) {
                         Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
                     }
@@ -12918,8 +12920,7 @@ exports.default = {
                 });
             } else if ("home.usersettings" == routeName) {
                 var _type = "u";
-                var source = "d";
-                this.$myfetch.fetch('/settings/' + device + '?type=' + _type + '&source=' + source, { method: 'GET' }, function (json) {
+                this.$myfetch.fetch('/settings/' + device + '?type=' + _type, { method: 'GET' }, function (json) {
                     _self.data = json;
                     _self.$mem.currentUserSettingsData = json;
                     if (_next) {
@@ -13106,6 +13107,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'ChannelsContent',
@@ -13251,16 +13257,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 
 exports.default = {
     name: 'UserSettingsContent',
     components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default },
-    computed: {
-        currentUserSettingsData: function currentUserSettingsData() {
-            return this.$mem.currentUserSettingsData;
-        }
-    }
+    props: {
+        initData: Object
+    },
+    computed: {},
+    beforeUpdate: function beforeUpdate() {}
 };
 
 /***/ }),
@@ -13306,9 +13311,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
 
 exports.default = {
     name: 'Chan',
@@ -13318,8 +13320,8 @@ exports.default = {
     },
     data: function data() {
         return {
-            burnerTypeItem1: { display: 'IR', value: 'IR' },
-            burnerTypeItem2: { display: 'UV', value: 'UV' },
+            burnerTypeItem1: { display: 'IR', value: '1' },
+            burnerTypeItem2: { display: 'UV', value: '0' },
             EnItem1: { display: 'Enable', value: 1 },
             EnItem2: { display: 'Disable', value: 0 },
             fileItem1: { display: 'File A', value: 0 },
@@ -13492,7 +13494,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'ActionBar',
     props: {
-        initData: String
+        deviceName: String
     },
     methods: {
         clickGo2Usersettings: function clickGo2Usersettings(event) {
@@ -13505,7 +13507,7 @@ exports.default = {
             var form = new URLSearchParams();
             form.set('content', JSON.stringify(_currentUserSettingsData));
             form.set('type', "u");
-            var _device = this.initData;
+            var _device = this.deviceName;
             this.$myfetch.fetch('/settings/' + _device, { method: 'PUT', body: form, loadingMessage: 'Update UserSettings.' }, function (json) {
                 _self.$tools.toastrError('write device ' + _device + ' success.');
                 _self.$store.commit('changeUserSettingsData', json);
@@ -13858,7 +13860,6 @@ exports.default = {
     name: 'Navbar',
     computed: {
         isNotLogin: function isNotLogin() {
-            console.log("globle_is_electron:", globle_is_electron);
             return this.$store.state.isLogin == false;
         },
         is_electron: function is_electron() {
@@ -21213,7 +21214,7 @@ var render = function() {
             _c("span", [_vm._v("ON_TH")]),
             _vm._v(" "),
             _c("span", { staticClass: "value" }, [
-              _vm._v(_vm._s(_vm.initData.onth))
+              _vm._v(_vm._s(_vm.initData.ac_on_th))
             ])
           ]),
           _vm._v(" "),
@@ -21221,7 +21222,7 @@ var render = function() {
             _c("span", [_vm._v("ON_TL")]),
             _vm._v(" "),
             _c("span", { staticClass: "value" }, [
-              _vm._v(_vm._s(_vm.initData.ontl))
+              _vm._v(_vm._s(_vm.initData.ac_on_tl))
             ])
           ]),
           _vm._v(" "),
@@ -21451,21 +21452,18 @@ var render = function() {
     "div",
     { staticClass: "col-sm-8" },
     [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-12" },
-          [_c("Chan", { attrs: { "init-data": _vm.initData.ch1 } })],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12" },
-          [_c("Chan", { attrs: { "init-data": _vm.initData.ch2 } })],
-          1
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.initData.channels, function(channel, index) {
+          return _c(
+            "div",
+            { staticClass: "col-12" },
+            [_c("Chan", { attrs: { "init-data": channel } })],
+            1
+          )
+        })
+      ),
       _vm._v(" "),
       _c("ActionBar", { attrs: { "init-data": _vm.initData.name } })
     ],
@@ -21798,7 +21796,9 @@ var render = function() {
   return _c("div", { staticClass: "col-md-6 file" }, [
     _vm.initData
       ? _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("File A")]),
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(_vm._s(_vm.initData.name))
+          ]),
           _vm._v(" "),
           _c("div", [
             _c("ul", { staticClass: "property-list" }, [
@@ -22489,12 +22489,9 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "row" },
-                [
-                  _c("file", { attrs: { "init-data": _vm.initData.filea } }),
-                  _vm._v(" "),
-                  _c("file", { attrs: { "init-data": _vm.initData.fileb } })
-                ],
-                1
+                _vm._l(_vm.initData.files, function(_file, index) {
+                  return _c("File", { attrs: { "init-data": _file } })
+                })
               )
             ])
           ],
@@ -22634,6 +22631,7 @@ var render = function() {
         "router-link",
         {
           staticClass: "btn btn-primary",
+          class: [_vm.$store.state.isLogin ? "half-width" : "full-width"],
           attrs: { to: { name: "home.detail" }, append: "" }
         },
         [
@@ -22653,7 +22651,7 @@ var render = function() {
               expression: "$store.state.isLogin"
             }
           ],
-          staticClass: "btn btn-primary",
+          staticClass: "btn btn-primary half-width",
           attrs: { type: "button" },
           on: { click: _vm.clickWrite }
         },
@@ -22684,38 +22682,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentUserSettingsData
+  return _vm.initData
     ? _c(
         "div",
         { staticClass: "col-sm-8" },
         [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("Chan", {
-                  attrs: { "init-data": _vm.currentUserSettingsData.ch1 }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("Chan", {
-                  attrs: { "init-data": _vm.currentUserSettingsData.ch2 }
-                })
-              ],
-              1
-            )
-          ]),
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.initData.channels, function(channel, index) {
+              return _c(
+                "div",
+                { staticClass: "col-12" },
+                [_c("Chan", { attrs: { "init-data": channel } })],
+                1
+              )
+            })
+          ),
           _vm._v(" "),
-          _c("ActionBar", {
-            attrs: { "init-data": _vm.currentUserSettingsData.name }
-          })
+          _c("ActionBar", { attrs: { "init-data": _vm.initData.name } })
         ],
         1
       )
@@ -25010,7 +24995,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.display-none[data-v-c5192798] {\n  display: none;\n}\n.my-overlay[data-v-c5192798] {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading[data-v-c5192798] {\n  text-align: center;\n  padding-top: 40%;\n  color: #fff;\n}\n.notconnected[data-v-c5192798] {\n  text-align: center;\n  width: 100%;\n  position: absolute;\n  bottom: 0.8rem;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/VirtualLayer.vue"],"names":[],"mappings":";AAAA;EACE,cAAc;CACf;AACD;EACE,gBAAgB;EAChB,YAAY;EACZ,aAAa;EACb,OAAO;EACP,QAAQ;EACR,SAAS;EACT,UAAU;EACV,qCAAqC;EACrC,WAAW;CACZ;AACD;EACE,mBAAmB;EACnB,iBAAiB;EACjB,YAAY;CACb;AACD;EACE,mBAAmB;EACnB,YAAY;EACZ,mBAAmB;EACnB,eAAe;CAChB","file":"VirtualLayer.vue","sourcesContent":[".display-none {\n  display: none;\n}\n.my-overlay {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading {\n  text-align: center;\n  padding-top: 40%;\n  color: #fff;\n}\n.notconnected {\n  text-align: center;\n  width: 100%;\n  position: absolute;\n  bottom: 0.8rem;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.display-none[data-v-c5192798] {\n  display: none;\n}\n.my-overlay[data-v-c5192798] {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading[data-v-c5192798] {\n  text-align: center;\n  padding-top: 25%;\n  color: #fff;\n}\n.notconnected[data-v-c5192798] {\n  text-align: center;\n  width: 100%;\n  position: absolute;\n  bottom: 0.8rem;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/framework/VirtualLayer.vue"],"names":[],"mappings":";AAAA;EACE,cAAc;CACf;AACD;EACE,gBAAgB;EAChB,YAAY;EACZ,aAAa;EACb,OAAO;EACP,QAAQ;EACR,SAAS;EACT,UAAU;EACV,qCAAqC;EACrC,WAAW;CACZ;AACD;EACE,mBAAmB;EACnB,iBAAiB;EACjB,YAAY;CACb;AACD;EACE,mBAAmB;EACnB,YAAY;EACZ,mBAAmB;EACnB,eAAe;CAChB","file":"VirtualLayer.vue","sourcesContent":[".display-none {\n  display: none;\n}\n.my-overlay {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 2;\n}\n.loading {\n  text-align: center;\n  padding-top: 25%;\n  color: #fff;\n}\n.notconnected {\n  text-align: center;\n  width: 100%;\n  position: absolute;\n  bottom: 0.8rem;\n}\n"],"sourceRoot":""}]);
 
 // exports
 

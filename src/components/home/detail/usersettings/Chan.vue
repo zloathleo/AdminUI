@@ -4,17 +4,14 @@
         <div class="row">
             <div class="col-12">
                 <ul class="property-list ribbon-box-paddomh">
-
                     <RadioButtom :title="'Burner Type'" :value="initData.type" :item1="burnerTypeItem1" :item2="burnerTypeItem2" @onPropsChange="burnerTypeChange" />
                     <RadioButtom :title="'Channel En'" :value="initData.enable" :item1="EnItem1" :item2="EnItem2" @onPropsChange="enableChange" />
                     <RadioButtom :title="'File'" :value="initData.file" :item1="fileItem1" :item2="fileItem2" @onPropsChange="fileChange" />
-
                     <div class="dropdown-divider"></div>
-
                     <div class="col-12">
                         <div class="row">
-                            <file :init-data='initData.filea' />
-                            <file :init-data='initData.fileb' />
+                            <File v-for="_file, index in initData.files" :init-data='_file'>
+                            </File>
                         </div>
                     </div>
                 </ul>
@@ -34,8 +31,8 @@ export default {
     },
     data: function () {
         return {
-            burnerTypeItem1: { display: 'IR', value: 'IR' },
-            burnerTypeItem2: { display: 'UV', value: 'UV' },
+            burnerTypeItem1: { display: 'IR', value: '1' },
+            burnerTypeItem2: { display: 'UV', value: '0' },
             EnItem1: { display: 'Enable', value: 1 },
             EnItem2: { display: 'Disable', value: 0 },
             fileItem1: { display: 'File A', value: 0 },

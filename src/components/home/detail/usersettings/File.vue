@@ -2,7 +2,7 @@
 
     <div class="col-md-6 file">
         <div class="card" v-if="initData">
-            <div class="card-header">File A</div>
+            <div class="card-header">{{initData.name}}</div>
             <div>
                 <ul class="property-list">
                     <li class="detail-item-li">

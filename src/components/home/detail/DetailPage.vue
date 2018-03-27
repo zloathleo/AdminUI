@@ -14,8 +14,10 @@ export default {
     data: function () {
         return {
             data: {
-                name: '--', ch1: {
-                }, ch2: {
+                name: '--',
+                ch1: {
+                },
+                ch2: {
                 }
             }
         }
@@ -37,7 +39,7 @@ export default {
                 let type = 1;
                 this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (json) {
                     //待修改
-                    let _device_detail = json.devices[device];
+                    let _device_detail = json.value;
                     if (_device_detail) {
                         Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
                     }
@@ -48,8 +50,7 @@ export default {
                 });
             } else if ("home.usersettings" == routeName) {
                 let type = "u";
-                let source = "d";
-                this.$myfetch.fetch('/settings/' + device + '?type=' + type + '&source=' + source, { method: 'GET' }, function (json) {
+                this.$myfetch.fetch('/settings/' + device + '?type=' + type, { method: 'GET' }, function (json) {
                     _self.data = json;
                     _self.$mem.currentUserSettingsData = json;
                     if (_next) {
