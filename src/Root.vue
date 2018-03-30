@@ -1,11 +1,11 @@
-<template> 
-    <div> 
-      <Sidebar/>
-      <Navbar />
-      <MainContent />
-      <VirtualLayer /> 
-      <!-- <Foot /> -->
-    </div> 
+<template>
+  <div>
+    <Sidebar/>
+    <Navbar />
+    <MainContent />
+    <VirtualLayer />
+    <!-- <Foot /> -->
+  </div>
 </template>
 
 <script> 
@@ -13,9 +13,5 @@ import { Navbar, MainContent, Sidebar, VirtualLayer, Foot } from './components/f
 export default {
   name: 'Root',
   components: { Navbar, MainContent, Sidebar, VirtualLayer, Foot },
-  mounted() {
-  },
-  methods: {
-  }
 }
 </script>

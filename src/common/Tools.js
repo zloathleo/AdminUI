@@ -26,7 +26,7 @@ export default {
 
     initServer: function (_myfetch, _mem) {
         let _self = this;
-        _myfetch.fetch("/products", { method: 'GET' }, function (_products) {
+        _myfetch.fetch("/products", { method: 'GET', loadingMessage: "init server" }, function (_products) {
 
             _products.rows.forEach(function (_product) {
                 _mem.state.products[_product.name] = _product;
@@ -41,7 +41,7 @@ export default {
     },
 
     initConfig(_myfetch, _mem) {
-        _myfetch.fetch("/configs", { method: 'GET' }, function (_configs) {
+        _myfetch.fetch("/configs", { method: 'GET', loadingMessage: "init server" }, function (_configs) {
             _mem.commit('changeServerConnected', true);
 
             if (_configs.product && _configs.com) {

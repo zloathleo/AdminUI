@@ -2,12 +2,14 @@
     <div>
         <div id="overlay" class="my-overlay display-none" v-on:click="clickOverlay" />
 
-        <div id="loadingOverLayer" v-show="isApiLoadStart" class="my-overlay loading">
-            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-            <div id="loadingOverLayerText">
-                loading data
+        <transition name="fade" mode="out-in">
+            <div id="loadingOverLayer" v-show="isApiLoadStart" class="my-overlay loading">
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                <div id="loadingOverLayerText">
+                    {{loadingMessage}}
+                </div>
             </div>
-        </div>
+        </transition>
 
         <div v-show="isServerConnected" class="my-overlay">
             <div class="alert alert-dismissible alert-danger notconnected">
@@ -32,6 +34,14 @@ export default {
         isServerConnected: function () {
             return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
         },
+        loadingMessage: function () {
+            let _msg = this.$mem.state.apiLoading.loadingMessage;
+            if (_msg) {
+                return _msg;
+            } else {
+                return "load data";
+            }
+        }
     },
     methods: {
         clickOverlay: function (event) {

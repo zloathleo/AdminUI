@@ -6,14 +6,14 @@
             <label>please choose product</label>
             <div class="form-group">
                 <div v-for="(_product,key,index) of $mem.state.products" class="custom-control custom-radio">
-                    <input type="radio" :id="_product.name" name="customRadio" class="custom-control-input">
+                    <input type="radio" :id="_product.name" name="customRadio" class="custom-control-input" :checked="isProductChecked(_product.name)">
                     <label class="custom-control-label" :for="_product.name">{{_product.name}}</label>
                 </div>
             </div>
             <label>please choose communication com</label>
-            <select class="custom-select" ref="inputCom" required autofocus>
-                <option v-for="com, index in coms">
-                    <option>{{com}}</option>
+            <select class="custom-select" ref="inputCom" required>
+                <option v-for="com, index in coms" :selected="isComSelected(com)">
+                    {{com}}
                 </option>
             </select>
             <a href="#" class="btn-link" v-on:click="clickPageChangeServerHost">change server host</a>
@@ -37,6 +37,23 @@ export default {
         });
     },
     methods: {
+        isProductChecked(_n) {
+            let _currentProduct = this.$mem.state.currentProduct;
+            if (_currentProduct) {
+                let _name = this.$mem.state.currentProduct.name;
+                return _name === _n;
+            } else {
+                return false;
+            }
+        },
+        isComSelected(_com) {
+            let _currentCom = this.$mem.state.currentCom;
+            if (_currentCom) {
+                return _currentCom === _com;
+            } else {
+                return false;
+            } 
+        },
         clickPageChangeServerHost: function (event) {
             this.$mem.commit("changeInitConfig", 1);
         },
@@ -59,7 +76,7 @@ export default {
                             _self.$myfetch.fetch('/configs/com', { method: 'PUT', body: form2 }, function (json2) {
                                 _self.$tools.initConfig(_self.$myfetch, _self.$mem);
 
-                                _self.$tools.toastrSuccess('save system config success.'); 
+                                _self.$tools.toastrSuccess('save system config success.');
                                 _self.$tools.back(_self);
                             });
 

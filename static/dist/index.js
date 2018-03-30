@@ -13626,10 +13626,7 @@ var _framework = __webpack_require__(135);
 
 exports.default = {
   name: 'Root',
-  components: { Navbar: _framework.Navbar, MainContent: _framework.MainContent, Sidebar: _framework.Sidebar, VirtualLayer: _framework.VirtualLayer, Foot: _framework.Foot },
-  mounted: function mounted() {},
-
-  methods: {}
+  components: { Navbar: _framework.Navbar, MainContent: _framework.MainContent, Sidebar: _framework.Sidebar, VirtualLayer: _framework.VirtualLayer, Foot: _framework.Foot }
 }; //
 //
 //
@@ -13980,6 +13977,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     name: 'VirtualLayer',
@@ -13989,6 +13988,14 @@ exports.default = {
         },
         isServerConnected: function isServerConnected() {
             return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
+        },
+        loadingMessage: function loadingMessage() {
+            var _msg = this.$mem.state.apiLoading.loadingMessage;
+            if (_msg) {
+                return _msg;
+            } else {
+                return "load data";
+            }
         }
     },
     methods: {
@@ -16704,7 +16711,7 @@ module.exports = function(module) {
         if (_opt.defaultEventDispatch != false) {
             this.mem.commit('changeApiLoading', {
                 status: 1,//1=loading
-                loadingMessage: _opt ? _opt.loadingMessage : undefined,
+                loadingMessage: _opt.loadingMessage,
                 url: _url,
             });
         }
@@ -16712,14 +16719,14 @@ module.exports = function(module) {
         let _self = this;
         fetch(_url, _opt)
             .then(function (response) {
-                response.json().then(function (_json) { 
+                response.json().then(function (_json) {
                     //ok 范围 200-299  
                     if (response.ok) {
                         _self._timeoutCall(function () {
                             if (_opt.defaultEventDispatch !== false) {
                                 _self.mem.commit('changeApiLoading', {
                                     status: 0,//1=loading
-                                    loadingMessage: undefined,
+                                    loadingMessage: _opt.loadingMessage,
                                     url: undefined,
                                 });
                             }
@@ -16732,7 +16739,7 @@ module.exports = function(module) {
                             let _dispatch = { err: response, json: _json };
                             _self.mem.commit('changeApiLoading', {
                                 status: -1,//1=loading
-                                loadingMessage: undefined,
+                                loadingMessage: _opt.loadingMessage,
                                 url: undefined,
                             });
                             if (_fault) {
@@ -16741,12 +16748,12 @@ module.exports = function(module) {
                         });
                     }
                 });
-            }).catch(function (err) { 
+            }).catch(function (err) {
                 _self._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
                     _self.mem.commit('changeApiLoading', {
                         status: -1,//1=loading
-                        loadingMessage: undefined,
+                        loadingMessage: _opt.loadingMessage,
                         url: undefined,
                     });
                     if (_fault) {
@@ -16802,7 +16809,7 @@ module.exports = function(module) {
 
     initServer: function (_myfetch, _mem) {
         let _self = this;
-        _myfetch.fetch("/products", { method: 'GET' }, function (_products) {
+        _myfetch.fetch("/products", { method: 'GET', loadingMessage: "init server" }, function (_products) {
 
             _products.rows.forEach(function (_product) {
                 _mem.state.products[_product.name] = _product;
@@ -16817,7 +16824,7 @@ module.exports = function(module) {
     },
 
     initConfig(_myfetch, _mem) {
-        _myfetch.fetch("/configs", { method: 'GET' }, function (_configs) {
+        _myfetch.fetch("/configs", { method: 'GET', loadingMessage: "init server" }, function (_configs) {
             _mem.commit('changeServerConnected', true);
 
             if (_configs.product && _configs.com) {
@@ -24866,82 +24873,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", {
-      staticClass: "my-overlay display-none",
-      attrs: { id: "overlay" },
-      on: { click: _vm.clickOverlay }
-    }),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.isApiLoadStart,
-            expression: "isApiLoadStart"
-          }
-        ],
-        staticClass: "my-overlay loading",
-        attrs: { id: "loadingOverLayer" }
-      },
-      [
-        _c("i", {
-          staticClass: "fa fa-spinner fa-spin",
-          attrs: { "aria-hidden": "true" }
-        }),
-        _vm._v(" "),
-        _c("div", { attrs: { id: "loadingOverLayerText" } }, [
-          _vm._v("\n            loading data\n        ")
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.isServerConnected,
-            expression: "isServerConnected"
-          }
-        ],
-        staticClass: "my-overlay"
-      },
-      [
+  return _c(
+    "div",
+    [
+      _c("div", {
+        staticClass: "my-overlay display-none",
+        attrs: { id: "overlay" },
+        on: { click: _vm.clickOverlay }
+      }),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
         _c(
           "div",
-          { staticClass: "alert alert-dismissible alert-danger notconnected" },
-          [
-            _vm._v(
-              "\n            server " +
-                _vm._s(_vm.$store.state.serverhost) +
-                " connect fault.\n            "
-            ),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "a",
+          {
+            directives: [
               {
-                staticClass: "cursor-pointer",
-                on: { click: _vm.clickReconnectServer }
-              },
-              [
-                _c("i", { staticClass: "fa fa-refresh" }),
-                _vm._v(
-                  "\n                click reconnect server.\n            "
-                )
-              ]
-            )
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isApiLoadStart,
+                expression: "isApiLoadStart"
+              }
+            ],
+            staticClass: "my-overlay loading",
+            attrs: { id: "loadingOverLayer" }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-spinner fa-spin",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "loadingOverLayerText" } }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.loadingMessage) +
+                  "\n            "
+              )
+            ])
           ]
         )
-      ]
-    )
-  ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isServerConnected,
+              expression: "isServerConnected"
+            }
+          ],
+          staticClass: "my-overlay"
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "alert alert-dismissible alert-danger notconnected"
+            },
+            [
+              _vm._v(
+                "\n            server " +
+                  _vm._s(_vm.$store.state.serverhost) +
+                  " connect fault.\n            "
+              ),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "cursor-pointer",
+                  on: { click: _vm.clickReconnectServer }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-refresh" }),
+                  _vm._v(
+                    "\n                click reconnect server.\n            "
+                  )
+                ]
+              )
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25183,6 +25202,24 @@ exports.default = {
     },
 
     methods: {
+        isProductChecked: function isProductChecked(_n) {
+            var _currentProduct = this.$mem.state.currentProduct;
+            if (_currentProduct) {
+                var _name = this.$mem.state.currentProduct.name;
+                return _name === _n;
+            } else {
+                return false;
+            }
+        },
+        isComSelected: function isComSelected(_com) {
+            var _currentCom = this.$mem.state.currentCom;
+            if (_currentCom) {
+                return _currentCom === _com;
+            } else {
+                return false;
+            }
+        },
+
         clickPageChangeServerHost: function clickPageChangeServerHost(event) {
             this.$mem.commit("changeInitConfig", 1);
         },
@@ -25339,7 +25376,8 @@ var render = function() {
           return _c("div", { staticClass: "custom-control custom-radio" }, [
             _c("input", {
               staticClass: "custom-control-input",
-              attrs: { type: "radio", id: _product.name, name: "customRadio" }
+              attrs: { type: "radio", id: _product.name, name: "customRadio" },
+              domProps: { checked: _vm.isProductChecked(_product.name) }
             }),
             _vm._v(" "),
             _c(
@@ -25361,10 +25399,14 @@ var render = function() {
         {
           ref: "inputCom",
           staticClass: "custom-select",
-          attrs: { required: "", autofocus: "" }
+          attrs: { required: "" }
         },
         _vm._l(_vm.coms, function(com, index) {
-          return _c("option", [_c("option", [_vm._v(_vm._s(com))])])
+          return _c(
+            "option",
+            { domProps: { selected: _vm.isComSelected(com) } },
+            [_vm._v("\n                " + _vm._s(com) + "\n            ")]
+          )
         })
       ),
       _vm._v(" "),
@@ -25424,11 +25466,11 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
 
 exports.default = {
     name: 'ConfigPageHost',
+    mounted: function mounted() {},
+
     methods: {
         clickConfig: function clickConfig(event) {
             this.$mem.commit("changeInitConfig", 0);

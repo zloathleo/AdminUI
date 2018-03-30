@@ -28,7 +28,7 @@ export default {
         if (_opt.defaultEventDispatch != false) {
             this.mem.commit('changeApiLoading', {
                 status: 1,//1=loading
-                loadingMessage: _opt ? _opt.loadingMessage : undefined,
+                loadingMessage: _opt.loadingMessage,
                 url: _url,
             });
         }
@@ -36,14 +36,14 @@ export default {
         let _self = this;
         fetch(_url, _opt)
             .then(function (response) {
-                response.json().then(function (_json) { 
+                response.json().then(function (_json) {
                     //ok 范围 200-299  
                     if (response.ok) {
                         _self._timeoutCall(function () {
                             if (_opt.defaultEventDispatch !== false) {
                                 _self.mem.commit('changeApiLoading', {
                                     status: 0,//1=loading
-                                    loadingMessage: undefined,
+                                    loadingMessage: _opt.loadingMessage,
                                     url: undefined,
                                 });
                             }
@@ -56,7 +56,7 @@ export default {
                             let _dispatch = { err: response, json: _json };
                             _self.mem.commit('changeApiLoading', {
                                 status: -1,//1=loading
-                                loadingMessage: undefined,
+                                loadingMessage: _opt.loadingMessage,
                                 url: undefined,
                             });
                             if (_fault) {
@@ -65,12 +65,12 @@ export default {
                         });
                     }
                 });
-            }).catch(function (err) { 
+            }).catch(function (err) {
                 _self._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
                     _self.mem.commit('changeApiLoading', {
                         status: -1,//1=loading
-                        loadingMessage: undefined,
+                        loadingMessage: _opt.loadingMessage,
                         url: undefined,
                     });
                     if (_fault) {
