@@ -1,6 +1,7 @@
 export default {
-    callUsertimeOut: 100,
+    callUsertimeOut: 1000,
     store: undefined,
+    mem: undefined,
 
     fetch: function (url, _opt, _then, _fault) {
         _opt.headers = {
@@ -25,59 +26,58 @@ export default {
 
     _callFetch(_url, _opt, _then, _fault) {
         if (_opt.defaultEventDispatch != false) {
-            this.store.state.apiLoading = {
+            this.mem.commit('changeApiLoading', {
                 status: 1,//1=loading
                 loadingMessage: _opt ? _opt.loadingMessage : undefined,
                 url: _url,
-            };
+            });
         }
 
+        let _self = this;
         fetch(_url, _opt)
             .then(function (response) {
-                response.json().then(function (_json) {
-                    // MCache.APICalling = false;
+                response.json().then(function (_json) { 
                     //ok 范围 200-299  
                     if (response.ok) {
-                        this._timeoutCall(function () {
-                            if (_then) {
-                                _then(_json);
-                            }
+                        _self._timeoutCall(function () {
                             if (_opt.defaultEventDispatch !== false) {
-                                this.store.state.apiLoading = {
+                                _self.mem.commit('changeApiLoading', {
                                     status: 0,//1=loading
                                     loadingMessage: undefined,
                                     url: undefined,
-                                };
+                                });
                             }
-                        }.bind(this));
+                            if (_then) {
+                                _then(_json);
+                            }
+                        });
                     } else {
-                        this._timeoutCall(function () {
+                        _self._timeoutCall(function () {
                             let _dispatch = { err: response, json: _json };
-                            this.store.state.apiLoading = {
+                            _self.mem.commit('changeApiLoading', {
                                 status: -1,//1=loading
                                 loadingMessage: undefined,
                                 url: undefined,
-                            };
+                            });
                             if (_fault) {
                                 _fault(_dispatch);
                             }
-                        }.bind(this));
+                        });
                     }
-                }.bind(this));
-            }.bind(this)).catch(function (err) {
-                // MCache.APICalling = false;
-                this._timeoutCall(function () {
+                });
+            }).catch(function (err) { 
+                _self._timeoutCall(function () {
                     let _dispatch = { err: "failt to connect " + _url };
-                    this.store.state.apiLoading = {
+                    _self.mem.commit('changeApiLoading', {
                         status: -1,//1=loading
                         loadingMessage: undefined,
                         url: undefined,
-                    };
+                    });
                     if (_fault) {
                         _fault(_dispatch);
                     }
-                }.bind(this));
-            }.bind(this));
+                });
+            });
     },
 
     download_file: undefined,

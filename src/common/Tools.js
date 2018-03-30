@@ -24,15 +24,45 @@ export default {
         toastr.error(errorMsg + '<br/>' + _err);
     },
 
-    connectServer: function (_vue) {
-        _vue.$myfetch.fetch("/products", { method: 'GET' }, function (json) {
-            json.rows.forEach(function (_product) {
-                _vue.$mem.products[_product.name] = _product;
+    initServer: function (_myfetch, _mem) {
+        let _self = this;
+        _myfetch.fetch("/products", { method: 'GET' }, function (_products) {
+
+            _products.rows.forEach(function (_product) {
+                _mem.state.products[_product.name] = _product;
             });
-            _vue.$store.commit('changeServerConnected', true);
+            _self.initConfig(_myfetch, _mem);
+
         }, function (_errDispatch) {
-            _vue.$store.commit('changeServerConnected', false);
+            _mem.commit('changeServerConnected', false);
+            _mem.commit('changeServerInit', -1);
+
         });
+    },
+
+    initConfig(_myfetch, _mem) {
+        _myfetch.fetch("/configs", { method: 'GET' }, function (_configs) {
+            _mem.commit('changeServerConnected', true);
+
+            if (_configs.product && _configs.com) {
+                let _currentProduct = _mem.state.products[_configs.product];
+                _currentProduct.isCurrent = true;
+                _mem.commit('changeCurrentProduct', _currentProduct);
+                _mem.commit('changeCurrentCom', _configs.com);
+                _mem.commit('changeServerInit', 1);
+            } else {
+                _mem.commit('changeServerInit', 0);
+            }
+
+        }, function (_errDispatch) {
+            _mem.commit('changeServerConnected', false);
+            _mem.commit('changeServerInit', -1);
+
+        });
+    },
+
+    connectServer: function (_vue) {
+        this.initServer(_vue.$myfetch, _vue.$mem);
     },
 
     back: function (_vue) {

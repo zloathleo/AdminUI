@@ -27,10 +27,10 @@ export default {
     name: 'VirtualLayer',
     computed: {
         isApiLoadStart: function () {
-            return this.$store.state.apiLoading.status == 1;
+            return this.$mem.state.apiLoading.status == 1;
         },
         isServerConnected: function () {
-            return !this.$store.state.serverConnected && !(this.$store.state.apiLoading.status == 1);
+            return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
         },
     },
     methods: {

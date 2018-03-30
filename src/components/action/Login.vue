@@ -34,7 +34,7 @@ export default {
                     $(_inputDom).removeClass('is-invalid');
                     _self.$refs.invalidMessage.style.display = 'none';
 
-                    _self.$store.commit('changeLogin', true);
+                    _self.$mem.commit('changeLogin', true);
                     _self.$eventHub.$emit('changeLogin', true);
                     _self.$tools.toastrSuccess('login success.');
 
@@ -56,22 +56,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-.my-card {
-  max-width: 320px;
-  padding: 24px 24px;
-  margin: 24px auto 24px;
-  i {
-    margin: 0 auto 24px;
-  }
-  input {
-    margin-bottom: 10px;
-  }
-  .invalid-message {
-    display: none;
-    width: 100%;
-    margin-bottom: 0.5rem;
-    font-size: 80%;
-    color: #ee5f5b;
-  }
-}
+ 
 </style>

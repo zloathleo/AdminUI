@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-primary">
-        {{$store.state.serverConnected}}
+        {{$mem.state.serverConnected}}
     </footer>
 </template>
 

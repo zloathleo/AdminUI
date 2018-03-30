@@ -2,18 +2,24 @@
   <div>
     <Breadcrumb />
     <div id="MainContent" class="main-content">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view v-if="$mem.state.serverInit === 1" />
+        <ConfigPage v-else-if="$mem.state.serverInit === 0" />
+        <div v-else-if="$mem.state.serverInit === -1" />
+      </transition>
     </div>
   </div>
 </template>
 
 <script>  
 import Breadcrumb from './Breadcrumb.vue';
+import ConfigPage from '../action/ConfigPage.vue';
+
 export default {
   name: 'MainContent',
-  components: { Breadcrumb },
+  components: { Breadcrumb, ConfigPage },
   mounted() {
-    this.changeHeight(this.$store.state.isLogin);
+    this.changeHeight(this.$mem.state.isLogin);
 
     let _self = this;
     this.$eventHub.$on("changeLogin", function (_isLogin) {
@@ -23,10 +29,6 @@ export default {
   },
   methods: {
     changeHeight: function (_isLogin) {
-      // let _padding = (42 + 54 + 16 + 22);
-      // if (_isLogin) {
-      //   _padding = 42 + 54 + 36 + 5 + 22;
-      // }
       let _padding = (42 + 54 + 16 + 0);
       if (_isLogin) {
         _padding = 42 + 54 + 36 + 5 + 0;
@@ -50,7 +52,6 @@ export default {
 }
 
 .main-content::-webkit-scrollbar-track {
-  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   background-color: #f5f5f5;
 }
@@ -61,7 +62,6 @@ export default {
 
 .main-content::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgba(0, 0, 0, 0.2);
 }
 </style>

@@ -2,6 +2,10 @@ html {
     overflow: hidden;
 }
 
+body {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
@@ -74,6 +78,28 @@ input::-webkit-inner-spin-button {
     line-height: 1.5;
     border-radius: 0;
     min-width: 4rem;
+}
+
+.my-card {
+    max-width: 320px;
+    padding: 24px 24px;
+    margin: 24px auto 24px;
+}
+
+.my-card i {
+    margin: 0 auto 24px;
+}
+
+.my-card input {
+    margin-bottom: 10px;
+}
+
+.my-card .invalid-message {
+    display: none;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-size: 80%;
+    color: #ee5f5b;
 }
 
 .hvr-fade {

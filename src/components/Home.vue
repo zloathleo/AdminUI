@@ -9,13 +9,9 @@
                     <DeviceItem :init-data='item' />
                 </div>
             </div>
-            <transition name="fade">
-                <RowActionBar v-if="showRowActionBar(row.title)" :row-title="row.title" />
-            </transition>
-
-            <!-- <RowActionBar v-if="$store.state.isLogin" :row-title="row.title" /> -->
+            <RowActionBar v-if="showRowActionBar(row.title)" :row-title="row.title" />
         </div>
-        <ActionBar v-show="$store.state.isLogin" />
+        <ActionBar v-show="$mem.state.isLogin" />
     </div>
 </template>
 
@@ -33,8 +29,6 @@ export default {
         }
     },
     mounted() {
-        this.loadDashboard();
-
         let _self = this;
         this.$eventHub.$on("dashboardUpdate", function (json) {
             if (json) {
@@ -42,11 +36,12 @@ export default {
                 console.log(_self.showStatus);
             }
         });
+        this.loadDashboard();
     },
     methods: {
-        clickRow: function (_event, _title) { 
+        clickRow: function (_event, _title) {
             _event.stopPropagation();
-            if (this.$store.state.isLogin) {
+            if (this.$mem.state.isLogin) {
 
                 let _isShow = this.showStatus[_title];
                 //reset
@@ -69,9 +64,6 @@ export default {
         loadDashboard() {
             let _self = this;
             this.$myfetch.fetch("/dashboard", { method: 'GET' }, function (json) {
-                let _currentProduct = _self.$mem.products[json.product];
-                _self.$store.commit('changeCurrentProduct', _currentProduct);
-
                 _self.data = json;
             });
         },

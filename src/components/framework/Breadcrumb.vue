@@ -26,7 +26,6 @@ export default {
             } else {
                 return new Object();
             }
-
         }
     },
     methods: {

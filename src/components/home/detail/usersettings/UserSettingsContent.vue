@@ -7,7 +7,7 @@
             </div> 
 
         </div>
-        <ActionBar :init-data="initData.name" />
+        <ActionBar :device-name="initData.name" />
     </div>
 </template>
 

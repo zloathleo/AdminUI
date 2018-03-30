@@ -6,7 +6,7 @@
         <input ref="inputAddress" type="text" class="form-control" placeholder="Device Address" required autofocus>
 
         <div ref="invalidMessage" class="invalid-message">Sorry, the device address range is 1-127. Try another?</div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickLogin">Write</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickWrite">Write</button>
 
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
             }
             return false;
         },
-        clickLogin: function (event) {
+        clickWrite: function (event) {
             let _inputDom = this.$refs.inputAddress;
             let _inputValue = _inputDom.value;
             if (this.invalidInput(_inputValue)) {
@@ -40,23 +40,5 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.my-card {
-  max-width: 320px;
-  padding: 24px 24px;
-  margin: 24px auto 24px;
-  i {
-    margin: 0 auto 24px;
-  }
-  input {
-    margin-bottom: 10px;
-  }
-  .invalid-message {
-    display: none;
-    width: 100%;
-    margin-bottom: 0.5rem;
-    font-size: 80%;
-    color: #ee5f5b;
-  }
-}
+<style scoped lang="less"> 
 </style>

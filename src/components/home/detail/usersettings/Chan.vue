@@ -10,7 +10,7 @@
                     <div class="dropdown-divider"></div>
                     <div class="col-12">
                         <div class="row">
-                            <File v-for="_file, index in initData.files" :init-data='_file'>
+                            <File v-for="_file, index in initData.files" :key="index" :init-data='_file'>
                             </File>
                         </div>
                     </div>

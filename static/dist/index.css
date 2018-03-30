@@ -1,6 +1,10 @@
-/*! This file is created at 2018-03-27T00:48:36.603Z */
+/*! This file is created at 2018-03-30T02:00:20.197Z */
 html {
     overflow: hidden;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif !important;
 }
 
 input::-webkit-outer-spin-button,
@@ -77,6 +81,28 @@ input::-webkit-inner-spin-button {
     min-width: 4rem;
 }
 
+.my-card {
+    max-width: 320px;
+    padding: 24px 24px;
+    margin: 24px auto 24px;
+}
+
+.my-card i {
+    margin: 0 auto 24px;
+}
+
+.my-card input {
+    margin-bottom: 10px;
+}
+
+.my-card .invalid-message {
+    display: none;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    font-size: 80%;
+    color: #ee5f5b;
+}
+
 .hvr-fade {
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -101,5 +127,24 @@ input::-webkit-inner-spin-button {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}@font-face {
+    font-family: 'Open Sans';
+    font-weight: 300;
+    font-style: normal;
+    src: url(05c88e41fc725cb1974b99534a8f8357.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-style: normal;
+    src: url(c8ffdeb3144d5055756ef01ef98e8486.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: 700;
+    font-style: normal;
+    src: url(f9fc9780feed3b7444ba6277f067c7f5.woff) format('woff');
 }
 /*# sourceMappingURL=index.css.map*/

@@ -1,9 +1,13 @@
 <template>
     <div>
+
         <div class="row">
             <Summary :init-data='data' />
-            <router-view :init-data='data'></router-view>
+            <transition name="fade" mode="out-in">
+                <router-view :init-data='data'></router-view>
+            </transition>
         </div>
+
     </div>
 </template>
 

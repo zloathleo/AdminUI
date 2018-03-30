@@ -9,8 +9,7 @@ import UserSettingsContent from '../components/home/detail/usersettings/UserSett
 
 import Login from '../components/action/Login.vue';
 import SetDeviceAddress from '../components/action/SetDeviceAddress.vue';
-import SetCom from '../components/action/SetCom.vue';
-import SetHost from '../components/action/SetHost.vue';
+import ConfigPage from '../components/action/ConfigPage.vue';
 
 Vue.use(VueRouter);
 
@@ -32,7 +31,7 @@ export default new VueRouter({
     { name: 'alarm', path: '/alarm', component: Alarm },
     { name: 'login', path: '/login', component: Login },
     { name: 'set_device_address', path: '/set_device_address', component: SetDeviceAddress },
-    { name: 'set_com', path: '/set_com', component: SetCom },
-    { name: 'set_host', path: '/set_host', component: SetHost }
+
+    { name: 'set_config', path: '/set_config', component: ConfigPage }, 
   ]
 })
