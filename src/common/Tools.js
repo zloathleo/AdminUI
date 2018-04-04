@@ -24,23 +24,28 @@ export default {
         toastr.error(errorMsg + '<br/>' + _err);
     },
 
-    initServer: function (_myfetch, _mem) {
+    initServer: function (_myfetch, _mem, _succ, _fault) {
         let _self = this;
         _myfetch.fetch("/products", { method: 'GET', loadingMessage: "init server" }, function (_products) {
 
             _products.rows.forEach(function (_product) {
                 _mem.state.products[_product.name] = _product;
             });
-            _self.initConfig(_myfetch, _mem);
+            _self.initConfig(_myfetch, _mem, _succ, _fault);
 
         }, function (_errDispatch) {
             _mem.commit('changeServerConnected', false);
-            _mem.commit('changeServerInit', -1);
-
+            _self.toastrError(_errDispatch, 'connect server fault.');
+            _mem.commit("changeInitConfig", 1);
+            _mem.commit('changeServerInit', 0);
+            if (_fault) {
+                _fault(_errDispatch);
+            }
         });
     },
 
-    initConfig(_myfetch, _mem) {
+    initConfig(_myfetch, _mem, _succ, _fault) {
+        let _self = this;
         _myfetch.fetch("/configs", { method: 'GET', loadingMessage: "init server" }, function (_configs) {
             _mem.commit('changeServerConnected', true);
 
@@ -56,13 +61,18 @@ export default {
 
         }, function (_errDispatch) {
             _mem.commit('changeServerConnected', false);
-            _mem.commit('changeServerInit', -1);
+            _self.toastrError(_errDispatch, 'connect server fault.');
+            _mem.commit("changeInitConfig", 1);
+            _mem.commit('changeServerInit', 0);
+            if (_fault) {
+                _fault(_errDispatch);
+            }
 
         });
     },
 
-    connectServer: function (_vue) {
-        this.initServer(_vue.$myfetch, _vue.$mem);
+    connectServer: function (_vue, _succ, _fault) {
+        this.initServer(_vue.$myfetch, _vue.$mem, _succ, _fault);
     },
 
     back: function (_vue) {
@@ -83,6 +93,6 @@ export default {
             return "#f89406";
         }
         return "#7A8288";
-    }, 
+    },
 
 }

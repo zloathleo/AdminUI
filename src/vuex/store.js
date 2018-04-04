@@ -20,7 +20,7 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        changeServerhost(state, value) {
+        changeServerHost(state, value) {
             state.serverhost = value;
         },
   

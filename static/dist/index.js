@@ -1,4 +1,4 @@
-/*! This file is created at 2018-04-02T06:43:53.376Z */
+/*! This file is created at 2018-04-04T01:06:59.474Z */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -12488,7 +12488,7 @@ const vuexLocal = new __WEBPACK_IMPORTED_MODULE_2_vuex_persist___default.a({
 
     },
     mutations: {
-        changeServerhost(state, value) {
+        changeServerHost(state, value) {
             state.serverhost = value;
         },
   
@@ -13164,12 +13164,26 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'Chan',
     props: {
         initData: Object
-    }
+    },
+    data: function data() {
+        return {
+            progressbarStyle: {
+                width: this.initData.fq + "%",
+                height: "18px"
+            }
+        };
+    },
+    methods: {}
 };
 
 /***/ }),
@@ -13861,8 +13875,13 @@ exports.default = {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
 
-                this.$tools.toastrSuccess('change server host success.');
-                this.$tools.back(this);
+                this.$store.commit("changeServerHost", _inputValue);
+
+                var _self = this;
+                this.$tools.connectServer(this);
+
+                // this.$tools.toastrSuccess('change server host success.');
+                // this.$tools.back(this);
             } else {
                 $(_inputDom).addClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'block';
@@ -14067,7 +14086,7 @@ exports.default = {
       _self.changeHeight(_isLogin);
     });
 
-    setInterval(this.refreshPage, 1000);
+    setInterval(this.refreshPage, 1000 * 1);
   },
 
   methods: {
@@ -14247,9 +14266,9 @@ exports.default = {
         isApiLoadStart: function isApiLoadStart() {
             return this.$mem.state.apiLoading.status == 1;
         },
-        isServerConnected: function isServerConnected() {
-            return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
-        },
+        // isServerConnected: function () {
+        //     return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
+        // },
         loadingMessage: function loadingMessage() {
             var _msg = this.$mem.state.apiLoading.loadingMessage;
             if (_msg) {
@@ -14353,10 +14372,6 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   store: __WEBPACK_IMPORTED_MODULE_2__vuex_store__["default"],
   components: { 'root': __WEBPACK_IMPORTED_MODULE_7__Root_vue__["default"] }
 });
-
-
-
-
 
 /***/ }),
 /* 38 */
@@ -17076,23 +17091,28 @@ module.exports = function(module) {
         toastr.error(errorMsg + '<br/>' + _err);
     },
 
-    initServer: function (_myfetch, _mem) {
+    initServer: function (_myfetch, _mem, _succ, _fault) {
         let _self = this;
         _myfetch.fetch("/products", { method: 'GET', loadingMessage: "init server" }, function (_products) {
 
             _products.rows.forEach(function (_product) {
                 _mem.state.products[_product.name] = _product;
             });
-            _self.initConfig(_myfetch, _mem);
+            _self.initConfig(_myfetch, _mem, _succ, _fault);
 
         }, function (_errDispatch) {
             _mem.commit('changeServerConnected', false);
-            _mem.commit('changeServerInit', -1);
-
+            _self.toastrError(_errDispatch, 'connect server fault.');
+            _mem.commit("changeInitConfig", 1);
+            _mem.commit('changeServerInit', 0);
+            if (_fault) {
+                _fault(_errDispatch);
+            }
         });
     },
 
-    initConfig(_myfetch, _mem) {
+    initConfig(_myfetch, _mem, _succ, _fault) {
+        let _self = this;
         _myfetch.fetch("/configs", { method: 'GET', loadingMessage: "init server" }, function (_configs) {
             _mem.commit('changeServerConnected', true);
 
@@ -17108,13 +17128,18 @@ module.exports = function(module) {
 
         }, function (_errDispatch) {
             _mem.commit('changeServerConnected', false);
-            _mem.commit('changeServerInit', -1);
+            _self.toastrError(_errDispatch, 'connect server fault.');
+            _mem.commit("changeInitConfig", 1);
+            _mem.commit('changeServerInit', 0);
+            if (_fault) {
+                _fault(_errDispatch);
+            }
 
         });
     },
 
-    connectServer: function (_vue) {
-        this.initServer(_vue.$myfetch, _vue.$mem);
+    connectServer: function (_vue, _succ, _fault) {
+        this.initServer(_vue.$myfetch, _vue.$mem, _succ, _fault);
     },
 
     back: function (_vue) {
@@ -17135,7 +17160,7 @@ module.exports = function(module) {
             return "#f89406";
         }
         return "#7A8288";
-    }, 
+    },
 
 });
 
@@ -21383,7 +21408,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
           _c("li", { staticClass: "detail-item-li" }, [
             _c("span", [_vm._v("FC")]),
@@ -21463,6 +21488,19 @@ var render = function() {
             _c("span", { staticClass: "value" }, [
               _vm._v(_vm._s(_vm.initData.fq) + "%")
             ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "detail-item-li" }, [
+            _c("div", {
+              staticClass: "progress-bar",
+              style: _vm.progressbarStyle,
+              attrs: {
+                role: "progressbar",
+                "aria-valuenow": "100",
+                "aria-valuemin": "0",
+                "aria-valuemax": "100"
+              }
+            })
           ])
         ])
       ])
@@ -24272,15 +24310,17 @@ var render = function() {
         _vm._v("the input is error. Try another?")
       ]),
       _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn-link",
-          attrs: { href: "#" },
-          on: { click: _vm.clickConfig }
-        },
-        [_vm._v("change system config")]
-      )
+      _vm.$mem.state.serverConnected
+        ? _c(
+            "a",
+            {
+              staticClass: "btn-link",
+              attrs: { href: "#" },
+              on: { click: _vm.clickConfig }
+            },
+            [_vm._v("change system config")]
+          )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c(
@@ -25379,52 +25419,7 @@ var render = function() {
             ])
           ]
         )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isServerConnected,
-              expression: "isServerConnected"
-            }
-          ],
-          staticClass: "my-overlay"
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "alert alert-dismissible alert-danger notconnected"
-            },
-            [
-              _vm._v(
-                "\n            server " +
-                  _vm._s(_vm.$store.state.serverhost) +
-                  " connect fault.\n            "
-              ),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "cursor-pointer",
-                  on: { click: _vm.clickReconnectServer }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-refresh" }),
-                  _vm._v(
-                    "\n                click reconnect server.\n            "
-                  )
-                ]
-              )
-            ]
-          )
-        ]
-      )
+      ])
     ],
     1
   )

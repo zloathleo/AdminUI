@@ -11,7 +11,7 @@
             </div>
         </transition>
 
-        <div v-show="isServerConnected" class="my-overlay">
+        <!-- <div v-show="isServerConnected" class="my-overlay">
             <div class="alert alert-dismissible alert-danger notconnected">
                 server {{$store.state.serverhost}} connect fault.
                 <br/>
@@ -20,7 +20,7 @@
                     click reconnect server.
                 </a>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -31,9 +31,9 @@ export default {
         isApiLoadStart: function () {
             return this.$mem.state.apiLoading.status == 1;
         },
-        isServerConnected: function () {
-            return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
-        },
+        // isServerConnected: function () {
+        //     return !this.$mem.state.serverConnected && !(this.$mem.state.apiLoading.status == 1);
+        // },
         loadingMessage: function () {
             let _msg = this.$mem.state.apiLoading.loadingMessage;
             if (_msg) {

@@ -1,0 +1,118 @@
+{
+    "addr": 1,
+    "channels": [
+        {
+            "enable": 1,
+            "file": 1,
+            "files": [
+                {
+                    "ac": {
+                        "ac_gain": 1,
+                        "ac_on_th": 1999,
+                        "ac_on_tl": 600,
+                        "fc": 12,
+                        "max": 1600,
+                        "min": 300
+                    },
+                    "dc": {
+                        "dc_gain": 1,
+                        "dc_on_th": 1999,
+                        "dc_on_tl": 0
+                    },
+                    "frequency": {
+                        "freq_on_th": 123,
+                        "freq_on_tl": 0
+                    },
+                    "name": "filea",
+                    "public": {
+                        "ffrt": 3,
+                        "otd": 1
+                    }
+                },
+                {
+                    "ac": {
+                        "ac_gain": 1,
+                        "ac_on_th": 1999,
+                        "ac_on_tl": 600,
+                        "fc": 89,
+                        "max": 1600,
+                        "min": 300
+                    },
+                    "dc": {
+                        "dc_gain": 1,
+                        "dc_on_th": 1999,
+                        "dc_on_tl": 0
+                    },
+                    "frequency": {
+                        "freq_on_th": 123,
+                        "freq_on_tl": 0
+                    },
+                    "name": "fileb",
+                    "public": {
+                        "ffrt": 3,
+                        "otd": 1
+                    }
+                }
+            ],
+            "name": "ch1",
+            "type": 1
+        },
+        {
+            "enable": 1,
+            "file": 1,
+            "files": [
+                {
+                    "ac": {
+                        "ac_gain": 1,
+                        "ac_on_th": 1999,
+                        "ac_on_tl": 600,
+                        "fc": 89,
+                        "max": 1600,
+                        "min": 300
+                    },
+                    "dc": {
+                        "dc_gain": 1,
+                        "dc_on_th": 1999,
+                        "dc_on_tl": 0
+                    },
+                    "frequency": {
+                        "freq_on_th": 123,
+                        "freq_on_tl": 0
+                    },
+                    "name": "filea",
+                    "public": {
+                        "ffrt": 3,
+                        "otd": 1
+                    }
+                },
+                {
+                    "ac": {
+                        "ac_gain": 1,
+                        "ac_on_th": 1999,
+                        "ac_on_tl": 600,
+                        "fc": 89,
+                        "max": 1600,
+                        "min": 300
+                    },
+                    "dc": {
+                        "dc_gain": 1,
+                        "dc_on_th": 1999,
+                        "dc_on_tl": 0
+                    },
+                    "frequency": {
+                        "freq_on_th": 123,
+                        "freq_on_tl": 0
+                    },
+                    "name": "fileb",
+                    "public": {
+                        "ffrt": 3,
+                        "otd": 1
+                    }
+                }
+            ],
+            "name": "ch2",
+            "type": 1
+        }
+    ],
+    "name": "A1"
+}

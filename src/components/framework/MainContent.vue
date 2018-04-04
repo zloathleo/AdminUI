@@ -26,7 +26,7 @@ export default {
       _self.changeHeight(_isLogin);
     });
 
-    setInterval(this.refreshPage, 1000);
+    setInterval(this.refreshPage, 1000 * 1);
 
   },
   methods: {

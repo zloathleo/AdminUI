@@ -40,6 +40,3 @@ new Vue({
   store,
   components: { 'root': Root }
 });
-
-
-

@@ -6,7 +6,7 @@
             <label>change server host</label>
             <input ref="inputDom" type="text" class="form-control" placeholder="Server Host" :value="$store.state.serverhost" required autofocus/>
             <div ref="invalidMessage" class="invalid-message">the input is error. Try another?</div>
-            <a href="#" class="btn-link" v-on:click="clickConfig">change system config</a>
+            <a href="#" class="btn-link" v-on:click="clickConfig" v-if="$mem.state.serverConnected">change system config</a>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" v-on:click="clickSubmit">Submit</button>
     </div>
@@ -35,8 +35,13 @@ export default {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
 
-                this.$tools.toastrSuccess('change server host success.');
-                this.$tools.back(this);
+                this.$store.commit("changeServerHost", _inputValue);
+
+                let _self = this;
+                this.$tools.connectServer(this);
+
+                // this.$tools.toastrSuccess('change server host success.');
+                // this.$tools.back(this);
             } else {
                 $(_inputDom).addClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'block';
