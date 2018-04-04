@@ -4,7 +4,7 @@
 
         <div class="form-group">
             <label>change server host</label>
-            <input ref="inputDom" type="text" class="form-control" placeholder="Server Host" required autofocus/>
+            <input ref="inputDom" type="text" class="form-control" placeholder="Server Host" :value="$store.state.serverhost" required autofocus/>
             <div ref="invalidMessage" class="invalid-message">the input is error. Try another?</div>
             <a href="#" class="btn-link" v-on:click="clickConfig">change system config</a>
         </div>

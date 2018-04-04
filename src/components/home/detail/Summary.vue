@@ -16,7 +16,7 @@
                         <div class="text-label text-muted">Addr</div>
                     </div>
                     <div class="col-6">
-                        <div class="text-value font-w300">{{initData.s_deviceMessage}}</div>
+                        <div class="text-value font-w300">{{getStatusMsg()}}</div>
                         <div class="text-label text-muted">Status</div>
                     </div>
                 </div>
@@ -36,13 +36,13 @@ export default {
     },
     methods: {
         getStatusMsg: function () {
-            if (this.initData.statusValue) {
-                return this.initData.statusValue.ch2Color;
-            } else {
-                return '#989898';
+            let currentStatus = this.$mem.state.currentStatus;
+            if (currentStatus && currentStatus.value && currentStatus.value.status) {
+                let _deviceValue = currentStatus.value.status;
+                return _deviceValue === 1 ? "Online" : "Offline";
             }
         },
-    }, 
+    },
 }
 </script>
 

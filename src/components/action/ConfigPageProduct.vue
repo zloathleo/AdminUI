@@ -52,7 +52,7 @@ export default {
                 return _currentCom === _com;
             } else {
                 return false;
-            } 
+            }
         },
         clickPageChangeServerHost: function (event) {
             this.$mem.commit("changeInitConfig", 1);
@@ -64,21 +64,27 @@ export default {
             _inputs.each(
                 function (index, _input) {
                     if (_input.checked) {
+                        let _inputCom = _self.$refs.inputCom;
+                        let _inputComValue = _inputCom.value;
+
                         var form = new URLSearchParams();
-                        form.set('value', _input.id);
-                        _self.$myfetch.fetch('/configs/product', { method: 'PUT', body: form }, function (json) {
+                        form.set('product', _input.id);
+                        form.set('com', _inputComValue);
 
-                            let _inputCom = _self.$refs.inputCom;
-                            let _inputComValue = _inputCom.value;
-                            var form2 = new URLSearchParams();
-                            form2.set('value', _inputComValue);
+                        _self.$myfetch.fetch('/configs', { method: 'PUT', body: form }, function (json) {
+                            _self.$tools.initConfig(_self.$myfetch, _self.$mem); 
+                            _self.$tools.toastrSuccess('save system config success.');
+                            _self.$tools.back(_self);
 
-                            _self.$myfetch.fetch('/configs/com', { method: 'PUT', body: form2 }, function (json2) {
-                                _self.$tools.initConfig(_self.$myfetch, _self.$mem);
+                            // var form2 = new URLSearchParams();
+                            // form2.set('value', _inputComValue);
 
-                                _self.$tools.toastrSuccess('save system config success.');
-                                _self.$tools.back(_self);
-                            });
+                            // _self.$myfetch.fetch('/configs/com', { method: 'PUT', body: form2 }, function (json2) {
+                            //     _self.$tools.initConfig(_self.$myfetch, _self.$mem);
+
+                            //     _self.$tools.toastrSuccess('save system config success.');
+                            //     _self.$tools.back(_self);
+                            // });
 
                         });
                     }

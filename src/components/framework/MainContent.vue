@@ -26,8 +26,42 @@ export default {
       _self.changeHeight(_isLogin);
     });
 
+    setInterval(this.refreshPage, 1000);
+
   },
   methods: {
+    refreshPage: function () {
+      //not ready
+      if (this.$mem.state.serverInit !== 1) {
+        return;
+      }
+      //busy
+      if (this.$mem.state.apiLoading.status === 1) {
+        return;
+      }
+
+      let _self = this;
+
+      let _currentRouteName = this.$store.state.currentRouteName;
+      let _device = this.$store.state.currentDeviceName;
+      if (_currentRouteName) {
+        let _names = _currentRouteName.split(".");
+        if (_names.length === 1 && _names[0] === "home") {
+          this.$myfetch.fetch("/status", { method: 'GET', defaultEventDispatch: false }, function (json) {
+            _self.$mem.commit('changeCurrentStatus', json);
+          });
+        } else if (_currentRouteName === "home.detail" && _device) {
+          this.$myfetch.fetch("/status/" + _device + "?type=1", { method: 'GET', defaultEventDispatch: false }, function (json) {
+            _self.$mem.commit('changeCurrentStatus', json);
+          });
+        } else if (_currentRouteName === "home.usersettings" && _device) {
+          this.$myfetch.fetch("/status/" + _device + "?type=0", { method: 'GET', defaultEventDispatch: false }, function (json) {
+            _self.$mem.commit('changeCurrentStatus', json);
+          });
+        }
+      }
+    },
+
     changeHeight: function (_isLogin) {
       let _padding = (42 + 54 + 16 + 0);
       if (_isLogin) {

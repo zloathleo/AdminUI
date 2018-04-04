@@ -18,6 +18,10 @@ export default new Vuex.Store({
         products: {},
         currentProduct: undefined,
         currentCom: "",
+
+        //当前状态
+        currentStatus: new Object(),
+
         currentUserSettingsData: undefined,
 
         isLogin: true,
@@ -50,6 +54,10 @@ export default new Vuex.Store({
         },
         changeCurrentCom(state, value) {
             state.currentCom = value;
+        },
+
+        changeCurrentStatus(state, value) {
+            state.currentStatus = value;
         },
         changeCurrentUserSettingsData(state, value) {
             state.currentUserSettingsData = value;

@@ -43,11 +43,11 @@ export default {
                 let type = 1;
                 this.$myfetch.fetch("/status/" + device + "?type=" + type, { method: 'GET' }, function (json) {
                     //待修改
-                    let _device_detail = json.value;
-                    if (_device_detail) {
-                        Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
-                    }
-                    _self.data = _device_detail;
+                    // let _device_detail = json.value;
+                    // if (_device_detail) {
+                    //     Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
+                    // }
+                    _self.data = json.value;
                     if (_next) {
                         _next();
                     }

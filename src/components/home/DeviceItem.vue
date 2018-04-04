@@ -21,8 +21,17 @@ export default {
       this.$router.push({ path: '/detail' });
     },
     getChannelColor: function (_chs, _index) {
-      let _ch = _chs[_index - 1];
-      return this.$tools.getChannelColor(_ch.status);
+      let channelStatus;
+      let deviceName = this.initData.name;
+      let currentAllStatus = this.$mem.state.currentStatus;
+      if (currentAllStatus) {
+        let _deviceValue = currentAllStatus.value;
+        if (_deviceValue && _deviceValue[deviceName] && _deviceValue[deviceName].channels) {
+          let _channels = _deviceValue[deviceName].channels;
+          channelStatus = _channels[_index - 1];
+        }
+      }
+      return this.$tools.getChannelColor(channelStatus);
     }
   }
 }
