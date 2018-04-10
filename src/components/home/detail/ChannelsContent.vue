@@ -1,19 +1,11 @@
 <template>
-    <div class="col-sm-8">
+    <div class="col-sm-8" v-if="getDeviceData() && getDeviceData().channels">
         <div class="row">
-
-            <div v-for="channel, index in initData.channels" class="col-12">
-                <Chan :init-data="channel" />
+            <div v-for="channel, index in getDeviceData().channels" class="col-12">
+                <Chan :init-data="channel" :index-data="index" />
             </div>
-
-            <!-- <div class="col-12">
-                <Chan :init-data='initData.ch1' />
-            </div>
-            <div class="col-12">
-                <Chan :init-data='initData.ch2' />
-            </div> -->
         </div>
-        <ActionBar :init-data='initData.name' />
+        <ActionBar :init-data='getDeviceData().name' />
     </div>
 </template>
 
@@ -23,10 +15,13 @@ import ActionBar from './ActionBar.vue';
 export default {
     name: 'ChannelsContent',
     components: { Chan, ActionBar },
-    props: {
-        initData: Object,
+    props: { 
     },
-
+    methods: {
+        getDeviceData: function () {
+            return this.$mem.state.currentStatus;
+        }
+    }
 }
 </script>
 

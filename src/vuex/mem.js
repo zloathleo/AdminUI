@@ -66,5 +66,16 @@ export default new Vuex.Store({
         changeLogin(state, value) {
             state.isLogin = value;
         },
+    },
+
+    getters: {
+        getCurrentStatusValue: (state) => (_key) => {
+            let currentStatus = state.currentStatus; 
+            if (currentStatus && currentStatus[_key] != undefined) {
+                return currentStatus[_key];
+            } else {
+                return "--";
+            }
+        }
     }
 });

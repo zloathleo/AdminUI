@@ -22,9 +22,9 @@ export default {
             this.$tools.toastrError('clickGo2Usersettings success.');
         },
         clickWrite: function (event) {
-            let _currentUserSettingsData = this.$mem.currentUserSettingsData;
+            let _currentUserSettingsData = this.$mem.state.currentUserSettingsData;
             var _self = this;
-
+ 
             var form = new URLSearchParams();
             form.set('content', JSON.stringify(_currentUserSettingsData));
             form.set('type', "u");

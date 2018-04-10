@@ -37,7 +37,7 @@ export default {
             _mem.commit('changeServerConnected', false);
             _self.toastrError(_errDispatch, 'connect server fault.');
             _mem.commit("changeInitConfig", 1);
-            _mem.commit('changeServerInit', 0);
+            _mem.commit('changeServerInit', 0); 
             if (_fault) {
                 _fault(_errDispatch);
             }
@@ -55,6 +55,11 @@ export default {
                 _mem.commit('changeCurrentProduct', _currentProduct);
                 _mem.commit('changeCurrentCom', _configs.com);
                 _mem.commit('changeServerInit', 1);
+
+                _self.toastrSuccess('connect server success.');
+                if (_succ) {
+                    _succ();
+                }
             } else {
                 _mem.commit('changeServerInit', 0);
             }
@@ -93,6 +98,7 @@ export default {
             return "#f89406";
         }
         return "#7A8288";
-    },
+    },  
+
 
 }

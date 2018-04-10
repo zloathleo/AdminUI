@@ -1,13 +1,13 @@
 <template>
-    <div v-if="initData" class="col-sm-8">
+    <div v-if="currentUserSettingsData && currentUserSettingsData.channels" class="col-sm-8">
         <div class="row">
 
-            <div v-for="channel, index in initData.channels" class="col-12">
+            <div v-for="channel, index in currentUserSettingsData.channels" class="col-12">
                 <Chan :init-data="channel" />
-            </div> 
+            </div>
 
         </div>
-        <ActionBar :device-name="initData.name" />
+        <ActionBar :device-name="currentUserSettingsData.name" />
     </div>
 </template>
 
@@ -20,9 +20,13 @@ export default {
     props: {
         initData: Object,
     },
-    computed: { 
+    computed: {
+        currentUserSettingsData: function () {
+            return this.$mem.state.currentUserSettingsData;
+        }
     },
-    beforeUpdate: function () { 
+    beforeUpdate: function () {
+
     },
 }
 </script>

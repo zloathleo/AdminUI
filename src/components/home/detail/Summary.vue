@@ -5,14 +5,14 @@
                 <div class="device-summary-bg-op">
                     <div class="text-center">
                         <i class="fa fa-3x fa-sun-o text-warning device-logo"></i>
-                        <h3 class="h4 text-uppercase text-white device-name">{{initData.name}}</h3>
+                        <h3 class="h4 text-uppercase text-white device-name">{{$mem.getters.getCurrentStatusValue("name")}}</h3>
                     </div>
                 </div>
             </div>
             <div class="summary-content">
                 <div class="row text-center">
                     <div class="col-6">
-                        <div class="text-value font-w300">{{initData.addr}}</div>
+                        <div class="text-value font-w300">{{$mem.getters.getCurrentStatusValue("addr")}}</div>
                         <div class="text-label text-muted">Addr</div>
                     </div>
                     <div class="col-6">
@@ -32,14 +32,14 @@ export default {
     name: 'Summary',
     components: { Comment },
     props: {
-        initData: Object,
     },
     methods: {
         getStatusMsg: function () {
-            let currentStatus = this.$mem.state.currentStatus;
-            if (currentStatus && currentStatus.value && currentStatus.value.status) {
-                let _deviceValue = currentStatus.value.status;
-                return _deviceValue === 1 ? "Online" : "Offline";
+            let v = this.$mem.getters.getCurrentStatusValue("status"); 
+            if (v === "--") {
+                return "--";
+            } else {
+                return v === 1 ? "Online" : "Offline";
             }
         },
     },

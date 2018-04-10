@@ -23,7 +23,7 @@ MyFetch.store = store;
 MyFetch.mem = mem;
 
 // 全局钩子
-router.afterEach((to, from) => {
+router.afterEach((to, from) => { 
   store.commit('changeRouteName', [from.name, to.name]);
 });
 

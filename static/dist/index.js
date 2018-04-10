@@ -1,4 +1,4 @@
-/*! This file is created at 2018-04-04T01:06:59.474Z */
+/*! This file is created at 2018-04-09T07:35:14.700Z */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -12634,9 +12634,8 @@ exports.default = {
       var deviceName = this.initData.name;
       var currentAllStatus = this.$mem.state.currentStatus;
       if (currentAllStatus) {
-        var _deviceValue = currentAllStatus.value;
-        if (_deviceValue && _deviceValue[deviceName] && _deviceValue[deviceName].channels) {
-          var _channels = _deviceValue[deviceName].channels;
+        if (currentAllStatus && currentAllStatus[deviceName] && currentAllStatus[deviceName].channels) {
+          var _channels = currentAllStatus[deviceName].channels;
           channelStatus = _channels[_index - 1];
         }
       }
@@ -12858,15 +12857,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: 'DetailPage',
-    data: function data() {
-        return {
-            data: {
-                name: '--',
-                ch1: {},
-                ch2: {}
-            }
-        };
-    },
     components: { Summary: _Summary2.default },
     mounted: function mounted() {
         var routeName = this.$route.name;
@@ -12889,7 +12879,8 @@ exports.default = {
                     // if (_device_detail) {
                     //     Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
                     // }
-                    _self.data = json.value;
+                    // _self.data = json.value;
+                    _self.$mem.commit('changeCurrentStatus', json.value);
                     if (_next) {
                         _next();
                     }
@@ -12897,21 +12888,18 @@ exports.default = {
             } else if ("home.usersettings" == routeName) {
                 var _type = "u";
                 this.$myfetch.fetch('/settings/' + device + '?type=' + _type, { method: 'GET' }, function (json) {
-                    _self.data = json;
-                    _self.$mem.currentUserSettingsData = json;
+                    _self.$mem.commit('changeCurrentUserSettingsData', json);
                     if (_next) {
                         _next();
                     }
                 }, function (_errDispatch) {
                     _self.$tools.toastrError(_errDispatch, 'read device ' + device + ' usersettings fault.');
-                    _self.$mem.currentUserSettingsData = undefined;
+                    _self.$mem.commit('changeCurrentUserSettingsData', undefined);
                 });
             }
         }
     }
 }; //
-//
-//
 //
 //
 //
@@ -12943,15 +12931,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     name: 'Summary',
     components: { Comment: _Comment2.default },
-    props: {
-        initData: Object
-    },
+    props: {},
     methods: {
         getStatusMsg: function getStatusMsg() {
-            var currentStatus = this.$mem.state.currentStatus;
-            if (currentStatus && currentStatus.value && currentStatus.value.status) {
-                var _deviceValue = currentStatus.value.status;
-                return _deviceValue === 1 ? "Online" : "Offline";
+            var v = this.$mem.getters.getCurrentStatusValue("status");
+            if (v === "--") {
+                return "--";
+            } else {
+                return v === 1 ? "Online" : "Offline";
             }
         }
     }
@@ -13084,22 +13071,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     name: 'ChannelsContent',
     components: { Chan: _Chan2.default, ActionBar: _ActionBar2.default },
-    props: {
-        initData: Object
+    props: {},
+    methods: {
+        getDeviceData: function getDeviceData() {
+            return this.$mem.state.currentStatus;
+        }
     }
-
 };
 
 /***/ }),
@@ -13112,79 +13093,87 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _ChanChart = __webpack_require__(171);
+
+var _ChanChart2 = _interopRequireDefault(_ChanChart);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     name: 'Chan',
+    components: { ChanChart: _ChanChart2.default },
     props: {
-        initData: Object
-    },
-    data: function data() {
-        return {
-            progressbarStyle: {
-                width: this.initData.fq + "%",
-                height: "18px"
-            }
-        };
+        initData: Object,
+        indexData: Number
     },
     methods: {}
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 18 */
@@ -13258,7 +13247,11 @@ exports.default = {
     props: {
         initData: Object
     },
-    computed: {},
+    computed: {
+        currentUserSettingsData: function currentUserSettingsData() {
+            return this.$mem.state.currentUserSettingsData;
+        }
+    },
     beforeUpdate: function beforeUpdate() {}
 };
 
@@ -13495,7 +13488,7 @@ exports.default = {
             this.$tools.toastrError('clickGo2Usersettings success.');
         },
         clickWrite: function clickWrite(event) {
-            var _currentUserSettingsData = this.$mem.currentUserSettingsData;
+            var _currentUserSettingsData = this.$mem.state.currentUserSettingsData;
             var _self = this;
 
             var form = new URLSearchParams();
@@ -13878,7 +13871,11 @@ exports.default = {
                 this.$store.commit("changeServerHost", _inputValue);
 
                 var _self = this;
-                this.$tools.connectServer(this);
+                this.$tools.connectServer(this, function () {
+                    console.log("success");
+                }, function () {
+                    console.log("fault");
+                });
 
                 // this.$tools.toastrSuccess('change server host success.');
                 // this.$tools.back(this);
@@ -14080,14 +14077,18 @@ exports.default = {
   components: { Breadcrumb: _Breadcrumb2.default, ConfigPage: _ConfigPage2.default },
   mounted: function mounted() {
     this.changeHeight(this.$mem.state.isLogin);
-
     var _self = this;
     this.$eventHub.$on("changeLogin", function (_isLogin) {
       _self.changeHeight(_isLogin);
     });
-
     setInterval(this.refreshPage, 1000 * 1);
   },
+
+
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log("beforeRouteUpdate");
+  //   this.$mem.commit('changeCurrentStatus', undefined);
+  // },
 
   methods: {
     refreshPage: function refreshPage() {
@@ -14108,15 +14109,23 @@ exports.default = {
         var _names = _currentRouteName.split(".");
         if (_names.length === 1 && _names[0] === "home") {
           this.$myfetch.fetch("/status", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         } else if (_currentRouteName === "home.detail" && _device) {
           this.$myfetch.fetch("/status/" + _device + "?type=1", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+            json.value.channels[0].fq = parseInt(Math.random() * 100);
+            json.value.channels[1].fq = parseInt(Math.random() * 100);
+            json.value.addr = parseInt(Math.random() * 100);
+            json.value.status = Math.random() > 0.5 ? 1 : 0;
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         } else if (_currentRouteName === "home.usersettings" && _device) {
           this.$myfetch.fetch("/status/" + _device + "?type=0", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+
+            json.value.name = _device;
+            json.value.addr = parseInt(Math.random() * 100);
+            json.value.status = Math.random() > 0.5 ? 1 : 0;
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         }
       }
@@ -14355,7 +14364,7 @@ __WEBPACK_IMPORTED_MODULE_4__common_MyFetch__["a" /* default */].store = __WEBPA
 __WEBPACK_IMPORTED_MODULE_4__common_MyFetch__["a" /* default */].mem = __WEBPACK_IMPORTED_MODULE_3__vuex_mem__["a" /* default */];
 
 // 全局钩子
-__WEBPACK_IMPORTED_MODULE_6__router__["a" /* default */].afterEach((to, from) => {
+__WEBPACK_IMPORTED_MODULE_6__router__["a" /* default */].afterEach((to, from) => { 
   __WEBPACK_IMPORTED_MODULE_2__vuex_store__["default"].commit('changeRouteName', [from.name, to.name]);
 });
 
@@ -16957,6 +16966,17 @@ module.exports = function(module) {
         changeLogin(state, value) {
             state.isLogin = value;
         },
+    },
+
+    getters: {
+        getCurrentStatusValue: (state) => (_key) => {
+            let currentStatus = state.currentStatus; 
+            if (currentStatus && currentStatus[_key] != undefined) {
+                return currentStatus[_key];
+            } else {
+                return "--";
+            }
+        }
     }
 }));
 
@@ -17104,7 +17124,7 @@ module.exports = function(module) {
             _mem.commit('changeServerConnected', false);
             _self.toastrError(_errDispatch, 'connect server fault.');
             _mem.commit("changeInitConfig", 1);
-            _mem.commit('changeServerInit', 0);
+            _mem.commit('changeServerInit', 0); 
             if (_fault) {
                 _fault(_errDispatch);
             }
@@ -17122,6 +17142,11 @@ module.exports = function(module) {
                 _mem.commit('changeCurrentProduct', _currentProduct);
                 _mem.commit('changeCurrentCom', _configs.com);
                 _mem.commit('changeServerInit', 1);
+
+                _self.toastrSuccess('connect server success.');
+                if (_succ) {
+                    _succ();
+                }
             } else {
                 _mem.commit('changeServerInit', 0);
             }
@@ -17160,7 +17185,8 @@ module.exports = function(module) {
             return "#f89406";
         }
         return "#7A8288";
-    },
+    },  
+
 
 });
 
@@ -17180,6 +17206,7 @@ module.exports = function(module) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_action_Login_vue__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_action_SetDeviceAddress_vue__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_action_ConfigPage_vue__ = __webpack_require__(26);
+
 
 
 
@@ -21104,7 +21131,11 @@ var render = function() {
                 _c(
                   "h3",
                   { staticClass: "h4 text-uppercase text-white device-name" },
-                  [_vm._v(_vm._s(_vm.initData.name))]
+                  [
+                    _vm._v(
+                      _vm._s(_vm.$mem.getters.getCurrentStatusValue("name"))
+                    )
+                  ]
                 )
               ])
             ])
@@ -21115,7 +21146,7 @@ var render = function() {
           _c("div", { staticClass: "row text-center" }, [
             _c("div", { staticClass: "col-6" }, [
               _c("div", { staticClass: "text-value font-w300" }, [
-                _vm._v(_vm._s(_vm.initData.addr))
+                _vm._v(_vm._s(_vm.$mem.getters.getCurrentStatusValue("addr")))
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "text-label text-muted" }, [
@@ -21167,12 +21198,12 @@ var render = function() {
       "div",
       { staticClass: "row" },
       [
-        _c("Summary", { attrs: { "init-data": _vm.data } }),
+        _c("Summary"),
         _vm._v(" "),
         _c(
           "transition",
           { attrs: { name: "fade", mode: "out-in" } },
-          [_c("router-view", { attrs: { "init-data": _vm.data } })],
+          [_c("router-view")],
           1
         )
       ],
@@ -21386,7 +21417,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"Chan.vue","sourceRoot":""}]);
+exports.push([module.i, "\n.chart-panel[data-v-5e1842e0] {\n  position: relative;\n  text-align: center;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/Chan.vue"],"names":[],"mappings":";AAAA;EACE,mBAAmB;EACnB,mBAAmB;CACpB","file":"Chan.vue","sourcesContent":[".chart-panel {\n  position: relative;\n  text-align: center;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -21408,7 +21439,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
+      _c("div", { staticClass: "col-12 col-md-4" }, [
         _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
           _c("li", { staticClass: "detail-item-li" }, [
             _c("span", [_vm._v("FC")]),
@@ -21448,8 +21479,12 @@ var render = function() {
             _c("span", { staticClass: "value" }, [
               _vm._v(_vm._s(_vm.initData.min))
             ])
-          ]),
-          _vm._v(" "),
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-md-4" }, [
+        _c("ul", { staticClass: "property-list ribbon-box-paddomh" }, [
           _c("li", { staticClass: "detail-item-li" }, [
             _c("span", [_vm._v("DC ")]),
             _vm._v(" "),
@@ -21488,21 +21523,26 @@ var render = function() {
             _c("span", { staticClass: "value" }, [
               _vm._v(_vm._s(_vm.initData.fq) + "%")
             ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "detail-item-li" }, [
-            _c("div", {
-              staticClass: "progress-bar",
-              style: _vm.progressbarStyle,
-              attrs: {
-                role: "progressbar",
-                "aria-valuenow": "100",
-                "aria-valuemin": "0",
-                "aria-valuemax": "100"
-              }
-            })
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-md-4 chart-panel" }, [
+        _c(
+          "div",
+          { staticClass: "ribbon-box-paddomh" },
+          [
+            _c("ChanChart", {
+              attrs: {
+                percent: _vm.initData.fq,
+                insname: "ChanChart" + _vm.indexData
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("span", [_vm._v("Flame Ratio")])
       ])
     ])
   ])
@@ -21669,27 +21709,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-sm-8" },
-    [
-      _c(
+  return _vm.getDeviceData() && _vm.getDeviceData().channels
+    ? _c(
         "div",
-        { staticClass: "row" },
-        _vm._l(_vm.initData.channels, function(channel, index) {
-          return _c(
+        { staticClass: "col-sm-8" },
+        [
+          _c(
             "div",
-            { staticClass: "col-12" },
-            [_c("Chan", { attrs: { "init-data": channel } })],
-            1
-          )
-        })
-      ),
-      _vm._v(" "),
-      _c("ActionBar", { attrs: { "init-data": _vm.initData.name } })
-    ],
-    1
-  )
+            { staticClass: "row" },
+            _vm._l(_vm.getDeviceData().channels, function(channel, index) {
+              return _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("Chan", {
+                    attrs: { "init-data": channel, "index-data": index }
+                  })
+                ],
+                1
+              )
+            })
+          ),
+          _vm._v(" "),
+          _c("ActionBar", { attrs: { "init-data": _vm.getDeviceData().name } })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -22906,7 +22952,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.initData
+  return _vm.currentUserSettingsData && _vm.currentUserSettingsData.channels
     ? _c(
         "div",
         { staticClass: "col-sm-8" },
@@ -22914,7 +22960,10 @@ var render = function() {
           _c(
             "div",
             { staticClass: "row" },
-            _vm._l(_vm.initData.channels, function(channel, index) {
+            _vm._l(_vm.currentUserSettingsData.channels, function(
+              channel,
+              index
+            ) {
               return _c(
                 "div",
                 { staticClass: "col-12" },
@@ -22924,7 +22973,9 @@ var render = function() {
             })
           ),
           _vm._v(" "),
-          _c("ActionBar", { attrs: { "device-name": _vm.initData.name } })
+          _c("ActionBar", {
+            attrs: { "device-name": _vm.currentUserSettingsData.name }
+          })
         ],
         1
       )
@@ -25605,6 +25656,193 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'ChanChart',
+    props: {
+        insname: String,
+        percent: Number
+    },
+    mounted: function mounted() {
+        var _insName = this.insname;
+        $('#' + _insName).easyPieChart({
+            easing: 'easeOutBounce',
+            animate: {
+                duration: 700,
+                enabled: true
+            },
+            barColor: '#F04124',
+            trackColor: '#fff',
+            scaleColor: '#d5d4d4',
+            lineWidth: 5,
+            size: 100,
+            lineCap: 'circle'
+        });
+
+        var _chart = $('#' + _insName).data('easyPieChart');
+
+        this.$watch("percent", function (val) {
+            _chart.update(val);
+        });
+    },
+    methods: {}
+};
+
+/***/ }),
+/* 171 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0e791a5e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ChanChart_vue__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(0);
+var disposed = false
+function injectStyle (context) {
+  if (disposed) return
+  __webpack_require__(172)
+}
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-0e791a5e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+
+var Component = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__["a" /* default */])(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ChanChart_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0e791a5e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ChanChart_vue__["a" /* render */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0e791a5e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ChanChart_vue__["b" /* staticRenderFns */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src\\components\\home\\detail\\ChanChart.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e791a5e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e791a5e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(173);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(2).default
+var update = add("42bb9954", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0e791a5e\",\"scoped\":true,\"sourceMap\":true}!../../../../node_modules/less-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ChanChart.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0e791a5e\",\"scoped\":true,\"sourceMap\":true}!../../../../node_modules/less-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ChanChart.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(true);
+// imports
+
+
+// module
+exports.push([module.i, "\n.chart[data-v-0e791a5e] {\n  text-align: center;\n}\n.chart span[data-v-0e791a5e] {\n  position: absolute;\n  top: 50%;\n  left: 45%;\n}\n", "", {"version":3,"sources":["D:/workspace/AdminUI/src/components/home/detail/ChanChart.vue"],"names":[],"mappings":";AAAA;EACE,mBAAmB;CACpB;AACD;EACE,mBAAmB;EACnB,SAAS;EACT,UAAU;CACX","file":"ChanChart.vue","sourcesContent":[".chart {\n  text-align: center;\n}\n.chart span {\n  position: absolute;\n  top: 50%;\n  left: 45%;\n}\n"],"sourceRoot":""}]);
+
+// exports
+
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "chart",
+      attrs: { id: _vm.insname, "data-percent": _vm.percent }
+    },
+    [_c("span", [_vm._v(_vm._s(_vm.percent) + "%")])]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e791a5e", { render: render, staticRenderFns: staticRenderFns })
+  }
+}
 
 /***/ })
 /******/ ]);

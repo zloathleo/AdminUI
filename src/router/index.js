@@ -11,6 +11,7 @@ import Login from '../components/action/Login.vue';
 import SetDeviceAddress from '../components/action/SetDeviceAddress.vue';
 import ConfigPage from '../components/action/ConfigPage.vue';
 
+
 Vue.use(VueRouter);
 
 export default new VueRouter({

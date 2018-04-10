@@ -38,7 +38,11 @@ export default {
                 this.$store.commit("changeServerHost", _inputValue);
 
                 let _self = this;
-                this.$tools.connectServer(this);
+                this.$tools.connectServer(this, function () {
+                    console.log("success");
+                }, function () {
+                    console.log("fault");
+                });
 
                 // this.$tools.toastrSuccess('change server host success.');
                 // this.$tools.back(this);

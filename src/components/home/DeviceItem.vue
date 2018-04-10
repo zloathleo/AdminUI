@@ -24,10 +24,9 @@ export default {
       let channelStatus;
       let deviceName = this.initData.name;
       let currentAllStatus = this.$mem.state.currentStatus;
-      if (currentAllStatus) {
-        let _deviceValue = currentAllStatus.value;
-        if (_deviceValue && _deviceValue[deviceName] && _deviceValue[deviceName].channels) {
-          let _channels = _deviceValue[deviceName].channels;
+      if (currentAllStatus) { 
+        if (currentAllStatus && currentAllStatus[deviceName] && currentAllStatus[deviceName].channels) {
+          let _channels = currentAllStatus[deviceName].channels;
           channelStatus = _channels[_index - 1];
         }
       }
@@ -44,16 +43,14 @@ export default {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
-  padding: 0.5rem;
-
+  padding: 0.5rem; 
   .device-channel {
     width: 100%;
     text-align: center;
   }
   .channel-icon {
     font-size: 1rem;
-  }
-
+  } 
   .channel-display {
     font-size: 0.8rem;
   }
@@ -64,8 +61,7 @@ export default {
   .device-item {
     .device-channel {
       padding-right: 0;
-      padding-left: 0;
-
+      padding-left: 0; 
       -webkit-box-flex: 0;
       -ms-flex: 0 0 33.33%;
       flex: 0 0 33.33%;

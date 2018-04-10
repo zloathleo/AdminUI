@@ -1,13 +1,11 @@
 <template>
     <div>
-
         <div class="row">
-            <Summary :init-data='data' />
+            <Summary />
             <transition name="fade" mode="out-in">
-                <router-view :init-data='data'></router-view>
+                <router-view></router-view>
             </transition>
         </div>
-
     </div>
 </template>
 
@@ -15,17 +13,6 @@
 import Summary from './Summary.vue';
 export default {
     name: 'DetailPage',
-    data: function () {
-        return {
-            data: {
-                name: '--',
-                ch1: {
-                },
-                ch2: {
-                }
-            }
-        }
-    },
     components: { Summary },
     mounted() {
         let routeName = this.$route.name;
@@ -47,7 +34,8 @@ export default {
                     // if (_device_detail) {
                     //     Object.assign(_device_detail, _self.$tools.parseComplexState(_device_detail.status));
                     // }
-                    _self.data = json.value;
+                    // _self.data = json.value;
+                    _self.$mem.commit('changeCurrentStatus', json.value);
                     if (_next) {
                         _next();
                     }
@@ -55,14 +43,13 @@ export default {
             } else if ("home.usersettings" == routeName) {
                 let type = "u";
                 this.$myfetch.fetch('/settings/' + device + '?type=' + type, { method: 'GET' }, function (json) {
-                    _self.data = json;
-                    _self.$mem.currentUserSettingsData = json;
+                    _self.$mem.commit('changeCurrentUserSettingsData', json);
                     if (_next) {
                         _next();
                     }
                 }, function (_errDispatch) {
                     _self.$tools.toastrError(_errDispatch, 'read device ' + device + ' usersettings fault.');
-                    _self.$mem.currentUserSettingsData = undefined;
+                    _self.$mem.commit('changeCurrentUserSettingsData', undefined);
                 });
             }
 

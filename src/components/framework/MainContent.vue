@@ -20,15 +20,18 @@ export default {
   components: { Breadcrumb, ConfigPage },
   mounted() {
     this.changeHeight(this.$mem.state.isLogin);
-
     let _self = this;
     this.$eventHub.$on("changeLogin", function (_isLogin) {
       _self.changeHeight(_isLogin);
     });
-
     setInterval(this.refreshPage, 1000 * 1);
-
   },
+
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log("beforeRouteUpdate");
+  //   this.$mem.commit('changeCurrentStatus', undefined);
+  // },
+
   methods: {
     refreshPage: function () {
       //not ready
@@ -48,15 +51,23 @@ export default {
         let _names = _currentRouteName.split(".");
         if (_names.length === 1 && _names[0] === "home") {
           this.$myfetch.fetch("/status", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         } else if (_currentRouteName === "home.detail" && _device) {
           this.$myfetch.fetch("/status/" + _device + "?type=1", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+            json.value.channels[0].fq = parseInt(Math.random() * 100);
+            json.value.channels[1].fq = parseInt(Math.random() * 100);
+            json.value.addr = parseInt(Math.random() * 100);
+            json.value.status = Math.random() > 0.5 ? 1 : 0; 
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         } else if (_currentRouteName === "home.usersettings" && _device) {
           this.$myfetch.fetch("/status/" + _device + "?type=0", { method: 'GET', defaultEventDispatch: false }, function (json) {
-            _self.$mem.commit('changeCurrentStatus', json);
+
+            json.value.name = _device;
+            json.value.addr = parseInt(Math.random() * 100);
+            json.value.status = Math.random() > 0.5 ? 1 : 0;
+            _self.$mem.commit('changeCurrentStatus', json.value);
           });
         }
       }
