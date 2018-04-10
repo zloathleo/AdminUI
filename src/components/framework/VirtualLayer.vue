@@ -73,8 +73,16 @@ export default {
 }
 .loading {
   text-align: center;
-  padding-top: 25%;
+  padding-top: 60%;
   color: #fff;
+}
+
+@media (min-width: 768px) {
+  .loading {
+    text-align: center;
+    padding-top: 30%;
+    color: #fff;
+  }
 }
 .notconnected {
   text-align: center;

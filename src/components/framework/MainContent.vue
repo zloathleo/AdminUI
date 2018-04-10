@@ -58,7 +58,7 @@ export default {
             json.value.channels[0].fq = parseInt(Math.random() * 100);
             json.value.channels[1].fq = parseInt(Math.random() * 100);
             json.value.addr = parseInt(Math.random() * 100);
-            json.value.status = Math.random() > 0.5 ? 1 : 0; 
+            json.value.status = Math.random() > 0.5 ? 1 : 0;
             _self.$mem.commit('changeCurrentStatus', json.value);
           });
         } else if (_currentRouteName === "home.usersettings" && _device) {
@@ -74,8 +74,9 @@ export default {
     },
 
     changeHeight: function (_isLogin) {
+      
       let _padding = (42 + 54 + 16 + 0);
-      if (_isLogin) {
+      if (_isLogin && this.$store.state.currentRouteName === "home") {
         _padding = 42 + 54 + 36 + 5 + 0;
       }
       let _content_height = document.documentElement.clientHeight - _padding;

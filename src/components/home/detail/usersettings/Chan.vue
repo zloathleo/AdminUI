@@ -8,11 +8,14 @@
                     <RadioButtom :title="'Channel En'" :value="initData.enable" :item1="EnItem1" :item2="EnItem2" @onPropsChange="enableChange" />
                     <RadioButtom :title="'File'" :value="initData.file" :item1="fileItem1" :item2="fileItem2" @onPropsChange="fileChange" />
                     <div class="dropdown-divider"></div>
+
                     <div class="col-12">
                         <div class="row">
                             <File v-for="_file, index in initData.files" :key="index" :init-data='_file'>
                             </File>
                         </div>
+
+                        <ChanActionBar v-if="$mem.state.isLogin" :chan-name="initData.name"/>
                     </div>
                 </ul>
             </div>
@@ -23,9 +26,11 @@
 <script>   
 import File from './File.vue';
 import RadioButtom from './RadioButtom.vue';
+import ChanActionBar from './ChanActionBar.vue';
+
 export default {
     name: 'Chan',
-    components: { File, RadioButtom },
+    components: { File, RadioButtom, ChanActionBar },
     props: {
         initData: Object,
     },

@@ -1,5 +1,5 @@
 export default {
-    callUsertimeOut: 1000,
+    callUsertimeOut: 1000 * 1,
     store: undefined,
     mem: undefined,
 
@@ -88,7 +88,7 @@ export default {
             this.download_file = iframe;
             document.body.appendChild(this.download_file);
         }
-        this.download_file.src = url;
+        this.download_file.src = this.store.state.serverhost + url;
         this.download_file.style.display = "none";
     }
 }

@@ -40,9 +40,8 @@ export default {
                         _next();
                     }
                 });
-            } else if ("home.usersettings" == routeName) {
-                let type = "u";
-                this.$myfetch.fetch('/settings/' + device + '?type=' + type, { method: 'GET' }, function (json) {
+            } else if ("home.usersettings" == routeName) { 
+                this.$myfetch.fetch('/settings/' + device + '?type=u' , { method: 'GET' }, function (json) {
                     _self.$mem.commit('changeCurrentUserSettingsData', json);
                     if (_next) {
                         _next();
