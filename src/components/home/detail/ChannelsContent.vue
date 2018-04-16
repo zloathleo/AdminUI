@@ -2,7 +2,10 @@
     <div class="col-sm-8" v-if="getDeviceData() && getDeviceData().channels">
         <div class="row">
             <div v-for="channel, index in getDeviceData().channels" class="col-12">
-                <Chan :init-data="channel" :index-data="index" />
+
+                <ChanEZFlame v-if="$mem.state.currentProduct.name === 'EZFlame'" :init-data="channel" :index-data="index" />
+                <ChanSFS1000 v-else-if="$mem.state.currentProduct.name === 'SFS1000'" :init-data="channel" :index-data="index" />
+
             </div>
         </div>
         <ActionBar :init-data='getDeviceData().name' />
@@ -10,12 +13,13 @@
 </template>
 
 <script>    
-import Chan from './Chan.vue';
+import ChanEZFlame from './ChanEZFlame.vue';
+import ChanSFS1000 from './ChanSFS1000.vue';
 import ActionBar from './ActionBar.vue';
 export default {
     name: 'ChannelsContent',
-    components: { Chan, ActionBar },
-    props: { 
+    components: { ChanEZFlame, ChanSFS1000, ActionBar },
+    props: {
     },
     methods: {
         getDeviceData: function () {

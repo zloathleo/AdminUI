@@ -11,7 +11,7 @@ export default new Vuex.Store({
     plugins: [vuexLocal.plugin],
     // 定义状态
     state: {
-        serverhost: 'http://192.168.1.142:80', 
+        serverhost: 'http://192.168.1.58:80', 
 
         lastRouteName: '/',
         currentRouteName: '/',

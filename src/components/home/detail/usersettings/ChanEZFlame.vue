@@ -11,11 +11,10 @@
 
                     <div class="col-12">
                         <div class="row">
-                            <File v-for="_file, index in initData.files" :key="index" :init-data='_file'>
-                            </File>
+                            <FileEZFlame v-for="_file, index in initData.files" :key="index" :init-data='_file' />
                         </div>
 
-                        <ChanActionBar v-if="$mem.state.isLogin" :chan-name="initData.name"/>
+                        <ChanActionBar v-if="$mem.state.isLogin" :chan-name="initData.name" />
                     </div>
                 </ul>
             </div>
@@ -24,13 +23,13 @@
 </template>
 
 <script>   
-import File from './File.vue';
+import FileEZFlame from './FileEZFlame.vue';
 import RadioButtom from './RadioButtom.vue';
 import ChanActionBar from './ChanActionBar.vue';
 
 export default {
-    name: 'Chan',
-    components: { File, RadioButtom, ChanActionBar },
+    name: 'ChanEZFlame',
+    components: { FileEZFlame, RadioButtom, ChanActionBar },
     props: {
         initData: Object,
     },

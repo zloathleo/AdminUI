@@ -5,16 +5,16 @@
             <div class="col-12 col-md-4">
                 <ul class="property-list ribbon-box-paddomh">
                     <li class="detail-item-li">
-                        <span>FC</span>
-                        <span class="value">{{initData.fc}}</span>
+                        <span>GAIN</span>
+                        <span class="value">{{initData.gain}}</span>
                     </li>
                     <li class="detail-item-li">
-                        <span>ON_TH</span>
-                        <span class="value">{{initData.ac_on_th}}</span>
+                        <span>TH_ON</span>
+                        <span class="value">{{initData.thon}}</span>
                     </li>
                     <li class="detail-item-li">
-                        <span>ON_TL</span>
-                        <span class="value">{{initData.ac_on_tl}}</span>
+                        <span>TH_OFF</span>
+                        <span class="value">{{initData.thoff}}</span>
                     </li>
                     <li class="detail-item-li">
                         <span>MAX</span>
@@ -30,12 +30,12 @@
             <div class="col-12 col-md-4">
                 <ul class="property-list ribbon-box-paddomh">
                     <li class="detail-item-li">
-                        <span>DC </span>
-                        <span class="value">{{initData.dc}}</span>
+                        <span>IR </span>
+                        <span class="value">{{initData.ir}}</span>
                     </li>
                     <li class="detail-item-li">
-                        <span>AC </span>
-                        <span class="value">{{initData.ac}}</span>
+                        <span>BAND </span>
+                        <span class="value">{{initData.band}}</span>
                     </li>
                     <li class="detail-item-li">
                         <span>FREQ</span>
@@ -67,7 +67,7 @@
 <script>   
 import ChanChart from './ChanChart.vue';
 export default {
-    name: 'Chan',
+    name: 'ChanSFS1000',
     components: { ChanChart },
     props: {
         initData: Object,

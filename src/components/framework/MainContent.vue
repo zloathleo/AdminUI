@@ -56,7 +56,7 @@ export default {
         } else if (_currentRouteName === "home.detail" && _device) {
           this.$myfetch.fetch("/status/" + _device + "?type=1", { method: 'GET', defaultEventDispatch: false }, function (json) {
             json.value.channels[0].fq = parseInt(Math.random() * 100);
-            json.value.channels[1].fq = parseInt(Math.random() * 100);
+            // json.value.channels[1].fq = parseInt(Math.random() * 100);
             json.value.addr = parseInt(Math.random() * 100);
             json.value.status = Math.random() > 0.5 ? 1 : 0;
             _self.$mem.commit('changeCurrentStatus', json.value);

@@ -40,6 +40,7 @@ export default {
                 let _self = this;
                 this.$tools.connectServer(this, function () {
                     console.log("success");
+                    _self.$router.push({ name: 'home' });
                 }, function () {
                     console.log("fault");
                 });

@@ -62,7 +62,7 @@
 
 <script> 
 export default {
-    name: 'File',
+    name: 'FileEZFlame',
     methods: {
     },
     props: {

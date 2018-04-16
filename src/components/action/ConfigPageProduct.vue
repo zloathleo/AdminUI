@@ -72,9 +72,10 @@ export default {
                         form.set('com', _inputComValue);
 
                         _self.$myfetch.fetch('/configs', { method: 'PUT', body: form }, function (json) {
-                            _self.$tools.initConfig(_self.$myfetch, _self.$mem); 
+                            _self.$tools.initConfig(_self.$myfetch, _self.$mem);
                             _self.$tools.toastrSuccess('save system config success.');
-                            _self.$tools.back(_self);
+
+                            _self.$router.push({ name: 'home' });
 
                             // var form2 = new URLSearchParams();
                             // form2.set('value', _inputComValue);
