@@ -68,7 +68,7 @@ export default {
       max-width: 33.33%;
     }
     .channel-icon {
-      font-size: 2em;
+      font-size: 1.5em;
       width: 100%;
     }
     .device-name {

@@ -35,10 +35,11 @@ export default {
                     _self.$refs.invalidMessage.style.display = 'none';
 
                     _self.$mem.commit('changeLogin', true);
-                    _self.$eventHub.$emit('changeLogin', true);
+                    _self.$tools.back(_self);
+ 
                     _self.$tools.toastrSuccess('login success.');
 
-                    _self.$tools.back(_self);
+
                 }, function (_errDispatch) {
                     $(_inputDom).removeClass('is-invalid');
                     _self.$refs.invalidMessage.style.display = 'none';
@@ -56,5 +57,5 @@ export default {
 </script>
 
 <style scoped lang="less">
- 
+
 </style>

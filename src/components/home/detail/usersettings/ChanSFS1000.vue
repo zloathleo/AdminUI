@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <ul class="property-list ribbon-box-paddomh">
-                    <RadioButtom :title="'File'" :value="initData.file" :item1="fileItem1" :item2="fileItem2" @onPropsChange="fileChange" />
+                    <RadioButtom4 :title="'File'" :value="initData.file" :item1="fileItem1" :item2="fileItem2" :item3="fileItem3" :item4="fileItem4" @onPropsChange="fileChange" />
                     <div class="dropdown-divider"></div>
 
                     <div class="col-12">
@@ -22,23 +22,21 @@
 
 <script>   
 import FileSFS1000 from './FileSFS1000.vue';
-import RadioButtom from './RadioButtom.vue';
+import RadioButtom4 from './RadioButtom4.vue';
 import ChanActionBar from './ChanActionBar.vue';
 
 export default {
     name: 'ChanSFS1000',
-    components: { FileSFS1000, RadioButtom, ChanActionBar },
+    components: { FileSFS1000, RadioButtom4, ChanActionBar },
     props: {
         initData: Object,
     },
     data: function () {
         return {
-            burnerTypeItem1: { display: 'IR', value: '1' },
-            burnerTypeItem2: { display: 'UV', value: '0' },
-            EnItem1: { display: 'Enable', value: 1 },
-            EnItem2: { display: 'Disable', value: 0 },
-            fileItem1: { display: 'File A', value: 0 },
-            fileItem2: { display: 'File B', value: 1 },
+            fileItem1: { display: 'A', value: 0 },
+            fileItem2: { display: 'B', value: 1 },
+            fileItem3: { display: 'C', value: 2 },
+            fileItem4: { display: 'D', value: 3 },
         }
     },
     methods: {

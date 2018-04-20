@@ -19,12 +19,11 @@ export default {
   name: 'MainContent',
   components: { Breadcrumb, ConfigPage },
   mounted() {
-    this.changeHeight(this.$mem.state.isLogin);
-    let _self = this;
-    this.$eventHub.$on("changeLogin", function (_isLogin) {
-      _self.changeHeight(_isLogin);
-    });
+    this.changeHeight(this.$mem.state.isLogin); 
     setInterval(this.refreshPage, 1000 * 1);
+  },
+  updated() {
+    this.changeHeight(this.$mem.state.isLogin);
   },
 
   // beforeRouteUpdate(to, from, next) {
@@ -74,11 +73,10 @@ export default {
     },
 
     changeHeight: function (_isLogin) {
-      
-      let _padding = (42 + 54 + 16 + 0);
-      if (_isLogin && this.$store.state.currentRouteName === "home") {
-        _padding = 42 + 54 + 36 + 5 + 0;
-      }
+      let _padding = (42 + 54 + 36 + 5 + 0);
+      if (!_isLogin && this.$store.state.currentRouteName === "home") {
+        _padding = (42 + 54 + 16 + 0);
+      } 
       let _content_height = document.documentElement.clientHeight - _padding;
       $('#MainContent').css("height", _content_height + "px");
     },

@@ -72,14 +72,6 @@ input::-webkit-inner-spin-button {
     margin-right: 0.8rem;
 }
 
-.value-radio-buttom {
-    padding: 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    border-radius: 0;
-    min-width: 4rem;
-}
-
 .my-card {
     max-width: 320px;
     padding: 24px 24px;

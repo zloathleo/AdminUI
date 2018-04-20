@@ -12,8 +12,7 @@
                     <div class="col-12">
                         <div class="row">
                             <FileEZFlame v-for="_file, index in initData.files" :key="index" :init-data='_file' />
-                        </div>
-
+                        </div> 
                         <ChanActionBar v-if="$mem.state.isLogin" :chan-name="initData.name" />
                     </div>
                 </ul>

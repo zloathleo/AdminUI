@@ -1,4 +1,4 @@
-/*! This file is created at 2018-04-16T08:51:26.725Z */
+/*! This file is created at 2018-04-20T05:19:04.772Z */
 html {
     overflow: hidden;
 }
@@ -71,14 +71,6 @@ input::-webkit-inner-spin-button {
     line-height: 36px;
     color: #fff;
     margin-right: 0.8rem;
-}
-
-.value-radio-buttom {
-    padding: 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    border-radius: 0;
-    min-width: 4rem;
 }
 
 .my-card {

@@ -1,0 +1,54 @@
+{
+    "file": 0,
+    "files": [
+        {
+            "band": 6,
+            "ffrt": 2,
+            "freq": 99,
+            "gain": 24,
+            "max": 1600,
+            "min": 300,
+            "name": "filea",
+            "otd": 2,
+            "thoff": 300,
+            "thon": 600
+        },
+        {
+            "band": 6,
+            "ffrt": 2,
+            "freq": 99,
+            "gain": 25,
+            "max": 1600,
+            "min": 300,
+            "name": "fileb",
+            "otd": 2,
+            "thoff": 300,
+            "thon": 600
+        },
+        {
+            "band": 6,
+            "ffrt": 2,
+            "freq": 99,
+            "gain": 25,
+            "max": 1600,
+            "min": 300,
+            "name": "filec",
+            "otd": 2,
+            "thoff": 300,
+            "thon": 600
+        },
+        {
+            "band": 6,
+            "ffrt": 2,
+            "freq": 99,
+            "gain": 25,
+            "max": 1600,
+            "min": 300,
+            "name": "filed",
+            "otd": 2,
+            "thoff": 300,
+            "thon": 600
+        }
+    ],
+    "name": "ch1"
+}

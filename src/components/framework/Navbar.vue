@@ -81,8 +81,15 @@ export default {
     methods: {
         clickLogout: function (event) {
             this.$mem.commit('changeLogin', false);
-            this.$eventHub.$emit('changeLogin', false);
             this.$tools.toastrSuccess('logout success.');
+
+            this.$router.go({
+                path: this.$router.path,
+                query: {
+                    t: + new Date()
+                }
+            });
+
         },
         clickAbout: function (event) {
             // `this` 在方法里指向当前 Vue 实例

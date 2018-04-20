@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
         currentUserSettingsData: undefined,
 
-        isLogin: true,
+        isLogin: false,
 
     },
     mutations: {
