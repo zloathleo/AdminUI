@@ -14,4 +14,4 @@ electron-packager <sourcedir> <sourcedir> --platform= <platform> win32,darwin --
 //上传到分支
 git push origin develop-20171020:develop-20171020
 
-更新
+更新1
