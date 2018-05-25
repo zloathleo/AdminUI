@@ -6,7 +6,7 @@
                 <i class="fa fa-align-left text-white"></i>
             </a>
 
-            <ul class="navbar-nav" v-bind:class="[is_electron ? 'electronClass' : 'mr-auto']">
+            <ul class="navbar-nav " v-bind:class="[is_electron ? 'electronClass' : 'mr-auto']" >
                 <li class="nav-item">
                     <a class="nav-link cursor-pointer">RodinX</a>
                 </li>
@@ -14,11 +14,11 @@
 
             <ul class="navbar-nav" v-if="$mem.state.serverInit === 1">
                 <li class="nav-item dropdown cursor-pointer">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="download" aria-expanded="true">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbar-action" aria-expanded="true">
                         Action
                         <span class="caret"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="download">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-action">
                         <router-link :to="{name:'login'}" class="dropdown-item" v-if="isNotLogin">
                             Login
                         </router-link>
@@ -75,7 +75,7 @@ export default {
             return this.$mem.state.isLogin == false;
         },
         is_electron: function () {
-            return globle_is_electron;
+            return true;
         }
     },
     methods: {
@@ -124,7 +124,8 @@ export default {
   padding: 0.2rem 1rem;
   .electronClass {
     -webkit-app-region: drag;
-    width: calc(100% - 203px);
+    width: calc(100% - 207px);
+    // margin-right: auto !important;
   }
   .nav-link {
     padding: 0.5rem;

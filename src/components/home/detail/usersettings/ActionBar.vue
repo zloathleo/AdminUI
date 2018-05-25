@@ -2,7 +2,7 @@
     <div class="btn-group actionbar" role="group">
         <router-link :to="{name:'home.detail'} " append class="btn btn-primary" v-bind:class="[$mem.state.isLogin ? 'half-width' : 'full-width']">
             <i class="fa fa-arrow-left"></i>
-            UserSettings
+            {{deviceName}} Detail
         </router-link>
 
         <button v-show="$mem.state.isLogin" type="button" class="btn btn-primary half-width" v-on:click="clickWrite"> Write

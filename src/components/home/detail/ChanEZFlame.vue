@@ -1,6 +1,7 @@
 <template>
     <div class="block">
-        <div class="bg-primary ribbon-box text-uppercase">CH1</div>
+
+        <div class="bg-primary ribbon-box text-uppercase">{{initData.name}}</div>
         <div class="row">
             <div class="col-12 col-md-4">
                 <ul class="property-list ribbon-box-paddomh">

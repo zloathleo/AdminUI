@@ -34,8 +34,8 @@ export default {
     },
     data: function () {
         return {
-            burnerTypeItem1: { display: 'IR', value: '1' },
-            burnerTypeItem2: { display: 'UV', value: '0' },
+            burnerTypeItem1: { display: 'IR', value: 1 },
+            burnerTypeItem2: { display: 'UV', value: 0 },
             EnItem1: { display: 'Enable', value: 1 },
             EnItem2: { display: 'Disable', value: 0 },
             fileItem1: { display: 'File A', value: 0 },

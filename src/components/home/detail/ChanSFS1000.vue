@@ -24,6 +24,7 @@
                         <span>MIN</span>
                         <span class="value">{{initData.min}}</span>
                     </li>
+
                 </ul>
             </div>
 
@@ -47,7 +48,10 @@
                     </li>
                     <li class="detail-item-li">
                         <span>FQ</span>
-                        <span class="value">{{initData.fq}}%</span>
+ 
+                        <router-link :to="{name:'home.history'}" append >
+                            <span class="value">{{initData.fq}}%</span>
+                        </router-link>
                     </li>
 
                 </ul>

@@ -2,7 +2,10 @@
     <div class="card my-card">
         <i class="fa fa-cog fa-5x text-primary"></i>
 
-        <label>write device address</label> 
+        <label>device old address</label>
+        <input ref="inputOldAddress" type="text" class="form-control" placeholder="Device Address" required autofocus>
+
+        <label>write device address</label>
         <input ref="inputAddress" type="text" class="form-control" placeholder="Device Address" required autofocus>
 
         <div ref="invalidMessage" class="invalid-message">Sorry, the device address range is 1-127. Try another?</div>
@@ -28,9 +31,19 @@ export default {
             if (this.invalidInput(_inputValue)) {
                 $(_inputDom).removeClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'none';
- 
-                this.$tools.toastrSuccess('write success.'); 
-                this.$tools.back(this);
+
+
+                var _self = this;
+                var form = new URLSearchParams();
+                form.set('addr', _inputValue);
+                this.$myfetch.fetch('/address', { method: 'PUT', loadingMessage: 'write address.', body: form }, function () {
+                    this.$tools.toastrSuccess('write address success.');
+                    this.$tools.back(this);
+                }, function (_errDispatch) {
+                    _self.$tools.toastrError(_errDispatch, 'write address fault.');
+                });
+                // this.$tools.toastrSuccess('write success.');
+                // this.$tools.back(this);
             } else {
                 $(_inputDom).addClass('is-invalid');
                 this.$refs.invalidMessage.style.display = 'block';
@@ -40,5 +53,5 @@ export default {
 }
 </script>
 
-<style scoped lang="less"> 
+<style scoped lang="less">
 </style>
