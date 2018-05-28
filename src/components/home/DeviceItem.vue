@@ -57,23 +57,23 @@ export default {
 }
 
 //≥768px ≥Medium
-@media (min-width: 768px) {
-  .device-item {
-    .device-channel {
-      padding-right: 0;
-      padding-left: 0; 
-      -webkit-box-flex: 0;
-      -ms-flex: 0 0 33.33%;
-      flex: 0 0 33.33%;
-      max-width: 33.33%;
-    }
-    .channel-icon {
-      font-size: 1.5em;
-      width: 100%;
-    }
-    .device-name {
-      position: fixed;
-    }
-  }
-}
+// @media (min-width: 768px) {
+//   .device-item {
+//     .device-channel {
+//       padding-right: 0;
+//       padding-left: 0; 
+//       -webkit-box-flex: 0;
+//       -ms-flex: 0 0 33.33%;
+//       flex: 0 0 33.33%;
+//       max-width: 33.33%;
+//     }
+//     .channel-icon {
+//       font-size: 1.5em;
+//       width: 100%;
+//     }
+//     .device-name {
+//       position: fixed;
+//     }
+//   }
+// }
 </style>

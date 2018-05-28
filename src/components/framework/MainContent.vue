@@ -68,11 +68,7 @@ export default {
             // json.value.status = Math.random() > 0.5 ? 1 : 0;
             _self.$mem.commit('changeCurrentStatus', json.value);
           });
-        } else if (_currentRouteName === "home.history" && _device) {
-          this.$myfetch.fetch("/status/" + _device + "?type=0", { method: 'GET', defaultEventDispatch: false }, function (json) {
- 
-          });
-        }
+        } 
       }
     },
 
