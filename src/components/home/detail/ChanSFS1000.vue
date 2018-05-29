@@ -32,7 +32,11 @@
                 <ul class="property-list ribbon-box-paddomh">
                     <li class="detail-item-li">
                         <span>IR </span>
-                        <span class="value">{{initData.ir}}</span>
+
+                        <router-link :to="{name:'home.historytable',query: {ch: initData.name}}" append>
+                            <span class="value">{{initData.ir}}</span>
+                        </router-link>
+ 
                     </li>
                     <li class="detail-item-li">
                         <span>BAND </span>
@@ -49,8 +53,7 @@
                     <li class="detail-item-li">
                         <span>FQ</span>
 
-                        <!-- <span class="value">{{initData.fq}}%</span> -->
-                        <router-link :to="{name:'home.history',query: {ch: initData.name}}" append >
+                        <router-link :to="{name:'home.historytable',query: {ch: initData.name}}" append>
                             <span class="value">{{initData.fq}}%</span>
                         </router-link>
                     </li>

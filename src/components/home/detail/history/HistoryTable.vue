@@ -11,27 +11,32 @@
                 <tr>
                     <th>#</th>
                     <th>Device</th>
-                    <th>Channel</th> 
+                    <th>Channel</th>
+                    <th>Tag</th>
                     <th>Timestamp</th>
-                    <th>Message</th>
+                    <th>Value</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="row, index in rows">
                     <th scope="row">{{index}}</th>
                     <td>{{row.dev}}</td>
-                    <td>{{row.ch}}</td> 
+                    <td>{{row.ch}}</td>
+                    <td>{{row.tag}}</td>
                     <td>{{row.timestamp}}</td>
-                    <td>{{row.message}}</td>
+                    <td>{{row.value}}</td>
                 </tr>
             </tbody>
         </table>
+        <ActionBar />
     </div>
 </template>
 
 <script>   
+import ActionBar from './ActionBar.vue';
 export default {
-    name: 'Alarm',
+    name: 'HistoryTable',
+    components: { ActionBar },
     data: function () {
         let _now = new Date();
         let _day = this.$tools.dateFormat(_now, "yyyy-MM-dd");
@@ -54,6 +59,16 @@ export default {
     methods: {
         refreshData: function () {
             this.clickSearch();
+            // let _device = this.$store.state.currentDeviceName;
+            // var beginTime = parseInt(new Date().getTime() / 1000 - 60 * 60);
+
+            // let _this = this;
+            // this.$myfetch.fetch("/values?dev=" + _device + "&ch=" + 0 + "&begin=" + beginTime, { method: 'GET' }, function (json) {
+            //     let rows = json.rows;
+            //     if (rows && rows.length > 0) {
+            //         _this.rows = rows;
+            //     }
+            // });
         },
         clickSearch: function () {
             let _device = this.$store.state.currentDeviceName;
@@ -68,7 +83,7 @@ export default {
             var endTime = parseInt(end.getTime() / 1000);
 
             let _this = this;
-            this.$myfetch.fetch("/alarms?dev=" + _device + "&begin=" + beginTime + "&end=" + endTime, { method: 'GET' }, function (json) {
+            this.$myfetch.fetch("/values?dev=" + _device + "&ch=" + 0 + "&begin=" + beginTime + "&end=" + endTime, { method: 'GET' }, function (json) {
                 _this.rows = json.rows;
             });
         }

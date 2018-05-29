@@ -11,7 +11,7 @@ export default {
     },
     data() {
         return {
-            chartData: null,
+            chartData: null, 
             options: {
                 height: 300, responsive: true, maintainAspectRatio: false
             }

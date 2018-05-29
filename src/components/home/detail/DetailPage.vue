@@ -3,7 +3,7 @@
     <transition name="fade" mode="out-in">
         <router-view></router-view>
     </transition>
- 
+
 </template>
 
 <script> 
@@ -41,17 +41,10 @@ export default {
                     _self.$tools.toastrError(_errDispatch, 'read device ' + device + ' usersettings fault.');
                     _self.$mem.commit('changeCurrentUserSettingsData', undefined);
                 });
-            } else if ("home.history" == routeName) {
+            } else {
                 if (_next) {
                     _next();
                 }
-                // this.$myfetch.fetch('/settings/' + device + '?type=u' , { method: 'GET' }, function (json) {
-                //     _self.$mem.commit('changeCurrentUserSettingsData', json);
-
-                // }, function (_errDispatch) {
-                //     _self.$tools.toastrError(_errDispatch, 'read device ' + device + ' usersettings fault.');
-                //     _self.$mem.commit('changeCurrentUserSettingsData', undefined);
-                // });
             }
 
 

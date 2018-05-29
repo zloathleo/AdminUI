@@ -13,6 +13,28 @@ export default {
         }
     },
 
+    string2Date: function (str) {
+        //"2008-04-02 10:08:44";  
+        str = str.replace("/-/g", "/");
+        return new Date(str);
+    },
+
+    dateFormat: function (_date, fmt) { //author: meizz
+        var o = {
+            "M+": _date.getMonth() + 1, //月份
+            "d+": _date.getDate(), //日
+            "h+": _date.getHours(), //小时
+            "m+": _date.getMinutes(), //分
+            "s+": _date.getSeconds(), //秒
+            "q+": Math.floor((_date.getMonth() + 3) / 3), //季度
+            "S": _date.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (_date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    },
+
     toastrSuccess: function (msg) {
         toastr.options.timeOut = 3000;
         toastr.success(msg);
@@ -37,7 +59,7 @@ export default {
             _mem.commit('changeServerConnected', false);
             _self.toastrError(_errDispatch, 'connect server fault.');
             _mem.commit("changeInitConfig", 1);
-            _mem.commit('changeServerInit', 0); 
+            _mem.commit('changeServerInit', 0);
             if (_fault) {
                 _fault(_errDispatch);
             }
@@ -98,7 +120,7 @@ export default {
             return "#f89406";
         }
         return "#7A8288";
-    },  
+    },
 
 
 }
