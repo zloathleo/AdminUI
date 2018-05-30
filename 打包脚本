@@ -1,5 +1,5 @@
 webpack
-npm run-script dist-win 
+npm run-script dist-win
  
 electron-packager <sourcedir> <sourcedir> --platform= <platform> win32,darwin --arch=all --electronVersion=1.6.10 --out=dist/ --overwrite --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --prune
 #*<sourcedir> ： 项目的位置

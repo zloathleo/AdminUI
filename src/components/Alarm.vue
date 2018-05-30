@@ -56,7 +56,7 @@ export default {
             this.clickSearch();
         },
         clickSearch: function () {
-            let _device = this.$store.state.currentDeviceName;
+            // let _device = this.$store.state.currentDeviceName;
             let _inputDay = this.$refs.inputDay.value;
             let _inputBegin = this.$refs.inputBegin.value;
             let _inputEnd = this.$refs.inputEnd.value;
@@ -68,7 +68,7 @@ export default {
             var endTime = parseInt(end.getTime() / 1000);
 
             let _this = this;
-            this.$myfetch.fetch("/alarms?dev=" + _device + "&begin=" + beginTime + "&end=" + endTime, { method: 'GET' }, function (json) {
+            this.$myfetch.fetch("/alarms?begin=" + beginTime + "&end=" + endTime, { method: 'GET' }, function (json) {
                 _this.rows = json.rows;
             });
         }
