@@ -6,7 +6,7 @@
                 <i class="fa fa-align-left text-white"></i>
             </a>
 
-            <ul class="navbar-nav " v-bind:class="[is_electron ? 'electronClass' : 'mr-auto']" >
+            <ul class="navbar-nav " v-bind:class="[is_electron ? 'electronClass' : 'mr-auto']">
                 <li class="nav-item">
                     <a class="nav-link cursor-pointer">RodinX</a>
                 </li>
@@ -32,6 +32,9 @@
                         <div class="dropdown-divider" v-if="!isNotLogin" />
                         <router-link :to="{name:'set_config'}" class="dropdown-item">
                             System Config
+                        </router-link>
+                        <router-link :to="{name:'upgrade_device'}" class="dropdown-item" >
+                            Upgrade Device
                         </router-link>
                     </div>
                 </li>

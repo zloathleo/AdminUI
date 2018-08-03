@@ -13,7 +13,7 @@ import HistoryContent from '../components/home/detail/history/HistoryContent.vue
 import Login from '../components/action/Login.vue';
 import SetDeviceAddress from '../components/action/SetDeviceAddress.vue';
 import ConfigPage from '../components/action/ConfigPage.vue';
-
+import UpgradeDevice from '../components/action/UpgradeDevice.vue';
 
 Vue.use(VueRouter);
 
@@ -42,6 +42,6 @@ export default new VueRouter({
     { name: 'login', path: '/login', component: Login },
     { name: 'set_device_address', path: '/set_device_address', component: SetDeviceAddress },
     { name: 'set_config', path: '/set_config', component: ConfigPage },
-
+    { name: 'upgrade_device', path: '/upgrade_device', component: UpgradeDevice },
   ]
 })
